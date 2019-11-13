@@ -9,11 +9,13 @@
 </template>
 
 <script>
+import ReaderWidget from './widgets/ReaderWidget.vue';
+
 export default {
   name: 'app',
   computed: {
     mainWidget() {
-      return null;
+      return ReaderWidget;
     },
     leftWidgets() {
       return [];
