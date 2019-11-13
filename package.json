@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.3.2",
+    "scaife-skeleton": "^0.7.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {
