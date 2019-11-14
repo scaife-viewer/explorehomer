@@ -1,6 +1,11 @@
 # explorehomer
 
-## Project setup
+## Prerequisites
+- [Node.js 12](https://nodejs.org/en/)
+- [yarn](https://yarnpkg.com/en/docs/install)
+- [vue-cli](https://cli.vuejs.org/guide/installation.html)
+
+## Install project
 ```
 yarn install
 ```
@@ -27,3 +32,10 @@ yarn run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+**NOTE: Project initialization**
+
+The following command was used to set up the initial project; it does not need to be ran again, but is provided here for reference on future projects:
+```shell
+vue create explorehomer -d
+```
