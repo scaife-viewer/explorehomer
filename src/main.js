@@ -1,6 +1,7 @@
 import Vue from 'vue';
 
 import SkeletonPlugin from 'scaife-skeleton';
+import GraphQLPlugin from './gql';
 
 import App from './App.vue';
 import router from './router';
@@ -13,6 +14,7 @@ const iconMap = [].reduce((map, obj) => {
 }, {});
 
 Vue.use(SkeletonPlugin, { iconMap });
+Vue.use(GraphQLPlugin);
 
 Vue.config.productionTip = false;
 
