@@ -5,13 +5,17 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "format": "prettier --write \"src/**/*.{js,scss,vue}\" && eslint --fix \"src/**/*.{js,vue}\"",
+    "test": "jest --collectCoverage",
+    "testDebug": "node --inspect-brk node_modules/.bin/jest --runInBand"
   },
   "dependencies": {
     "apollo-boost": "^0.4.4",
     "core-js": "^3.3.2",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
+    "lodash.clonedeep": "^4.5.0",
     "node-sass": "^4.13.0",
     "sass-loader": "^8.0.0",
     "scaife-skeleton": "^0.7.0",
@@ -21,13 +25,23 @@
     "webpack": "^4.41.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/preset-env": "^7.7.1",
     "@vue/cli-plugin-babel": "^4.0.0",
     "@vue/cli-plugin-eslint": "^4.0.0",
     "@vue/cli-service": "^4.0.0",
     "@vue/eslint-config-airbnb": "^4.0.0",
+    "@vue/server-test-utils": "^1.0.0-beta.29",
+    "@vue/test-utils": "^1.0.0-beta.29",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "jest": "^24.9.0",
+    "prettier": "^1.19.1",
+    "vue-jest": "^3.0.5",
+    "vue-server-renderer": "2.x",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {
@@ -39,7 +53,25 @@
       "plugin:vue/essential",
       "@vue/airbnb"
     ],
-    "rules": {},
+    "rules": {
+      "vue/script-indent": [
+        "error",
+        2,
+        {
+          "baseIndent": 1
+        }
+      ]
+    },
+    "overrides": [
+      {
+        "files": [
+          "*.vue"
+        ],
+        "rules": {
+          "indent": "off"
+        }
+      }
+    ],
     "parserOptions": {
       "parser": "babel-eslint"
     }
@@ -52,5 +84,16 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "transform": {
+      "^.+\\.js$": "./node_modules/babel-jest",
+      ".*\\.(vue)$": "./node_modules/vue-jest"
+    }
+  }
 }

@@ -1,9 +1,10 @@
 import ApolloClient from 'apollo-boost';
 
 const client = new ApolloClient({
-  uri: process.env.VUE_APP_ATLAS_GRAPHQL_ENDPOINT || 'https://explorehomer-atlas.herokuapp.com/graphql/',
+  uri:
+    process.env.VUE_APP_ATLAS_GRAPHQL_ENDPOINT
+    || 'https://explorehomer-atlas.herokuapp.com/graphql/',
 });
-
 
 const GraphQLPlugin = {
   install: (Vue) => {
@@ -31,4 +32,5 @@ const GraphQLPlugin = {
   },
 };
 
+export { client as gqlclient };
 export default GraphQLPlugin;
