@@ -46,9 +46,10 @@
           this.$store.dispatch(`${MODULE_NS}/${SET_PASSAGE}`, {
             urn: this.urn.absolute,
           });
+          const { version, reference } = this.urn;
           return gql`
             {
-              lines(version_Urn: "${this.urn.version}", reference: "${this.urn.reference}") {
+              lines(version_Urn: "${version}", reference: "${reference}") {
               edges {
                 node {
                   id

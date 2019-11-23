@@ -28,7 +28,9 @@ const GraphQLPlugin = {
     });
 
     // eslint-disable-next-line no-param-reassign
-    Vue.prototype.$gql = q => client.query({ query: q }).then(data => data.data);
+    Vue.prototype.$gql = q =>
+      // eslint-disable-next-line implicit-arrow-linebreak
+      client.query({ query: q }).then(data => data.data);
   },
 };
 

@@ -44,38 +44,6 @@
     "vue-server-renderer": "2.x",
     "vue-template-compiler": "^2.6.10"
   },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "@vue/airbnb"
-    ],
-    "rules": {
-      "vue/script-indent": [
-        "error",
-        2,
-        {
-          "baseIndent": 1
-        }
-      ]
-    },
-    "overrides": [
-      {
-        "files": [
-          "*.vue"
-        ],
-        "rules": {
-          "indent": "off"
-        }
-      }
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  },
   "postcss": {
     "plugins": {
       "autoprefixer": {}

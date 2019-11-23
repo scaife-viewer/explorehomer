@@ -9,7 +9,9 @@
 </template>
 
 <script>
+  // eslint-disable-next-line max-len
   import PassageAncestorsWidget from './scaife-widgets/widgets/PassageAncestorsWidget.vue';
+  // eslint-disable-next-line max-len
   import PassageReferenceWidget from './scaife-widgets/widgets/PassageReferenceWidget.vue';
   import ReaderWidget from './scaife-widgets/widgets/ReaderWidget.vue';
   import TextSizeWidget from './scaife-widgets/widgets/TextSizeWidget.vue';

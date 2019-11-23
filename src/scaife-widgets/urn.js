@@ -2,53 +2,114 @@ export default class URN {
   constructor(urn) {
     this.absolute = urn;
     this.delimiter = ':';
+    this.inclusiveRangeRe = /\d+-\d+$/;
+    this.subRangeRe = /\d+\.\d+-\d+\.\d+/;
     this.scheme = null;
     this.nid = null;
     this.nss = null;
     this.work = null;
     this.reference = null;
     this.version = null;
-    this.nodes = [];
-    this.node = null;
-    this.destructure();
+    this.hierarchy = null;
+    this.node = false;
+    this.range = false;
+    this.destructureUrn();
+    this.destructureReference();
   }
 
-  destructure() {
+  static range(start, stop) {
+    return [...Array(stop - start + 1)].map((x, y) => y + start);
+  }
+
+  isNode() {
+    return this.node !== false;
+  }
+
+  isRange() {
+    return this.range !== false;
+  }
+
+  destructureUrn() {
     const split = this.absolute.split(this.delimiter);
     [this.scheme, this.nid, this.nss, this.work, this.reference] = split;
     // TODO: Should have the trailing ':', see elsewhere.
     this.version = `${this.scheme}:${this.nid}:${this.nss}:${this.work}`;
-    this.nodes = this.splitReference();
-    this.node = this.nodes[this.nodes.length - 1];
   }
 
-  isRange() {
-    return this.reference.includes('-');
-  }
-
-  splitReference() {
-    if (this.isRange()) {
-      const [hierarchy, endRange] = this.reference.split('-');
-      const until = endRange.includes('.') ? endRange.split('.')[1] : endRange;
-      const nodes = hierarchy.split('.');
-      nodes[nodes.length - 1] = `${nodes[nodes.length - 1]}-${until}`;
-      return nodes;
+  destructureReference() {
+    if (this.reference.includes('-')) {
+      if (this.inclusiveRangeRe.exec(this.reference)) {
+        // An inclusive range between macro boundaries.
+        // Don't include the range values in the node hierarchy as they
+        // shouldn't be considered ancestors of themselves or each other.
+        // eg. 1.3-4
+        const split = this.reference.split('.');
+        this.range = split[split.length - 1];
+        this.hierarchy = split.slice(0, -1);
+      } else {
+        // A subrange specifying points between macro boundaries.
+        // In these cases, we do want to include the boundaries in the
+        // hierarchy so that the subrange points are aware of their macro
+        // ancestry. We also need to expand any intervals between the
+        // top-level macro boundary values if the difference between them is
+        // greater than one, in order have the complete set of ancestor URNs.
+        // eg. 1.2.3-2.5', 1.2.4-5.6.
+        const match = this.subRangeRe.exec(this.reference);
+        if (!match) {
+          throw new Error(`Malformed URN: ${this.absolute}`);
+        }
+        this.range = match.shift();
+        const ancestors = this.reference
+          .replace(`${this.range}`, '')
+          .split('.')
+          .filter(x => x !== '');
+        const [start, end] = this.range
+          .split('-')
+          .map(node => node.split('.')[0]);
+        this.hierarchy = start === end
+          ? [...ancestors, start]
+          : [...ancestors, URN.range(parseInt(start, 10), parseInt(end, 10))];
+      }
+    } else {
+      // prettier-ignore
+      this.hierarchy = this.reference.length > 1
+        ? this.reference.split('.').slice(0, -1)
+        : [];
+      this.node = this.reference ? this.reference.slice(-1) : false;
     }
-    return this.reference.split('.');
+  }
+
+  buildAncestor(node, last) {
+    if (!last) {
+      return `${this.version}:${node}`;
+    }
+    return `${last}.${node}`;
   }
 
   ancestors() {
-    const nodes = this.nodes.slice(0, -1);
     const ancestors = [];
     let last = null;
-    nodes.forEach((node) => {
-      if (!last) {
-        last = `${this.version}:${node}`;
+    this.hierarchy.forEach((node) => {
+      if (Array.isArray(node)) {
+        node.forEach((rangeNode) => {
+          const rangeUrn = this.buildAncestor(rangeNode, last);
+          ancestors.push(new this.constructor(rangeUrn));
+        });
       } else {
-        last = `${last}.${node}`;
+        last = this.buildAncestor(node, last);
+        ancestors.push(new this.constructor(last));
       }
-      ancestors.push(new this.constructor(last));
     });
     return ancestors;
+  }
+
+  /* eslint-disable class-methods-use-this */
+  queryChildren() {
+    return [];
+  }
+  /* eslint-enable class-methods-use-this */
+
+  children() {
+    return this.node ? this.queryChildren() : false;
   }
 }
