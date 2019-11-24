@@ -5,6 +5,7 @@ import SkeletonPlugin from 'scaife-skeleton';
 
 import mockRouter from '../utils/mockRouter';
 import PassageReferenceWidget from '../../widgets/PassageReferenceWidget.vue';
+import URN from '../../urn';
 
 const localVue = createLocalVue();
 localVue.use(VueRouter);
@@ -19,7 +20,7 @@ describe('PassageReferenceWidget.vue', () => {
       localVue,
       computed: {
         passage() {
-          return 'urn:cts:greekLit:tlg0012.tlg001.msA:1.2.3';
+          return new URN('urn:cts:greekLit:tlg0012.tlg001.msA:1.2.3');
         },
       },
     });

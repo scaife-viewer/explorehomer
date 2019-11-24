@@ -1,5 +1,14 @@
 <template>
-  <div class="passage-children-widget u-flex" v-if="children"></div>
+  <div class="passage-children-widget u-flex" v-if="children">
+    <template v-for="child in children">
+      <router-link
+        :key="`${child.absolute}`"
+        :to="{ path: 'reader', query: { urn: `${child.absolute}` } }"
+      >
+        {{ child.node }}
+      </router-link>
+    </template>
+  </div>
 </template>
 
 <script>
@@ -16,7 +25,7 @@
         return this.$store.getters[`${MODULE_NS}/passage`];
       },
       chidren() {
-        return null;
+        return this.passage.children();
       },
     },
   };
@@ -24,7 +33,7 @@
 
 <style lang="scss">
   @import '../_utilities.scss';
-  .passage-ancestors-widget {
+  .passage-children-widget {
     width: 100%;
     margin: 0 0.3em;
     > * {

@@ -12,7 +12,6 @@
 </template>
 
 <script>
-  import URN from '../urn';
   import { MODULE_NS } from '../constants';
 
   export default {
@@ -25,11 +24,8 @@
       passage() {
         return this.$store.getters[`${MODULE_NS}/passage`];
       },
-      urn() {
-        return new URN(this.passage);
-      },
       ancestors() {
-        return this.urn.ancestors();
+        return this.passage.ancestors();
       },
     },
   };

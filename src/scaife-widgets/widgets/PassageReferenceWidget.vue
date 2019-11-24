@@ -11,7 +11,6 @@
 </template>
 
 <script>
-  import URN from '../urn';
   import { MODULE_NS } from '../constants';
 
   export default {
@@ -27,9 +26,6 @@
       },
     },
     computed: {
-      urn() {
-        return this.$route.query.urn ? new URN(this.$route.query.urn) : null;
-      },
       initialPassage() {
         return this.$store.getters[`${MODULE_NS}/initialPassage`];
       },
@@ -44,7 +40,7 @@
     },
     methods: {
       setInputRef() {
-        this.reference = new URN(this.passage).reference;
+        this.reference = this.passage.reference;
       },
       handleKeyUp(e) {
         if (e.keyCode === 13) {
@@ -52,8 +48,8 @@
             to: 'reader',
             query: {
               urn: this.reference
-                ? `${this.urn.version}:${this.reference}`
-                : this.initialPassage,
+                ? `${this.passage.version}:${this.reference}`
+                : this.initialPassage.absolute,
             },
           });
         } else {

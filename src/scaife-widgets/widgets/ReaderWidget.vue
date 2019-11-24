@@ -29,7 +29,7 @@
         this.$router.push({
           to: 'reader',
           query: {
-            urn: this.$store.getters[`${MODULE_NS}/initialPassage`],
+            urn: this.$store.getters[`${MODULE_NS}/initialPassage`].absolute,
           },
         });
       }
