@@ -26,6 +26,8 @@ describe('TextWidthWidget.vue', () => {
     const narrowSpan = wrapper.findAll('span').at(0);
     const normalSpan = wrapper.findAll('span').at(1);
     const wideSpan = wrapper.findAll('span').at(2);
+    const fullSpan = wrapper.findAll('span').at(3);
+
 
     expect(moduleStore.store.state.readerTextWidth).toBe('normal');
     expect(narrowSpan.html()).toBe(
@@ -36,6 +38,9 @@ describe('TextWidthWidget.vue', () => {
     );
     expect(wideSpan.html()).toBe(
       '<span class="text-width-control">Wide</span>',
+    );
+    expect(fullSpan.html()).toBe(
+      '<span class="text-width-control">Full</span>',
     );
 
     wideSpan.trigger('click');
@@ -49,6 +54,9 @@ describe('TextWidthWidget.vue', () => {
     expect(wideSpan.html()).toBe(
       '<span class="text-width-control active">Wide</span>',
     );
+    expect(fullSpan.html()).toBe(
+      '<span class="text-width-control">Full</span>',
+    );
 
     narrowSpan.trigger('click');
     expect(moduleStore.store.state.readerTextWidth).toBe('narrow');
@@ -61,6 +69,9 @@ describe('TextWidthWidget.vue', () => {
     expect(wideSpan.html()).toBe(
       '<span class="text-width-control">Wide</span>',
     );
+    expect(fullSpan.html()).toBe(
+      '<span class="text-width-control">Full</span>',
+    );
 
     normalSpan.trigger('click');
     expect(moduleStore.store.state.readerTextWidth).toBe('normal');
@@ -72,6 +83,24 @@ describe('TextWidthWidget.vue', () => {
     );
     expect(wideSpan.html()).toBe(
       '<span class="text-width-control">Wide</span>',
+    );
+    expect(fullSpan.html()).toBe(
+      '<span class="text-width-control">Full</span>',
+    );
+
+    fullSpan.trigger('click');
+    expect(moduleStore.store.state.readerTextWidth).toBe('full');
+    expect(narrowSpan.html()).toBe(
+      '<span class="text-width-control">Narrow</span>',
+    );
+    expect(normalSpan.html()).toBe(
+      '<span class="text-width-control">Normal</span>',
+    );
+    expect(wideSpan.html()).toBe(
+      '<span class="text-width-control">Wide</span>',
+    );
+    expect(fullSpan.html()).toBe(
+      '<span class="text-width-control active">Full</span>',
     );
   });
 });

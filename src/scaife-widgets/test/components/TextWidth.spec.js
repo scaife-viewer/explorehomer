@@ -8,6 +8,7 @@ describe('TextWidth.vue', () => {
     ['narrow', 'active">Narrow'],
     ['normal', 'active">Normal'],
     ['wide', 'active">Wide'],
+    ['full', 'active">Full'],
   ])('it renders active correctly via props', (value, expected) => {
     const wrapper = mount(TextWidth, {
       propsData: { value, width: value },

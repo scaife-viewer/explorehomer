@@ -90,6 +90,6 @@
     width: 100%;
   }
   section {
-    width: 50%;
+    width: 100%;
   }
 </style>

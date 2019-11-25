@@ -29,21 +29,6 @@
     font-family: 'Noto Serif';
     margin: 1em 0;
 
-    .line {
-      display: flex;
-      align-items: center;
-      .line-ref {
-        font-size: 10pt;
-        color: #69c;
-        font-family: 'Noto Sans';
-        flex-basis: 4.5em;
-        text-align: right;
-      }
-      .line-text {
-        margin-left: 1em;
-      }
-    }
-
     &.text-xs {
       line-height: 1.5;
     }
@@ -58,6 +43,21 @@
     }
     &.text-xl {
       line-height: 1.9;
+    }
+
+    .line {
+      display: flex;
+      align-items: center;
+      .line-ref {
+        font-size: 10pt;
+        color: #69c;
+        font-family: 'Noto Sans';
+        flex-basis: 4.5em;
+        text-align: right;
+      }
+      .line-text {
+        margin-left: 1em;
+      }
     }
   }
 
@@ -82,13 +82,21 @@
     font-size: 24px;
   }
 
-  .text-width-normal {
-    max-width: 90%;
-  }
+  // TODO: media queries for defaults.
   .text-width-narrow {
+    max-width: 40%;
+  }
+
+  .text-width-normal {
+    max-width: 60%;
+  }
+
+  .text-width-wide {
     max-width: 80%;
   }
-  .text-width-wide {
+
+  .text-width-full {
     max-width: 100%;
   }
+
 </style>

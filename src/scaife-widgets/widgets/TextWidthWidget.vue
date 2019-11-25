@@ -3,6 +3,7 @@
     <TextWidth :value="textWidth" @input="changeTextWidth" width="narrow" />
     <TextWidth :value="textWidth" @input="changeTextWidth" width="normal" />
     <TextWidth :value="textWidth" @input="changeTextWidth" width="wide" />
+    <TextWidth :value="textWidth" @input="changeTextWidth" width="full" />
   </div>
 </template>
 
