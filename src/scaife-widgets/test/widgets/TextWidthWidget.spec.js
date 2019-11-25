@@ -28,7 +28,6 @@ describe('TextWidthWidget.vue', () => {
     const wideSpan = wrapper.findAll('span').at(2);
     const fullSpan = wrapper.findAll('span').at(3);
 
-
     expect(moduleStore.store.state.readerTextWidth).toBe('normal');
     expect(narrowSpan.html()).toBe(
       '<span class="text-width-control">Narrow</span>',

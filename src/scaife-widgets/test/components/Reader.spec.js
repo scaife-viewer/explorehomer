@@ -12,6 +12,7 @@ describe('Reader.vue', () => {
     const wrapper = mount(Reader, {
       propsData: { lines, textSize: 'text-md', textWidth: 'normal' },
     });
+
     expect(wrapper.html()).toContain(
       '<div class="reader text text-text-md text-width-normal"',
     );

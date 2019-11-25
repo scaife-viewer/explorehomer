@@ -98,5 +98,4 @@
   .text-width-full {
     max-width: 100%;
   }
-
 </style>

@@ -3,7 +3,7 @@ export default class URN {
     this.absolute = urn;
     this.delimiter = ':';
     this.inclusiveRangeRe = /\d+-\d+$/;
-    this.subRangeRe = /\d+\.\d+-\d+\.\d+/;
+    this.subRangeRe = /\d+\.\d+-\d+\.\d+$/;
     this.scheme = null;
     this.nid = null;
     this.nss = null;
