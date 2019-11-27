@@ -1,19 +1,19 @@
 /* global describe, expect, it  */
-import { mount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
+import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
 import Vuex from 'vuex';
 import SkeletonPlugin from 'scaife-skeleton';
 
 import URN from '@/scaife-widgets/urn';
 import createStore from '@/scaife-widgets/config';
 // eslint-disable-next-line max-len
-import PassageAncestorsWidget from '@/scaife-widgets/widgets/PassageAncestorsWidget.vue';
+import PassageChildrenWidget from '@/scaife-widgets/widgets/PassageChildrenWidget.vue';
 
 const localVue = createLocalVue();
-const widgets = [PassageAncestorsWidget];
+const widgets = [PassageChildrenWidget];
 localVue.use(SkeletonPlugin, { widgets });
 localVue.use(Vuex);
 
-describe('PassageAncestorsWidget.vue', () => {
+describe('PassageChildrenWidget.vue', () => {
   it('renders nothing given no URNs', () => {
     const moduleStore = createStore();
     const store = new Vuex.Store({
@@ -21,34 +21,34 @@ describe('PassageAncestorsWidget.vue', () => {
         [moduleStore.namespace]: moduleStore.store,
       },
     });
-    const wrapper = mount(PassageAncestorsWidget, {
+    const wrapper = shallowMount(PassageChildrenWidget, {
       localVue,
       store,
       computed: {
-        ancestors() {
+        children() {
           return [];
         },
       },
     });
 
     expect(wrapper.html()).toBe(
-      '<div class="passage-ancestors-widget u-grid"></div>',
+      '<div class="passage-children-widget u-grid"></div>',
     );
   });
 
-  it('renders a single ancestor from a single URN', () => {
+  it('renders a single child from a single URN', () => {
     const moduleStore = createStore();
     const store = new Vuex.Store({
       modules: {
         [moduleStore.namespace]: moduleStore.store,
       },
     });
-    const wrapper = mount(PassageAncestorsWidget, {
+    const wrapper = shallowMount(PassageChildrenWidget, {
       localVue,
       store,
       computed: {
-        ancestors() {
-          return [new URN('urn:cts:greekLit:tlg0012.tlg001.msA:1')];
+        children() {
+          return [new URN('urn:cts:greekLit:tlg0012.tlg001.msA:1.1')];
         },
       },
       stubs: {
@@ -62,26 +62,26 @@ describe('PassageAncestorsWidget.vue', () => {
     expect(routes.at(0).props().to).toEqual({
       path: 'reader',
       query: {
-        urn: 'urn:cts:greekLit:tlg0012.tlg001.msA:1',
+        urn: 'urn:cts:greekLit:tlg0012.tlg001.msA:1.1',
       },
     });
   });
 
-  it('renders multiple ancestors from multiple URNs', () => {
+  it('renders multiple children from multiple URNs', () => {
     const moduleStore = createStore();
     const store = new Vuex.Store({
       modules: {
         [moduleStore.namespace]: moduleStore.store,
       },
     });
-    const wrapper = mount(PassageAncestorsWidget, {
+    const wrapper = shallowMount(PassageChildrenWidget, {
       localVue,
       store,
       computed: {
-        ancestors() {
+        children() {
           return [
-            new URN('urn:cts:greekLit:tlg0012.tlg001.msA:1'),
-            new URN('urn:cts:greekLit:tlg0012.tlg001.msA:2'),
+            new URN('urn:cts:greekLit:tlg0012.tlg001.msA:1.1'),
+            new URN('urn:cts:greekLit:tlg0012.tlg001.msA:1.2'),
           ];
         },
       },
@@ -96,14 +96,14 @@ describe('PassageAncestorsWidget.vue', () => {
     expect(routes.at(0).props().to).toEqual({
       path: 'reader',
       query: {
-        urn: 'urn:cts:greekLit:tlg0012.tlg001.msA:1',
+        urn: 'urn:cts:greekLit:tlg0012.tlg001.msA:1.1',
       },
     });
     expect(wrapper.html()).toContain('2');
     expect(routes.at(1).props().to).toEqual({
       path: 'reader',
       query: {
-        urn: 'urn:cts:greekLit:tlg0012.tlg001.msA:2',
+        urn: 'urn:cts:greekLit:tlg0012.tlg001.msA:1.2',
       },
     });
   });

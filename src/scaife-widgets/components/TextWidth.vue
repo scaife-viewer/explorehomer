@@ -21,7 +21,7 @@
 </script>
 
 <style lang="scss">
-  @import '../_variables.scss';
+  @import '@/_variables.scss';
   .text-width-control {
     font-family: 'Noto Serif';
     cursor: pointer;

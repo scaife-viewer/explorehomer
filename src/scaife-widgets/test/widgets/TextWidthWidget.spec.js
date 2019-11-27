@@ -3,8 +3,8 @@ import { mount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 import SkeletonPlugin from 'scaife-skeleton';
 
-import createStore from '../../config';
-import TextWidthWidget from '../../widgets/TextWidthWidget.vue';
+import createStore from '@/scaife-widgets/config';
+import TextWidthWidget from '@/scaife-widgets/widgets/TextWidthWidget.vue';
 
 const localVue = createLocalVue();
 const widgets = [TextWidthWidget];

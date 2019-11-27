@@ -11,7 +11,7 @@
 </template>
 
 <script>
-  import { MODULE_NS } from '../constants';
+  import { MODULE_NS as READER_NS } from '@/reader/constants';
 
   export default {
     scaifeConfig: {
@@ -27,10 +27,10 @@
     },
     computed: {
       initialPassage() {
-        return this.$store.getters[`${MODULE_NS}/initialPassage`];
+        return this.$store.getters[`${READER_NS}/initialPassage`];
       },
       passage() {
-        return this.$store.getters[`${MODULE_NS}/passage`];
+        return this.$store.getters[`${READER_NS}/passage`];
       },
     },
     data() {
@@ -48,7 +48,7 @@
             to: 'reader',
             query: {
               urn: this.reference
-                ? `${this.passage.version}:${this.reference}`
+                ? `${this.passage.version}${this.reference}`
                 : this.initialPassage.absolute,
             },
           });
@@ -65,7 +65,7 @@
 </script>
 
 <style lang="scss">
-  @import '../_variables.scss';
+  @import '@/_variables.scss';
   .passage-reference-widget {
     margin: 0 2em;
     flex: 1;

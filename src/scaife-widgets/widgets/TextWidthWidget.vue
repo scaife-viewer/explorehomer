@@ -8,8 +8,8 @@
 </template>
 
 <script>
-  import TextWidth from '../components/TextWidth.vue';
-  import { MODULE_NS, SET_TEXT_WIDTH } from '../constants';
+  import TextWidth from '@/scaife-widgets/components/TextWidth.vue';
+  import { MODULE_NS, SET_TEXT_WIDTH } from '@/scaife-widgets/constants';
 
   export default {
     components: { TextWidth },
@@ -32,7 +32,7 @@
 </script>
 
 <style lang="scss">
-  @import '../variables.scss';
+  @import '@/_variables.scss';
   .text-width-widget {
     margin: 0 2em;
     flex: 1;

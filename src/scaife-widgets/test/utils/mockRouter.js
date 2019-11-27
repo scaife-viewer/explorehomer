@@ -1,7 +1,7 @@
 import cloneDeep from 'lodash.clonedeep';
 import VueRouter from 'vue-router';
 
-import routes from '../../../routes';
+import routes from '@/routes';
 
 const mockRouterComponents = (cloned) => {
   cloned.forEach((route) => {

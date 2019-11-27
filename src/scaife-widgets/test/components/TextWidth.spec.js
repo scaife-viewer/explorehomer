@@ -1,7 +1,7 @@
 /* global describe, expect, it  */
 import { mount } from '@vue/test-utils';
 
-import TextWidth from '../../components/TextWidth.vue';
+import TextWidth from '@/scaife-widgets/components/TextWidth.vue';
 
 describe('TextWidth.vue', () => {
   it.each([

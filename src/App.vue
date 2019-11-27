@@ -12,8 +12,10 @@
   // eslint-disable-next-line max-len
   import PassageAncestorsWidget from './scaife-widgets/widgets/PassageAncestorsWidget.vue';
   // eslint-disable-next-line max-len
+  import PassageChildrenWidget from './scaife-widgets/widgets/PassageChildrenWidget.vue';
+  // eslint-disable-next-line max-len
   import PassageReferenceWidget from './scaife-widgets/widgets/PassageReferenceWidget.vue';
-  import ReaderWidget from './scaife-widgets/widgets/ReaderWidget.vue';
+  import ReaderWidget from './reader/widgets/ReaderWidget.vue';
   import TextSizeWidget from './scaife-widgets/widgets/TextSizeWidget.vue';
   import TextWidthWidget from './scaife-widgets/widgets/TextWidthWidget.vue';
   import { FETCH_METADATA, VERSION } from './constants';
@@ -21,15 +23,18 @@
   export default {
     name: 'app',
     beforeCreate() {
-      // TODO: ATLAS metadata currently lacks the trailing ":" component.
-      this.$store.dispatch(FETCH_METADATA, { urn: VERSION.slice(0, -1) });
+      this.$store.dispatch(FETCH_METADATA, { urn: VERSION });
     },
     computed: {
       mainWidget() {
         return ReaderWidget;
       },
       leftWidgets() {
-        return [PassageAncestorsWidget, PassageReferenceWidget];
+        return [
+          PassageReferenceWidget,
+          PassageAncestorsWidget,
+          PassageChildrenWidget,
+        ];
       },
       rightWidgets() {
         return [TextSizeWidget, TextWidthWidget];

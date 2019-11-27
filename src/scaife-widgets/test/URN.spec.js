@@ -1,5 +1,5 @@
 /* global describe, expect, it  */
-import URN from '../urn';
+import URN from '@/scaife-widgets/urn';
 
 const urns = [
   'urn:cts:greekLit:tlg0012.tlg001.msA:',
@@ -14,7 +14,6 @@ const urns = [
   'urn:cts:greekLit:tlg0012.tlg001.msA:1.2.3.6',
   'urn:cts:greekLit:tlg0012.tlg001.msA:1.2.3.7',
 ];
-const asUrn = urns.map(urn => new URN(urn));
 
 describe('URN.js', () => {
   it.each([
@@ -44,34 +43,26 @@ describe('URN.js', () => {
   });
 
   it('parses an inclusive range without any ancestor nodes correctly', () => {
-    const urn = 'gurn:cts:greekLit:tlg0012.tlg001.perseus-grc2:1-3';
-    expect(new URN(urn).ancestors()).toEqual([]);
+    const urn = 'urn:cts:greekLit:tlg0012.tlg001.perseus-grc2:1-3';
+    expect(new URN(urn).hierarchy).toEqual([]);
   });
 
-  it('parses a subrange without any ancestor nodes correctly', () => {
-    const urn = 'gurn:cts:greekLit:tlg0012.tlg001.perseus-grc2:1.1-3.5';
-    const expected = [
-      new URN('gurn:cts:greekLit:tlg0012.tlg001.perseus-grc2:1'),
-      new URN('gurn:cts:greekLit:tlg0012.tlg001.perseus-grc2:2'),
-      new URN('gurn:cts:greekLit:tlg0012.tlg001.perseus-grc2:3'),
-    ];
-    expect(new URN(urn).ancestors()).toEqual(expected);
+  it('parses the ancestor nodes of a subrange correctly', () => {
+    const urn = 'urn:cts:greekLit:tlg0012.tlg001.perseus-grc2:1.1-3.5';
+    expect(new URN(urn).hierarchy).toEqual(['1', '2', '3']);
   });
 
   it.each([
     [urns[0], []],
     [urns[1], []],
-    [urns[2], [asUrn[1]]],
-    [urns[3], [asUrn[1], asUrn[2]]],
-    [urns[4], [asUrn[1], asUrn[2]]],
-    [urns[5], [asUrn[1], asUrn[2], asUrn[3]]],
-    [urns[6], [asUrn[1], asUrn[2], asUrn[3], asUrn[5]]],
-    [
-      urns[7],
-      [asUrn[1], asUrn[2], asUrn[3], asUrn[5], asUrn[8], asUrn[9], asUrn[10]],
-    ],
+    [urns[2], ['1']],
+    [urns[3], ['1', '2']],
+    [urns[4], ['1', '2']],
+    [urns[5], ['1', '2', '3']],
+    [urns[6], ['1', '2', '3', '4']],
+    [urns[7], ['1', '2', '3', '4', '5', '6', '7']],
   ])('parses the ancestor URN tree correctly at any depth', (urn, result) => {
-    expect(new URN(urn).ancestors()).toEqual(result);
+    expect(new URN(urn).hierarchy).toEqual(result);
   });
 
   it.each([

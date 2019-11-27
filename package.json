@@ -11,6 +11,9 @@
     "testDebug": "node --inspect-brk node_modules/.bin/jest --runInBand"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/vue-fontawesome": "^0.1.8",
     "apollo-boost": "^0.4.4",
     "core-js": "^3.3.2",
     "graphql": "^14.4.2",
@@ -62,6 +65,9 @@
     "transform": {
       "^.+\\.js$": "./node_modules/babel-jest",
       ".*\\.(vue)$": "./node_modules/vue-jest"
+    },
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
     }
   }
 }

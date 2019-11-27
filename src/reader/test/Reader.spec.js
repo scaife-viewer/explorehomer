@@ -1,7 +1,7 @@
 /* global describe, expect, it  */
 import { mount } from '@vue/test-utils';
 
-import Reader from '../../components/Reader.vue';
+import Reader from '@/reader/components/Reader.vue';
 
 describe('Reader.vue', () => {
   it('it renders lines and line references', () => {

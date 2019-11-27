@@ -9,8 +9,12 @@
 </template>
 
 <script>
-  import TextSize from '../components/TextSize.vue';
-  import { MODULE_NS, SET_TEXT_SIZE, SET_TEXT_WIDTH } from '../constants';
+  import TextSize from '@/scaife-widgets/components/TextSize.vue';
+  import {
+    MODULE_NS,
+    SET_TEXT_SIZE,
+    SET_TEXT_WIDTH,
+  } from '@/scaife-widgets/constants';
 
   export default {
     components: { TextSize },
@@ -36,7 +40,7 @@
 </script>
 
 <style lang="scss">
-  @import '../_variables.scss';
+  @import '@/_variables.scss';
   .text-size-widget {
     margin: 0 2em;
     flex: 1;

@@ -21,9 +21,9 @@
 </script>
 
 <style lang="scss">
-  @import '../_utilities.scss';
-  .reader {
-    flex-direction: column;
+  @import '@/_utilities.scss';
+  div.reader {
+    width: 100%;
   }
   .text {
     font-family: 'Noto Serif';
@@ -82,17 +82,17 @@
     font-size: 24px;
   }
 
-  // TODO: media queries for defaults.
+  // TODO: media queries for defaults?
   .text-width-narrow {
-    max-width: 40%;
+    max-width: 20em;
   }
 
   .text-width-normal {
-    max-width: 60%;
+    max-width: 30em;
   }
 
   .text-width-wide {
-    max-width: 80%;
+    max-width: 40em;
   }
 
   .text-width-full {

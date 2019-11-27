@@ -1,18 +1,24 @@
-<template>
-  <div class="passage-children-widget u-flex" v-if="children">
-    <template v-for="child in children">
+<template v-if="children">
+  <div class="passage-children-widget u-grid">
+    <div
+      class="grid-cell-square"
+      v-for="child in children"
+      :key="child.absolute"
+    >
       <router-link
-        :key="`${child.absolute}`"
         :to="{ path: 'reader', query: { urn: `${child.absolute}` } }"
       >
         {{ child.node }}
       </router-link>
-    </template>
+    </div>
   </div>
 </template>
 
 <script>
-  import { MODULE_NS } from '../constants';
+  import gql from 'graphql-tag';
+
+  import URN from '@/scaife-widgets/urn';
+  import { MODULE_NS as READER_NS } from '@/reader/constants';
 
   export default {
     scaifeConfig: {
@@ -22,23 +28,47 @@
     },
     computed: {
       passage() {
-        return this.$store.getters[`${MODULE_NS}/passage`];
+        return this.$store.getters[`${READER_NS}/passage`];
       },
-      chidren() {
-        return this.passage.children();
+      gqlQuery() {
+        return this.passage
+          ? gql`
+            {
+              passageLines(reference: "${this.passage.absolute}") {
+                metadata
+              }
+            }`
+          : null;
+      },
+      children() {
+        return this.gqlData && this.gqlData.passageLines.metadata.children
+          ? this.gqlData.passageLines.metadata.children.map(
+            node => new URN(node.urn),
+          )
+          : [];
       },
     },
   };
 </script>
 
 <style lang="scss">
-  @import '../_utilities.scss';
+  @import '@/_utilities.scss';
+  a {
+    text-decoration: none;
+  }
   .passage-children-widget {
     width: 100%;
-    margin: 0 0.3em;
+    margin: 0 0.33em;
+    margin: 0.5em 0 1em 0;
+    grid-auto-rows: 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(1.6em, 1fr));
+    grid-gap: 0.0825em;
     > * {
-      padding: 0.33em;
-      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #e9ecef;
+      font-size: 0.8rem;
     }
   }
 </style>

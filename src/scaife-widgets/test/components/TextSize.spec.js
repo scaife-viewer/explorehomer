@@ -1,7 +1,7 @@
 /* global describe, expect, it  */
 import { mount } from '@vue/test-utils';
 
-import TextSize from '../../components/TextSize.vue';
+import TextSize from '@/scaife-widgets/components/TextSize.vue';
 
 describe('TextSize.vue', () => {
   it.each([

@@ -3,9 +3,10 @@ import { shallowMount, createLocalVue } from '@vue/test-utils';
 import VueRouter from 'vue-router';
 import SkeletonPlugin from 'scaife-skeleton';
 
-import mockRouter from '../utils/mockRouter';
-import PassageReferenceWidget from '../../widgets/PassageReferenceWidget.vue';
-import URN from '../../urn';
+import URN from '@/scaife-widgets/urn';
+// eslint-disable-next-line max-len
+import PassageReferenceWidget from '@/scaife-widgets/widgets/PassageReferenceWidget.vue';
+import mockRouter from '@/scaife-widgets/test/utils/mockRouter';
 
 const localVue = createLocalVue();
 localVue.use(VueRouter);

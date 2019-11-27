@@ -14,11 +14,16 @@ export default class URN {
     this.node = false;
     this.range = false;
     this.destructureUrn();
-    this.destructureReference();
   }
 
-  static range(start, stop) {
-    return [...Array(stop - start + 1)].map((x, y) => y + start);
+  expandRange() {
+    const [start, stop] = this.range
+      .split('-')
+      .map(node => node.split('.')[0])
+      .map(boundary => parseInt(boundary, 10));
+    return [...Array(stop - start + 1)]
+      .map((x, y) => y + start)
+      .map(x => x.toString());
   }
 
   isNode() {
@@ -32,8 +37,8 @@ export default class URN {
   destructureUrn() {
     const split = this.absolute.split(this.delimiter);
     [this.scheme, this.nid, this.nss, this.work, this.reference] = split;
-    // TODO: Should have the trailing ':', see elsewhere.
-    this.version = `${this.scheme}:${this.nid}:${this.nss}:${this.work}`;
+    this.version = `${this.scheme}:${this.nid}:${this.nss}:${this.work}:`;
+    this.destructureReference();
   }
 
   destructureReference() {
@@ -68,48 +73,19 @@ export default class URN {
           .map(node => node.split('.')[0]);
         this.hierarchy = start === end
           ? [...ancestors, start]
-          : [...ancestors, URN.range(parseInt(start, 10), parseInt(end, 10))];
+          : [...ancestors, ...this.expandRange()];
       }
     } else {
       // prettier-ignore
       this.hierarchy = this.reference.length > 1
         ? this.reference.split('.').slice(0, -1)
         : [];
-      this.node = this.reference ? this.reference.slice(-1) : false;
+      this.node = this.reference
+        ? this.reference
+          .split('.')
+          .slice(-1)
+          .shift()
+        : false;
     }
-  }
-
-  buildAncestor(node, last) {
-    if (!last) {
-      return `${this.version}:${node}`;
-    }
-    return `${last}.${node}`;
-  }
-
-  ancestors() {
-    const ancestors = [];
-    let last = null;
-    this.hierarchy.forEach((node) => {
-      if (Array.isArray(node)) {
-        node.forEach((rangeNode) => {
-          const rangeUrn = this.buildAncestor(rangeNode, last);
-          ancestors.push(new this.constructor(rangeUrn));
-        });
-      } else {
-        last = this.buildAncestor(node, last);
-        ancestors.push(new this.constructor(last));
-      }
-    });
-    return ancestors;
-  }
-
-  /* eslint-disable class-methods-use-this */
-  queryChildren() {
-    return [];
-  }
-  /* eslint-enable class-methods-use-this */
-
-  children() {
-    return this.node ? this.queryChildren() : false;
   }
 }

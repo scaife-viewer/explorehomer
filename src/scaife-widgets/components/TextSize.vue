@@ -19,7 +19,7 @@
 </script>
 
 <style lang="scss">
-  @import '../_variables.scss';
+  @import '@/_variables.scss';
   .text-size-control {
     cursor: pointer;
     font-family: 'Noto Serif';

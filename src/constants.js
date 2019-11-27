@@ -1,5 +1,4 @@
 // eslint-disable-next-line import/prefer-default-export
-// TODO: ATLAS metadata is *not* using the trailing ':'.
 export const VERSION = 'urn:cts:greekLit:tlg0012.tlg001.perseus-grc2:';
 export const INITIAL_PASSAGE = `${VERSION}1.1-1.7`;
 
