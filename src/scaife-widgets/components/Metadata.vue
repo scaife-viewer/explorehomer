@@ -1,14 +1,14 @@
 <template functional>
-  <h1 class="work-title">{{ props.metadata.work_title }}</h1>
+  <h1 class="work-title">{{ props.workTitle }}</h1>
 </template>
 
 <script>
   export default {
     name: 'Metadata',
     props: {
-      metadata: {
+      workTitle: {
         required: true,
-        type: Object,
+        type: String,
       },
     },
   };

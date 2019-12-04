@@ -26,8 +26,8 @@
       },
     },
     computed: {
-      initialPassage() {
-        return this.$store.getters[`${READER_NS}/initialPassage`];
+      firstPassageUrn() {
+        return this.$store.getters[`${READER_NS}/firstPassageUrn`];
       },
       passage() {
         return this.$store.getters[`${READER_NS}/passage`];
@@ -40,7 +40,9 @@
     },
     methods: {
       setInputRef() {
-        this.reference = this.passage.reference;
+        if (this.passage) {
+          this.reference = this.passage.reference;
+        }
       },
       handleKeyUp(e) {
         if (e.keyCode === 13) {
@@ -49,7 +51,7 @@
             query: {
               urn: this.reference
                 ? `${this.passage.version}${this.reference}`
-                : this.initialPassage.absolute,
+                : this.firstPassageUrn.absolute,
             },
           });
         } else {

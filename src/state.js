@@ -1,3 +1,3 @@
 export default {
-  metadata: {},
+  metadata: null,
 };

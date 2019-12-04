@@ -1,7 +1,17 @@
 import URN from '@/scaife-widgets/urn';
 
 export default {
-  metadata: (state, getters, rootState, rootGetters) => rootGetters.metadata,
-  initialPassage: state => new URN(state.initialPassage),
-  passage: state => new URN(state.passage),
+  workUrn: (state, getters, rootState, rootGetters) =>
+    // eslint-disable-next-line implicit-arrow-linebreak
+    (rootGetters.metadata ? new URN(rootGetters.metadata.workUrn) : null),
+  workTitle: (state, getters, rootState, rootGetters) =>
+    // eslint-disable-next-line implicit-arrow-linebreak
+    (rootGetters.metadata ? rootGetters.metadata.workTitle : ''),
+  firstPassageUrn: (state, getters, rootState, rootGetters) =>
+    // prettier-ignore
+    // eslint-disable-next-line implicit-arrow-linebreak
+    (rootGetters.metadata
+      ? new URN(rootGetters.metadata.firstPassageUrn)
+      : null),
+  passage: state => (state.passage ? new URN(state.passage) : null),
 };

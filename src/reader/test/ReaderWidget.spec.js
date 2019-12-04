@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 import SkeletonPlugin from 'scaife-skeleton';
 
 import URN from '@/scaife-widgets/urn';
+import Metadata from '@/scaife-widgets/components/Metadata.vue';
 import Paginator from '@/scaife-widgets/components/Paginator.vue';
 import createStore from '@/reader/config';
 import ReaderWidget from '@/reader/widgets/ReaderWidget.vue';
@@ -29,8 +30,8 @@ describe('ReaderWidget.vue', () => {
         urn() {
           return new URN('urn:cts:greekLit:tlg0012.tlg001.msA:1.3-4');
         },
-        metadata() {
-          return { some: 'metadata' };
+        workTitle() {
+          return 'Iliad';
         },
         textSize() {
           return 'md';
@@ -55,6 +56,9 @@ describe('ReaderWidget.vue', () => {
     });
     const paginators = wrapper.findAll(Paginator);
 
+    expect(wrapper.find(Metadata).attributes()).toStrictEqual({
+      worktitle: 'Iliad',
+    });
     expect(paginators.at(0).props()).toStrictEqual({
       urn: new URN('urn:cts:greekLit:tlg0012.tlg001.msA:1.1-2'),
       direction: 'left',

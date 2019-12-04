@@ -1,4 +1,4 @@
-<template>
+<template v-if="metadata">
   <div id="app">
     <FixedSkeleton
       :main-widget="mainWidget"
@@ -18,14 +18,17 @@
   import ReaderWidget from './reader/widgets/ReaderWidget.vue';
   import TextSizeWidget from './scaife-widgets/widgets/TextSizeWidget.vue';
   import TextWidthWidget from './scaife-widgets/widgets/TextWidthWidget.vue';
-  import { FETCH_METADATA, VERSION } from './constants';
+  import { FETCH_METADATA } from './constants';
 
   export default {
     name: 'app',
     beforeCreate() {
-      this.$store.dispatch(FETCH_METADATA, { urn: VERSION });
+      this.$store.dispatch(FETCH_METADATA);
     },
     computed: {
+      metadata() {
+        return this.$store.getters.metadata;
+      },
       mainWidget() {
         return ReaderWidget;
       },

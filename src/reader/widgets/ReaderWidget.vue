@@ -1,7 +1,7 @@
 <template>
   <article class="u-flex">
     <section class="reader-left">
-      <Metadata :metadata="metadata" />
+      <Metadata :workTitle="workTitle" />
       <div class="reader-container u-flex">
         <Paginator :urn="previous" direction="left" />
         <Reader :lines="lines" :textSize="textSize" :textWidth="textWidth" />
@@ -30,19 +30,21 @@
     scaifeConfig: {
       location: 'main',
     },
-    created() {
-      if (!this.urn) {
+    beforeUpdate() {
+      if (this.urn) {
         this.$router.push({
           to: 'reader',
           query: {
-            urn: this.$store.getters[`${MODULE_NS}/initialPassage`].absolute,
+            urn: this.urn.absolute,
           },
         });
       }
     },
     computed: {
       urn() {
-        return this.$route.query.urn ? new URN(this.$route.query.urn) : null;
+        return this.$route.query.urn
+          ? new URN(this.$route.query.urn)
+          : this.$store.getters[`${MODULE_NS}/firstPassageUrn`];
       },
       gqlQuery() {
         if (this.urn) {
@@ -71,8 +73,8 @@
         }
         return null;
       },
-      metadata() {
-        return this.$store.getters[`${MODULE_NS}/metadata`];
+      workTitle() {
+        return this.$store.getters[`${MODULE_NS}/workTitle`];
       },
       textSize() {
         return this.$store.getters[`${WIDGETS_NS}/readerTextSize`];
