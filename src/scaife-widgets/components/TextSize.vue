@@ -19,10 +19,9 @@
 </script>
 
 <style lang="scss">
-  @import '@/_variables.scss';
   .text-size-control {
     cursor: pointer;
-    font-family: 'Noto Serif';
+    font-family: $font-family-serif;
     color: $gray-500;
     &.selected {
       color: $gray-800;

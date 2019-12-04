@@ -67,17 +67,8 @@
 </script>
 
 <style lang="scss">
-  @import '@/_variables.scss';
   .passage-reference-widget {
     margin: 0 2em;
     flex: 1;
-  }
-  // TODO: Break out/rationalise.
-  .form-control {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
-    border-radius: 0.2rem;
-    width: 100%;
-    border: 1px solid #ced4da;
   }
 </style>

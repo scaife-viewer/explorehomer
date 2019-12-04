@@ -21,12 +21,11 @@
 </script>
 
 <style lang="scss">
-  @import '@/_utilities.scss';
   div.reader {
     width: 100%;
   }
   .text {
-    font-family: 'Noto Serif';
+    font-family: $font-family-serif;
     margin: 1em 0;
 
     &.text-xs {

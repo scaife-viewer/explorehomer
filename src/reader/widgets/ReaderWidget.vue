@@ -107,8 +107,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/_utilities.scss';
-  @import '@/_variables.scss';
   article {
     margin: 0 5em;
     width: 100%;

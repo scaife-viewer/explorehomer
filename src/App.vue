@@ -47,18 +47,13 @@
 </script>
 
 <style lang="scss">
-  // prettier-ignore
-  @import url(https://fonts.googleapis.com/css?family=Noto+Serif:400,400i,700,700i&subset=greek,greek-ext,latin-ext);
-  // prettier-ignore
-  @import url(https://fonts.googleapis.com/css?family=Noto+Sans:400,700);
-
   html,
   body {
     margin: 0;
     padding: 0;
   }
   #app {
-    font-family: 'Noto Sans', Helvetica, Arial, sans-serif;
+    font-family: $font-family-sans;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

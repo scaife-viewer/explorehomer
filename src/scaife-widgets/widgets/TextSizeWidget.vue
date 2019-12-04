@@ -40,7 +40,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/_variables.scss';
   .text-size-widget {
     margin: 0 2em;
     flex: 1;

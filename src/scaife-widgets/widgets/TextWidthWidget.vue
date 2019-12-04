@@ -32,7 +32,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/_variables.scss';
   .text-width-widget {
     margin: 0 2em;
     flex: 1;

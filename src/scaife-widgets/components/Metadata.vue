@@ -15,7 +15,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/_variables.scss';
   h1 {
     font-size: 1.75em;
     margin: 0;

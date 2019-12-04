@@ -5,9 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "test": "jest --collectCoverage",
     "lint": "vue-cli-service lint",
     "format": "prettier --write \"src/**/*.{js,scss,vue}\" && eslint --fix \"src/**/*.{js,vue}\"",
-    "test": "jest --collectCoverage",
     "testDebug": "node --inspect-brk node_modules/.bin/jest --runInBand"
   },
   "dependencies": {
@@ -43,6 +43,8 @@
     "eslint-plugin-vue": "^5.0.0",
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
+    "style-resources-loader": "^1.3.2",
+    "vue-cli-plugin-style-resources-loader": "^0.1.4",
     "vue-jest": "^3.0.5",
     "vue-server-renderer": "2.x",
     "vue-template-compiler": "^2.6.10"

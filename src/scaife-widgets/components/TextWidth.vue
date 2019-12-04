@@ -21,9 +21,8 @@
 </script>
 
 <style lang="scss">
-  @import '@/_variables.scss';
   .text-width-control {
-    font-family: 'Noto Serif';
+    font-family: $font-family-serif;
     cursor: pointer;
     color: $gray-500;
     font-size: 14px;

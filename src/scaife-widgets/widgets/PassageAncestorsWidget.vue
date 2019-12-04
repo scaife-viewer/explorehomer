@@ -53,7 +53,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/_utilities.scss';
   a {
     text-decoration: none;
   }
