@@ -19,10 +19,12 @@ export default {
           }
         `,
       })
-      .then(data => commit(
-        FETCH_METADATA,
-        data.data.versions.edges.map(e => e.node.metadata).pop(),
-        { root: true },
-      ));
+      .then(data =>
+        commit(
+          FETCH_METADATA,
+          data.data.versions.edges.map(e => e.node.metadata).pop(),
+          { root: true },
+        ),
+      );
   },
 };

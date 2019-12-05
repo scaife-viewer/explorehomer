@@ -3,8 +3,8 @@ import VueRouter from 'vue-router';
 
 import routes from '@/routes';
 
-const mockRouterComponents = (cloned) => {
-  cloned.forEach((route) => {
+const mockRouterComponents = cloned => {
+  cloned.forEach(route => {
     // eslint-disable-next-line no-param-reassign
     route.component = { template: '<p>Stubbed</p>' };
     if (route.children && route.children.length) {

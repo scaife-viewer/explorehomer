@@ -71,20 +71,19 @@ export default class URN {
         const [start, end] = this.range
           .split('-')
           .map(node => node.split('.')[0]);
-        this.hierarchy = start === end
-          ? [...ancestors, start]
-          : [...ancestors, ...this.expandRange()];
+        this.hierarchy =
+          start === end
+            ? [...ancestors, start]
+            : [...ancestors, ...this.expandRange()];
       }
     } else {
-      // prettier-ignore
-      this.hierarchy = this.reference.length > 1
-        ? this.reference.split('.').slice(0, -1)
-        : [];
+      this.hierarchy =
+        this.reference.length > 1 ? this.reference.split('.').slice(0, -1) : [];
       this.node = this.reference
         ? this.reference
-          .split('.')
-          .slice(-1)
-          .shift()
+            .split('.')
+            .slice(-1)
+            .shift()
         : false;
     }
   }

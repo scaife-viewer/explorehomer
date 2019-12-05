@@ -42,10 +42,9 @@
           : null;
       },
       ancestors() {
-        return this.gqlData && this.gqlData.passageLines.metadata.ancestors
-          ? this.gqlData.passageLines.metadata.ancestors.map(
-            node => new URN(node.urn),
-          )
+        const ancestors = this.gqlData.passageLines.metadata.ancestors;
+        return this.gqlData && ancestors
+          ? ancestors.map(node => new URN(node.urn))
           : [];
       },
     },

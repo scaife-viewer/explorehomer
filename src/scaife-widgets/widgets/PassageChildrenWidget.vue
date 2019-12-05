@@ -41,10 +41,9 @@
           : null;
       },
       children() {
-        return this.gqlData && this.gqlData.passageLines.metadata.children
-          ? this.gqlData.passageLines.metadata.children.map(
-            node => new URN(node.urn),
-          )
+        const children = this.gqlData.passageLines.metadata.children;
+        return this.gqlData && children
+          ? children.map(node => new URN(node.urn))
           : [];
       },
     },
