@@ -41,10 +41,12 @@
             }`
           : null;
       },
+      ancestorsLens() {
+        return this.gqlData.passageLines.metadata.ancestors;
+      },
       ancestors() {
-        const ancestors = this.gqlData.passageLines.metadata.ancestors;
-        return this.gqlData && ancestors
-          ? ancestors.map(node => new URN(node.urn))
+        return this.gqlData && this.ancestorsLens
+          ? this.ancestorsLens.map(node => new URN(node.urn))
           : [];
       },
     },

@@ -40,10 +40,12 @@
             }`
           : null;
       },
+      childrenLens() {
+        return this.gqlData.passageLines.metadata.children;
+      },
       children() {
-        const children = this.gqlData.passageLines.metadata.children;
-        return this.gqlData && children
-          ? children.map(node => new URN(node.urn))
+        return this.gqlData && this.childrenLens
+          ? this.childrenLens.map(node => new URN(node.urn))
           : [];
       },
     },
