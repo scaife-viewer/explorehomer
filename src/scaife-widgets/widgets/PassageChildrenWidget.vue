@@ -17,7 +17,7 @@
 <script>
   import gql from 'graphql-tag';
 
-  import URN from '@/scaife-widgets/urn';
+  import { URN } from '@scaife-viewer/scaife-widgets';
   import { MODULE_NS as READER_NS } from '@/reader/constants';
 
   export default {

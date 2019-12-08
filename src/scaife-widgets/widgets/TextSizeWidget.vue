@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import TextSize from '@/scaife-widgets/components/TextSize.vue';
+  import { TextSize } from '@scaife-viewer/scaife-widgets';
   import {
     MODULE_NS,
     SET_TEXT_SIZE,

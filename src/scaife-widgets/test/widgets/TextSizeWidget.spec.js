@@ -34,35 +34,35 @@ describe('TextSizeWidget.vue', () => {
     expect(moduleStore.store.state.readerTextSize).toBe('xs');
     expect(moduleStore.store.state.readerTextWidth).toBe('normal');
     expect(wrapper.html()).toContain(
-      '<span class="text-size-control text-xs selected">Αα</span>',
+      'class="text-size-control text-xs selected">Αα</span>',
     );
 
     smSpan.trigger('click');
     expect(moduleStore.store.state.readerTextSize).toBe('sm');
     expect(moduleStore.store.state.readerTextWidth).toBe('normal');
     expect(wrapper.html()).toContain(
-      '<span class="text-size-control text-sm selected">Αα</span>',
+      'class="text-size-control text-sm selected">Αα</span>',
     );
 
     mdSpan.trigger('click');
     expect(moduleStore.store.state.readerTextSize).toBe('md');
     expect(moduleStore.store.state.readerTextWidth).toBe('normal');
     expect(wrapper.html()).toContain(
-      '<span class="text-size-control text-md selected">Αα</span>',
+      'class="text-size-control text-md selected">Αα</span>',
     );
 
     lgSpan.trigger('click');
     expect(moduleStore.store.state.readerTextSize).toBe('lg');
     expect(moduleStore.store.state.readerTextWidth).toBe('normal');
     expect(wrapper.html()).toContain(
-      '<span class="text-size-control text-lg selected">Αα</span>',
+      'class="text-size-control text-lg selected">Αα</span>',
     );
 
     xlSpan.trigger('click');
     expect(moduleStore.store.state.readerTextSize).toBe('xl');
     expect(moduleStore.store.state.readerTextWidth).toBe('normal');
     expect(wrapper.html()).toContain(
-      '<span class="text-size-control text-xl selected">Αα</span>',
+      'class="text-size-control text-xl selected">Αα</span>',
     );
   });
 });

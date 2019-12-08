@@ -1,11 +1,10 @@
 /* global describe, expect, it  */
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
-import SkeletonPlugin from 'scaife-skeleton';
 
-import URN from '@/scaife-widgets/urn';
-import Metadata from '@/scaife-widgets/components/Metadata.vue';
-import Paginator from '@/scaife-widgets/components/Paginator.vue';
+import SkeletonPlugin from 'scaife-skeleton';
+import { Metadata, Paginator, URN } from '@scaife-viewer/scaife-widgets';
+
 import createStore from '@/reader/config';
 import ReaderWidget from '@/reader/widgets/ReaderWidget.vue';
 import Reader from '@/reader/components/Reader.vue';

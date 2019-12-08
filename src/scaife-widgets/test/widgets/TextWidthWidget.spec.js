@@ -28,78 +28,78 @@ describe('TextWidthWidget.vue', () => {
     const wideSpan = wrapper.findAll('span').at(2);
     const fullSpan = wrapper.findAll('span').at(3);
 
-    expect(moduleStore.store.state.readerTextWidth).toBe('normal');
-    expect(narrowSpan.html()).toBe(
-      '<span class="text-width-control">Narrow</span>',
+    expect(moduleStore.store.state.readerTextWidth).toContain('normal');
+    expect(narrowSpan.html()).toContain(
+      'class="text-width-control">Narrow</span>',
     );
-    expect(normalSpan.html()).toBe(
-      '<span class="text-width-control active">Normal</span>',
+    expect(normalSpan.html()).toContain(
+      'class="text-width-control active">Normal</span>',
     );
-    expect(wideSpan.html()).toBe(
-      '<span class="text-width-control">Wide</span>',
+    expect(wideSpan.html()).toContain(
+      'class="text-width-control">Wide</span>',
     );
-    expect(fullSpan.html()).toBe(
-      '<span class="text-width-control">Full</span>',
+    expect(fullSpan.html()).toContain(
+      'class="text-width-control">Full</span>',
     );
 
     wideSpan.trigger('click');
-    expect(moduleStore.store.state.readerTextWidth).toBe('wide');
-    expect(narrowSpan.html()).toBe(
-      '<span class="text-width-control">Narrow</span>',
+    expect(moduleStore.store.state.readerTextWidth).toContain('wide');
+    expect(narrowSpan.html()).toContain(
+      'class="text-width-control">Narrow</span>',
     );
-    expect(normalSpan.html()).toBe(
-      '<span class="text-width-control">Normal</span>',
+    expect(normalSpan.html()).toContain(
+      'class="text-width-control">Normal</span>',
     );
-    expect(wideSpan.html()).toBe(
-      '<span class="text-width-control active">Wide</span>',
+    expect(wideSpan.html()).toContain(
+      'class="text-width-control active">Wide</span>',
     );
-    expect(fullSpan.html()).toBe(
-      '<span class="text-width-control">Full</span>',
+    expect(fullSpan.html()).toContain(
+      'class="text-width-control">Full</span>',
     );
 
     narrowSpan.trigger('click');
-    expect(moduleStore.store.state.readerTextWidth).toBe('narrow');
-    expect(narrowSpan.html()).toBe(
-      '<span class="text-width-control active">Narrow</span>',
+    expect(moduleStore.store.state.readerTextWidth).toContain('narrow');
+    expect(narrowSpan.html()).toContain(
+      'class="text-width-control active">Narrow</span>',
     );
-    expect(normalSpan.html()).toBe(
-      '<span class="text-width-control">Normal</span>',
+    expect(normalSpan.html()).toContain(
+      'class="text-width-control">Normal</span>',
     );
-    expect(wideSpan.html()).toBe(
-      '<span class="text-width-control">Wide</span>',
+    expect(wideSpan.html()).toContain(
+      'class="text-width-control">Wide</span>',
     );
-    expect(fullSpan.html()).toBe(
-      '<span class="text-width-control">Full</span>',
+    expect(fullSpan.html()).toContain(
+      'class="text-width-control">Full</span>',
     );
 
     normalSpan.trigger('click');
-    expect(moduleStore.store.state.readerTextWidth).toBe('normal');
-    expect(narrowSpan.html()).toBe(
-      '<span class="text-width-control">Narrow</span>',
+    expect(moduleStore.store.state.readerTextWidth).toContain('normal');
+    expect(narrowSpan.html()).toContain(
+      'class="text-width-control">Narrow</span>',
     );
-    expect(normalSpan.html()).toBe(
-      '<span class="text-width-control active">Normal</span>',
+    expect(normalSpan.html()).toContain(
+      'class="text-width-control active">Normal</span>',
     );
-    expect(wideSpan.html()).toBe(
-      '<span class="text-width-control">Wide</span>',
+    expect(wideSpan.html()).toContain(
+      'class="text-width-control">Wide</span>',
     );
-    expect(fullSpan.html()).toBe(
-      '<span class="text-width-control">Full</span>',
+    expect(fullSpan.html()).toContain(
+      'class="text-width-control">Full</span>',
     );
 
     fullSpan.trigger('click');
-    expect(moduleStore.store.state.readerTextWidth).toBe('full');
-    expect(narrowSpan.html()).toBe(
-      '<span class="text-width-control">Narrow</span>',
+    expect(moduleStore.store.state.readerTextWidth).toContain('full');
+    expect(narrowSpan.html()).toContain(
+      'class="text-width-control">Narrow</span>',
     );
-    expect(normalSpan.html()).toBe(
-      '<span class="text-width-control">Normal</span>',
+    expect(normalSpan.html()).toContain(
+      'class="text-width-control">Normal</span>',
     );
-    expect(wideSpan.html()).toBe(
-      '<span class="text-width-control">Wide</span>',
+    expect(wideSpan.html()).toContain(
+      'class="text-width-control">Wide</span>',
     );
-    expect(fullSpan.html()).toBe(
-      '<span class="text-width-control active">Full</span>',
+    expect(fullSpan.html()).toContain(
+      'class="text-width-control active">Full</span>',
     );
   });
 });

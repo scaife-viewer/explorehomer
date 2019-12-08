@@ -1,6 +1,5 @@
 /* global describe, expect, it  */
 import { mount } from '@vue/test-utils';
-
 import Reader from '@/reader/components/Reader.vue';
 
 describe('Reader.vue', () => {

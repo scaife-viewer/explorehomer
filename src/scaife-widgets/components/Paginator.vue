@@ -11,8 +11,11 @@
 </template>
 
 <script>
+  import { Icon } from "@scaife-viewer/scaife-widgets";
+
   export default {
     props: ['urn', 'direction'],
+    components: { Icon },
     computed: {
       icon() {
         return `chevron-${this.direction}`;

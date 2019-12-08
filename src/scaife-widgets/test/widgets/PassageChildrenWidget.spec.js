@@ -3,7 +3,7 @@ import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
 import Vuex from 'vuex';
 import SkeletonPlugin from 'scaife-skeleton';
 
-import URN from '@/scaife-widgets/urn';
+import { URN } from '@scaife-viewer/scaife-widgets';
 import createStore from '@/scaife-widgets/config';
 // eslint-disable-next-line max-len
 import PassageChildrenWidget from '@/scaife-widgets/widgets/PassageChildrenWidget.vue';

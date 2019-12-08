@@ -1,5 +1,5 @@
 /* global describe, expect, it  */
-import URN from '@/scaife-widgets/urn';
+import { URN } from '@scaife-viewer/scaife-widgets';
 
 const urns = [
   'urn:cts:greekLit:tlg0012.tlg001.msA:',

@@ -46,6 +46,7 @@
   };
 </script>
 
+<style src="@scaife-viewer/scaife-widgets/dist/scaife-widgets.css"></style>
 <style lang="scss">
   html,
   body {

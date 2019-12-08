@@ -8,7 +8,7 @@
 </template>
 
 <script>
-  import TextWidth from '@/scaife-widgets/components/TextWidth.vue';
+  import { TextWidth } from '@scaife-viewer/scaife-widgets';
   import { MODULE_NS, SET_TEXT_WIDTH } from '@/scaife-widgets/constants';
 
   export default {

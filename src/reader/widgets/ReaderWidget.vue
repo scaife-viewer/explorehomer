@@ -14,10 +14,9 @@
 <script>
   import gql from 'graphql-tag';
 
-  import URN from '@/scaife-widgets/urn';
+  import { Metadata, Paginator, URN } from '@scaife-viewer/scaife-widgets';
+
   import Reader from '@/reader/components/Reader.vue';
-  import Metadata from '@/scaife-widgets/components/Metadata.vue';
-  import Paginator from '@/scaife-widgets/components/Paginator.vue';
   import { MODULE_NS as WIDGETS_NS } from '@/scaife-widgets/constants';
   import { MODULE_NS, SET_PASSAGE } from '@/reader/constants';
 
@@ -31,7 +30,7 @@
       location: 'main',
     },
     beforeUpdate() {
-      if (this.urn) {
+      if (this.urn && !this.$route.query.urn) {
         this.$router.push({
           to: 'reader',
           query: {

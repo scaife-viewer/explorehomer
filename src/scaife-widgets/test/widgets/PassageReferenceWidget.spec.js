@@ -3,7 +3,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils';
 import VueRouter from 'vue-router';
 import SkeletonPlugin from 'scaife-skeleton';
 
-import URN from '@/scaife-widgets/urn';
+import { URN } from '@scaife-viewer/scaife-widgets';
 // eslint-disable-next-line max-len
 import PassageReferenceWidget from '@/scaife-widgets/widgets/PassageReferenceWidget.vue';
 import mockRouter from '@/scaife-widgets/test/utils/mockRouter';

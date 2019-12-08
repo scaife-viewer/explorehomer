@@ -1,4 +1,4 @@
-import URN from '@/scaife-widgets/urn';
+import { URN } from '@scaife-viewer/scaife-widgets';
 
 export default {
   workUrn: (state, getters, rootState, rootGetters) =>
