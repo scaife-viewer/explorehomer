@@ -9,16 +9,15 @@
 </template>
 
 <script>
-  // eslint-disable-next-line max-len
-  import PassageAncestorsWidget from './scaife-widgets/widgets/PassageAncestorsWidget.vue';
-  // eslint-disable-next-line max-len
-  import PassageChildrenWidget from './scaife-widgets/widgets/PassageChildrenWidget.vue';
-  // eslint-disable-next-line max-len
-  import PassageReferenceWidget from './scaife-widgets/widgets/PassageReferenceWidget.vue';
-  import ReaderWidget from './reader/widgets/ReaderWidget.vue';
-  import TextSizeWidget from './scaife-widgets/widgets/TextSizeWidget.vue';
-  import TextWidthWidget from './scaife-widgets/widgets/TextWidthWidget.vue';
-  import { FETCH_METADATA } from './constants';
+  import {
+    PassageAncestorsWidget,
+    PassageChildrenWidget,
+    PassageReferenceWidget,
+    TextSizeWidget,
+    TextWidthWidget,
+  } from '@scaife-viewer/scaife-widgets';
+  import ReaderWidget from '@/reader/widgets/ReaderWidget.vue';
+  import { FETCH_METADATA } from '@/constants';
 
   export default {
     name: 'app',

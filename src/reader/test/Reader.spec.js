@@ -16,10 +16,16 @@ describe('Reader.vue', () => {
       '<div class="reader text text-text-md text-width-normal"',
     );
     expect(wrapper.html()).toContain(
-      '<div class="line-ref">1</div> <div class="line-text">Some text</div>',
+      '<div class="line-ref">1</div>',
     );
     expect(wrapper.html()).toContain(
-      '<div class="line-ref">2</div> <div class="line-text">More text</div>',
+      '<div class="line-text">Some text</div>',
+    );
+    expect(wrapper.html()).toContain(
+      '<div class="line-ref">2</div>',
+    );
+    expect(wrapper.html()).toContain(
+      '<div class="line-text">More text</div>',
     );
   });
 });

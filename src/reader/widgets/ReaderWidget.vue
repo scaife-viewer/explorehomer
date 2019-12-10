@@ -14,11 +14,14 @@
 <script>
   import gql from 'graphql-tag';
 
-  import { Metadata, Paginator, URN } from '@scaife-viewer/scaife-widgets';
-
+  import WIDGETS_NS, {
+    Metadata,
+    Paginator,
+    URN,
+  } from '@scaife-viewer/scaife-widgets';
   import Reader from '@/reader/components/Reader.vue';
-  import { MODULE_NS as WIDGETS_NS } from '@/scaife-widgets/constants';
-  import { MODULE_NS, SET_PASSAGE } from '@/reader/constants';
+  import { SET_PASSAGE } from '@/constants';
+  import { MODULE_NS } from '@/reader/constants';
 
   export default {
     components: {
@@ -47,9 +50,11 @@
       },
       gqlQuery() {
         if (this.urn) {
-          this.$store.dispatch(`${MODULE_NS}/${SET_PASSAGE}`, {
-            urn: this.urn.absolute,
-          });
+          this.$store.dispatch(
+            SET_PASSAGE,
+            { urn: this.urn.absolute },
+            { root: true },
+          );
           return gql`
             {
               passageLines(reference: "${this.urn.absolute}") {

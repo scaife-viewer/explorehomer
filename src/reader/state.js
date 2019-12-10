@@ -1,3 +1,1 @@
-export default {
-  passage: null,
-};
+export default {};

@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 import { gqlclient } from './gql';
-import { FETCH_METADATA } from './constants';
+import { FETCH_METADATA, SET_PASSAGE } from './constants';
 
 export default {
   [FETCH_METADATA]: ({ commit }) => {
@@ -27,4 +27,5 @@ export default {
         ),
       );
   },
+  [SET_PASSAGE]: ({ commit }, { urn }) => commit(SET_PASSAGE, urn),
 };
