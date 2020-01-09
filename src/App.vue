@@ -1,42 +1,59 @@
-<template>
+<template v-if="metadata">
   <div id="app">
     <FixedSkeleton
-        :main-widget="mainWidget"
-        :left-widgets="leftWidgets"
-        :right-widgets="rightWidgets"
+      :main-widget="mainWidget"
+      :left-widgets="leftWidgets"
+      :right-widgets="rightWidgets"
     />
   </div>
 </template>
 
 <script>
-import ReaderWidget from './widgets/ReaderWidget.vue';
+  import {
+    PassageAncestorsWidget,
+    PassageChildrenWidget,
+    PassageReferenceWidget,
+    TextSizeWidget,
+    TextWidthWidget,
+  } from '@scaife-viewer/scaife-widgets';
+  import ReaderWidget from '@/reader/widgets/ReaderWidget.vue';
+  import { FETCH_METADATA } from '@/constants';
 
-export default {
-  name: 'app',
-  computed: {
-    mainWidget() {
-      return ReaderWidget;
+  export default {
+    name: 'app',
+    beforeCreate() {
+      this.$store.dispatch(FETCH_METADATA);
     },
-    leftWidgets() {
-      return [];
+    computed: {
+      metadata() {
+        return this.$store.getters.metadata;
+      },
+      mainWidget() {
+        return ReaderWidget;
+      },
+      leftWidgets() {
+        return [
+          PassageReferenceWidget,
+          PassageAncestorsWidget,
+          PassageChildrenWidget,
+        ];
+      },
+      rightWidgets() {
+        return [TextSizeWidget, TextWidthWidget];
+      },
     },
-    rightWidgets() {
-      return [];
-    },
-  },
-};
+  };
 </script>
 
+<style src="@scaife-viewer/scaife-widgets/dist/scaife-widgets.css"></style>
 <style lang="scss">
-  @import url(https://fonts.googleapis.com/css?family=Noto+Serif:400,400i,700,700i&subset=greek,greek-ext,latin-ext);
-  @import url(https://fonts.googleapis.com/css?family=Noto+Sans:400,700);
-
-  html,body {
+  html,
+  body {
     margin: 0;
     padding: 0;
   }
   #app {
-    font-family: 'Noto Sans', Helvetica, Arial, sans-serif;
+    font-family: $font-family-sans;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

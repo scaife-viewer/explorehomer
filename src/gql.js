@@ -1,12 +1,13 @@
 import ApolloClient from 'apollo-boost';
 
 const client = new ApolloClient({
-  uri: process.env.VUE_APP_ATLAS_GRAPHQL_ENDPOINT || 'https://explorehomer-atlas.herokuapp.com/graphql/',
+  uri:
+    process.env.VUE_APP_ATLAS_GRAPHQL_ENDPOINT ||
+    'https://explorehomer-atlas.herokuapp.com/graphql/',
 });
 
-
 const GraphQLPlugin = {
-  install: (Vue) => {
+  install: Vue => {
     Vue.mixin({
       data: () => ({ gqlData: null }),
       computed: {
@@ -17,7 +18,7 @@ const GraphQLPlugin = {
           immediate: true,
           handler() {
             if (this.gqlQuery) {
-              this.$gql(this.gqlQuery).then((data) => {
+              this.$gql(this.gqlQuery).then(data => {
                 this.gqlData = data;
               });
             }
@@ -27,8 +28,10 @@ const GraphQLPlugin = {
     });
 
     // eslint-disable-next-line no-param-reassign
-    Vue.prototype.$gql = q => client.query({ query: q }).then(data => data.data);
+    Vue.prototype.$gql = q =>
+      client.query({ query: q }).then(data => data.data);
   },
 };
 
+export { client as gqlclient };
 export default GraphQLPlugin;
