@@ -5,8 +5,8 @@ import Reader from '@/reader/components/Reader.vue';
 describe('Reader.vue', () => {
   it('it renders lines and line references', () => {
     const lines = [
-      { label: '1', textContent: 'Some text' },
-      { label: '2', textContent: 'More text' },
+      { ref: '1', textContent: 'Some text' },
+      { ref: '2', textContent: 'More text' },
     ];
     const wrapper = mount(Reader, {
       propsData: { lines, textSize: 'text-md', textWidth: 'normal' },
