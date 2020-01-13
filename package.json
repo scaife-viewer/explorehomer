@@ -20,6 +20,7 @@
     "graphql-tag": "^2.10.1",
     "lodash.clonedeep": "^4.5.0",
     "node-sass": "^4.13.0",
+    "path": "^0.12.7",
     "sass-loader": "^8.0.0",
     "scaife-skeleton": "^0.7.0",
     "vue": "^2.6.11",
