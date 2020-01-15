@@ -57,12 +57,13 @@
           );
           return gql`
             {
-              passageLines(reference: "${this.urn.absolute}") {
+              passageTextParts(reference: "${this.urn.absolute}") {
               metadata
               edges {
                 node {
                   id
-                  label
+                  kind
+                  urn
                   ref
                   textContent
                 }
@@ -88,12 +89,12 @@
       },
       lines() {
         return this.gqlData
-          ? this.gqlData.passageLines.edges.map(line => line.node)
+          ? this.gqlData.passageTextParts.edges.map(line => line.node)
           : [];
       },
       siblings() {
-        return this.gqlData && this.gqlData.passageLines.metadata.siblings
-          ? this.gqlData.passageLines.metadata.siblings
+        return this.gqlData && this.gqlData.passageTextParts.metadata.siblings
+          ? this.gqlData.passageTextParts.metadata.siblings
           : null;
       },
       previous() {

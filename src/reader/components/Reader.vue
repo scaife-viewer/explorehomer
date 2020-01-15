@@ -8,7 +8,7 @@
       v-for="(line, index) in lines"
       :key="`${index}-${line.label}`"
     >
-      <div class="line-ref">{{ line.label }}</div>
+      <div class="line-ref">{{ line.ref }}</div>
       <div class="line-text" v-html="line.textContent"></div>
     </div>
   </div>

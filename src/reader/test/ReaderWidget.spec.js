@@ -41,7 +41,7 @@ describe('ReaderWidget.vue', () => {
       },
       mocks: {
         gqlData: {
-          passageLines: {
+          passageTextParts: {
             metadata: {
               siblings: {
                 previous: 'urn:cts:greekLit:tlg0012.tlg001.msA:1.1-2',
