@@ -1,4 +1,6 @@
-# explorehomer
+# Explore Homer
+
+front-end for the Scaife "Explore Homer" prototype
 
 This repository is part of the [Scaife Viewer](https://scaife-viewer.org) project, an open-source ecosystem for building rich online reading environments.
 
