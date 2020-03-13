@@ -3,7 +3,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import SkeletonPlugin from 'scaife-skeleton';
-import { Metadata, Paginator, URN } from '@scaife-viewer/scaife-widgets';
+import { Paginator, URN } from '@scaife-viewer/scaife-widgets';
 
 import createStore from '@/reader/config';
 import ReaderWidget from '@/reader/widgets/ReaderWidget.vue';
@@ -15,7 +15,7 @@ localVue.use(SkeletonPlugin, { widgets });
 localVue.use(Vuex);
 
 describe('ReaderWidget.vue', () => {
-  it('passes props and parses lines from a graphql data', () => {
+  it('passes props and parses lines from graphql data', () => {
     const moduleStore = createStore();
     const store = new Vuex.Store({
       modules: {
@@ -55,19 +55,16 @@ describe('ReaderWidget.vue', () => {
     });
     const paginators = wrapper.findAll(Paginator);
 
-    expect(wrapper.find(Metadata).attributes()).toStrictEqual({
-      worktitle: 'Iliad',
-    });
-    expect(paginators.at(0).props()).toStrictEqual({
+    expect(paginators.at(0).props()).toEqual({
       urn: new URN('urn:cts:greekLit:tlg0012.tlg001.msA:1.1-2'),
       direction: 'left',
     });
-    expect(wrapper.find(Reader).props()).toStrictEqual({
+    expect(wrapper.find(Reader).props()).toEqual({
       lines: ['some', 'data'],
       textSize: 'md',
       textWidth: 'normal',
     });
-    expect(paginators.at(1).props()).toStrictEqual({
+    expect(paginators.at(1).props()).toEqual({
       urn: new URN('urn:cts:greekLit:tlg0012.tlg001.msA:1.5-6'),
       direction: 'right',
     });

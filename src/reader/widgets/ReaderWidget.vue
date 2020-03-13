@@ -1,7 +1,6 @@
 <template>
   <article class="u-flex">
     <section class="reader-left">
-      <Metadata :workTitle="workTitle" />
       <div class="reader-container u-flex">
         <Paginator :urn="previous" direction="left" />
         <Reader :lines="lines" :textSize="textSize" :textWidth="textWidth" />
@@ -14,24 +13,17 @@
 <script>
   import gql from 'graphql-tag';
 
-  import WIDGETS_NS, {
-    Metadata,
-    Paginator,
-    URN,
-  } from '@scaife-viewer/scaife-widgets';
+  import WIDGETS_NS, { Paginator, URN } from '@scaife-viewer/scaife-widgets';
   import Reader from '@/reader/components/Reader.vue';
-  import { SET_PASSAGE } from '@/constants';
+  import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
   import { MODULE_NS } from '@/reader/constants';
 
   export default {
     components: {
-      Metadata,
       Paginator,
       Reader,
     },
-    scaifeConfig: {
-      location: 'main',
-    },
+    scaifeConfig: {},
     beforeUpdate() {
       if (this.urn && !this.$route.query.urn) {
         this.$router.push({
@@ -40,6 +32,13 @@
             urn: this.urn.absolute,
           },
         });
+      }
+      if (this.version !== this.urn.version) {
+        this.$store.dispatch(
+          UPDATE_METADATA,
+          { urn: this.urn.version },
+          { root: true },
+        );
       }
     },
     computed: {
@@ -78,6 +77,9 @@
         }
         return null;
       },
+      version() {
+        return this.$store.getters[`${MODULE_NS}/firstPassageUrn`].version;
+      },
       workTitle() {
         return this.$store.getters[`${MODULE_NS}/workTitle`];
       },
@@ -111,9 +113,8 @@
   };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   article {
-    margin: 0 5em;
     width: 100%;
   }
   section {

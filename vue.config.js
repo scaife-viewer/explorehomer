@@ -7,4 +7,9 @@ module.exports = {
       patterns: [path.resolve(__dirname, './src/styles/globals.scss')],
     },
   },
+  configureWebpack: {
+    resolve: {
+      symlinks: false,
+    },
+  },
 };
