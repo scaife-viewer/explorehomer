@@ -1,2 +1,4 @@
 [context."develop".environment]
   VUE_APP_ATLAS_GRAPHQL_ENDPOINT = "https://explorehomer-atlas-dev.scaife-viewer.org/graphql/"
+[context."task/sync-with-sv-mini".environment]
+  VUE_APP_ATLAS_GRAPHQL_ENDPOINT = "https://explorehomer-task-sv-mi-is9985.herokuapp.com/graphql/"

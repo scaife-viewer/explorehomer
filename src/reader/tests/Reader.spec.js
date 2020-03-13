@@ -1,5 +1,5 @@
 /* global describe, expect, it  */
-import { mount } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import Reader from '@/reader/components/Reader.vue';
 
 describe('Reader.vue', () => {
@@ -8,7 +8,7 @@ describe('Reader.vue', () => {
       { ref: '1', textContent: 'Some text' },
       { ref: '2', textContent: 'More text' },
     ];
-    const wrapper = mount(Reader, {
+    const wrapper = shallowMount(Reader, {
       propsData: { lines, textSize: 'text-md', textWidth: 'normal' },
     });
 

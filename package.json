@@ -5,15 +5,15 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test": "jest --collectCoverage",
     "lint": "vue-cli-service lint",
+    "test": "vue-cli-service test:unit --coverage",
     "testDebug": "node --inspect-brk node_modules/.bin/jest --runInBand"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
     "@fortawesome/vue-fontawesome": "^0.1.9",
-    "@scaife-viewer/scaife-widgets": "^0.8.0",
+    "@scaife-viewer/scaife-widgets": "git://github.com/scaife-viewer/scaife-widgets#508b48f9aaad6c452916b295d8e87de49d5f9915",
     "apollo-boost": "^0.4.7",
     "core-js": "^3.5.0",
     "graphql": "^14.4.2",
@@ -33,6 +33,7 @@
     "@babel/preset-env": "^7.7.6",
     "@vue/cli-plugin-babel": "^4.1.1",
     "@vue/cli-plugin-eslint": "^4.1.1",
+    "@vue/cli-plugin-unit-jest": "^4.2.2",
     "@vue/cli-service": "^4.1.1",
     "@vue/eslint-config-airbnb": "^5.0.0",
     "@vue/eslint-config-prettier": "^6.0.0",
@@ -60,19 +61,5 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ],
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "vue"
-    ],
-    "transform": {
-      "^.+\\.js$": "./node_modules/babel-jest",
-      ".*\\.(vue)$": "./node_modules/vue-jest"
-    },
-    "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/src/$1"
-    }
-  }
+  ]
 }

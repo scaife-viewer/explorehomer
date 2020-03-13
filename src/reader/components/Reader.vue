@@ -20,7 +20,7 @@
   };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   div.reader {
     width: 100%;
   }
@@ -46,12 +46,13 @@
 
     .line {
       display: flex;
-      align-items: center;
+      align-items: baseline;
       .line-ref {
         font-size: 10pt;
         color: #69c;
         font-family: 'Noto Sans';
-        flex-basis: 4.5em;
+        min-width: 4em;
+        margin-left: 1em;
         text-align: right;
       }
       .line-text {

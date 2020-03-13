@@ -6,5 +6,5 @@ export default {
   firstPassageUrn: state =>
     state.metadata ? new URN(state.metadata.firstPassageUrn) : null,
   workTitle: state => (state.metadata ? state.metadata.workTitle : ''),
-  workUrn: state => (state.metadata ? new URN(state.metadata.workUrn) : null),
+  libraryTree: state => state.libraryTree,
 };
