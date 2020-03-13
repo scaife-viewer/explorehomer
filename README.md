@@ -1,5 +1,7 @@
 # explorehomer
 
+This repository is part of the [Scaife Viewer](https://scaife-viewer.org) project, an open-source ecosystem for building rich online reading environments.
+
 ## Prerequisites
 - [Node.js 12](https://nodejs.org/en/)
 - [yarn](https://yarnpkg.com/en/docs/install)
