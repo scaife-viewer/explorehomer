@@ -13,7 +13,7 @@ Vue.use(Vuex);
 const readerStore = createReaderStore();
 const skeletonStore = createSkeletonStore();
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   modules: {
     [readerStore.namespace]: readerStore.store,
     [scaifeWidgets.namespace]: scaifeWidgets.store,
@@ -21,3 +21,5 @@ export default new Vuex.Store({
   },
   ...createStore(),
 });
+
+export default store;
