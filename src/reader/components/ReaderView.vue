@@ -16,7 +16,7 @@
     PassageReferenceWidget,
     TextSizeWidget,
     TextWidthWidget,
-    TOCWidget,
+    // TOCWidget,
     WordListWidget,
   } from '@scaife-viewer/scaife-widgets';
   import ReaderWidget from '@/reader/widgets/ReaderWidget.vue';
@@ -38,7 +38,7 @@
           LibraryWidget,
           PassageAncestorsWidget,
           PassageChildrenWidget,
-          TOCWidget,
+          // TOCWidget,
         ];
       },
       rightWidgets() {
