@@ -1,6 +1,9 @@
 export default class URN {
   constructor(value) {
     this.value = value;
+    // @@@ ssvt readers assume this.value
+    // scaife-skeleton readers assume this.absolute
+    this.absolute = value;
     this.urnNamespace = null;
     this.ctsNamespace = null;
     this.textGroup = null;
@@ -31,6 +34,7 @@ export default class URN {
       if (bits.length >= 3) {
         this.version = bits[2]; // eslint-disable-line prefer-destructuring
       }
+      // @@@ implement exemplar
     }
   }
 
