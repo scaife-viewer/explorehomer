@@ -1,4 +1,4 @@
-import URN from './urn';
+import { URN } from '@scaife-viewer/scaife-widgets';
 
 export default {
   metadata: state => state.metadata,
