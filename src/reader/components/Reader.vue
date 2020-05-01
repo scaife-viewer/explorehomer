@@ -9,13 +9,16 @@
       :key="`${index}-${line.label}`"
     >
       <div class="line-ref">{{ line.ref }}</div>
-      <div class="line-text" v-html="line.textContent"></div>
+      <ReaderLine class="line-text" :tokens="line.tokens" />
     </div>
   </div>
 </template>
 
 <script>
+  import ReaderLine from './ReaderLine.vue';
+
   export default {
+    components: { ReaderLine },
     props: ['lines', 'textSize', 'textWidth'],
   };
 </script>

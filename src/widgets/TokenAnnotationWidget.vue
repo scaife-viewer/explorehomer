@@ -1,5 +1,8 @@
 <template>
   <table class="selected-tokens">
+    <tr colspan="3" v-if="selectedToken">
+      <a href @click.prevent="onClear">Clear Filter</a>
+    </tr>
     <tr v-for="token in tokens" :key="token.veRef">
       <th class="text">{{ token.value }}</th>
       <td class="text">{{ token.lemma }}</td>
@@ -11,7 +14,7 @@
 <script>
   import gql from 'graphql-tag';
   import { URN } from '@scaife-viewer/scaife-widgets';
-  import { MODULE_NS } from '@/reader/constants';
+  import { MODULE_NS, CLEAR_TOKEN } from '@/reader/constants';
 
   export default {
     scaifeConfig: {
@@ -21,8 +24,14 @@
       prettyPrint(token) {
         return JSON.stringify(token, null, 2);
       },
+      onClear() {
+        this.$store.dispatch(`${MODULE_NS}/${CLEAR_TOKEN}`);
+      },
     },
     computed: {
+      selectedToken() {
+        return this.$store.state[MODULE_NS].selectedToken;
+      },
       // TODO: Dedupe from Reader.vue
       urn() {
         return this.$route.query.urn
@@ -42,14 +51,10 @@
                   tokens {
                     edges {
                       node {
-                        idx
                         veRef
                         value
                         lemma
                         partOfSpeech
-                        case
-                        mood
-                        tag
                       }
                     }
                   }
@@ -68,20 +73,29 @@
           : [];
       },
       tokens() {
+        const selectedFilter = edge => {
+          return (
+            this.selectedToken === null ||
+            this.selectedToken.veRef === edge.node.veRef
+          );
+        };
+
         if (this.lines.length > 0) {
-          return this.lines[0].tokens.edges.map(edge => {
-            const token = edge.node;
-            return {
-              idx: token.idx,
-              uuid: token.uuid,
-              value: token.value,
-              lemma: token.lemma,
-              partOfSpeech: token.partOfSpeech,
-              case: token.case,
-              mood: token.mood,
-              tag: token.tag,
-            };
-          });
+          const tokens = this.lines
+            .map(line => {
+              const { edges } = line.tokens;
+              return edges.filter(selectedFilter).map(edge => {
+                const token = edge.node;
+                return {
+                  veRef: token.veRef,
+                  value: token.value,
+                  lemma: token.lemma,
+                  partOfSpeech: token.partOfSpeech,
+                };
+              });
+            })
+            .flat();
+          return [...new Set(tokens)];
         }
         return [];
       },
@@ -92,8 +106,10 @@
 <style lang="scss" scoped>
   @import '../styles/variables';
   .selected-tokens {
+    margin: 0 10px;
     color: $gray-700;
     font-size: 12px;
+    width: 100%;
     td {
       padding-left: 1em;
     }
