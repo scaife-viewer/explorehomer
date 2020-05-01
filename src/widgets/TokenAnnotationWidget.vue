@@ -5,8 +5,8 @@
     </tr>
     <tr v-for="token in tokens" :key="token.veRef">
       <th class="text">{{ token.value }}</th>
+      <td class="parse">{{ token.tag }}</td>
       <td class="text">{{ token.lemma }}</td>
-      <td class="text">{{ token.partOfSpeech }}</td>
     </tr>
   </table>
 </template>
@@ -54,7 +54,7 @@
                         veRef
                         value
                         lemma
-                        partOfSpeech
+                        tag
                       }
                     }
                   }
@@ -90,7 +90,7 @@
                   veRef: token.veRef,
                   value: token.value,
                   lemma: token.lemma,
-                  partOfSpeech: token.partOfSpeech,
+                  tag: token.tag,
                 };
               });
             })
