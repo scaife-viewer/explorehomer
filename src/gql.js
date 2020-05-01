@@ -18,10 +18,8 @@ const GraphQLPlugin = {
           immediate: true,
           handler() {
             if (this.gqlQuery) {
-              console.log('QUERY', this.gqlQuery);
               this.$gql(this.gqlQuery).then(data => {
                 this.gqlData = data;
-                console.log('GQL DATA', data);
               });
             }
           },
