@@ -3,7 +3,7 @@ import ApolloClient from 'apollo-boost';
 const client = new ApolloClient({
   uri:
     process.env.VUE_APP_ATLAS_GRAPHQL_ENDPOINT ||
-    'https://explorehomer-workaround-nz15dd.herokuapp.com/graphql/',
+    'https://explorehomer-atlas.scaife-viewer.org/graphql/',
 });
 
 const GraphQLPlugin = {

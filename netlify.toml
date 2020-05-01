@@ -2,3 +2,5 @@
   VUE_APP_ATLAS_GRAPHQL_ENDPOINT = "https://explorehomer-atlas-dev.scaife-viewer.org/graphql/"
 [context."task/sync-with-sv-mini".environment]
   VUE_APP_ATLAS_GRAPHQL_ENDPOINT = "https://explorehomer-task-sv-mi-is9985.herokuapp.com/graphql/"
+[context."show-annotation-token-list".environment]
+  VUE_APP_ATLAS_GRAPHQL_ENDPOINT = "https://explorehomer-workaround-nz15dd.herokuapp.com/graphql/"
