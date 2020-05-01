@@ -11,7 +11,6 @@
     props: ['token'],
     methods: {
       onSelect() {
-        console.log("ACTION", `${MODULE_NS}/${SELECT_TOKEN}`);
         this.$store.dispatch(`${MODULE_NS}/${SELECT_TOKEN}`, {
           token: this.token,
         });
