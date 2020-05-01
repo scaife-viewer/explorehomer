@@ -2,8 +2,8 @@
   <table class="selected-tokens">
     <tr v-for="token in tokens" :key="token.veRef">
       <th class="text">{{ token.value }}</th>
-      <td class="parse">{{ token.tag }}</td>
       <td class="text">{{ token.lemma }}</td>
+      <td class="text">{{ token.partOfSpeech }}</td>
     </tr>
   </table>
 </template>
