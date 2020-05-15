@@ -1,6 +1,7 @@
 <template>
   <div class="reader-line">
     <section class="tokens" v-if="interlinear">
+      <ReaderToken v-for="token in tokens" :key="token.veRef" :token="token" />
     </section>
     <div class="line u-flex" v-else>
       <div class="line-ref">{{ line.ref }}</div>
@@ -47,5 +48,9 @@
     .line-text {
       margin-left: 1em;
     }
+  }
+
+  .tokens {
+    margin: 20px 0;
   }
 </style>
