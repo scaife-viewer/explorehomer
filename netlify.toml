@@ -4,3 +4,5 @@
   VUE_APP_ATLAS_GRAPHQL_ENDPOINT = "https://explorehomer-task-sv-mi-is9985.herokuapp.com/graphql/"
 [context."show-annotation-token-list".environment]
   VUE_APP_ATLAS_GRAPHQL_ENDPOINT = "https://explorehomer-workaround-nz15dd.herokuapp.com/graphql/"
+[context."show-interlinear".environment]
+  VUE_APP_ATLAS_GRAPHQL_ENDPOINT = "https://explorehomer-feature-in-jme1sc.herokuapp.com/graphql/"
