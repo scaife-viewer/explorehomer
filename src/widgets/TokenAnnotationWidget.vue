@@ -21,9 +21,6 @@
       displayName: 'Token Annotations',
     },
     methods: {
-      prettyPrint(token) {
-        return JSON.stringify(token, null, 2);
-      },
       onClear() {
         this.$store.dispatch(`${MODULE_NS}/${CLEAR_TOKEN}`);
       },
@@ -52,7 +49,7 @@
                     edges {
                       node {
                         veRef
-                        value
+                        wordValue
                         lemma
                         tag
                       }
@@ -88,7 +85,7 @@
                 const token = edge.node;
                 return {
                   veRef: token.veRef,
-                  value: token.value,
+                  value: token.wordValue,
                   lemma: token.lemma,
                   tag: token.tag,
                 };
@@ -106,10 +103,10 @@
 <style lang="scss" scoped>
   @import '../styles/variables';
   .selected-tokens {
-    margin: 0 10px;
+    margin: 0 2rem;
     color: $gray-700;
     font-size: 12px;
-    width: 100%;
+    width: calc(100% - 4rem);
     td {
       padding-left: 1em;
     }
