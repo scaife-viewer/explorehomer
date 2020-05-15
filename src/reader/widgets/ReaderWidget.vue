@@ -64,7 +64,14 @@
                   kind
                   urn
                   ref
-                  textContent
+                  tokens {
+                    edges {
+                      node {
+                        veRef
+                        value
+                      }
+                    }
+                  }
                 }
               }
               pageInfo {
@@ -90,9 +97,17 @@
         return this.$store.getters[`${WIDGETS_NS}/readerTextWidth`];
       },
       lines() {
-        return this.gqlData
-          ? this.gqlData.passageTextParts.edges.map(line => line.node)
-          : [];
+        if (!this.gqlData) {
+          return [];
+        }
+        return this.gqlData.passageTextParts.edges.map(line => {
+          const { id, kind, ref } = line.node;
+          const tokens = line.node.tokens.edges.map(edge => {
+            const { value, veRef } = edge.node;
+            return { value, veRef };
+          });
+          return { id, kind, ref, tokens };
+        });
       },
       siblings() {
         return this.gqlData && this.gqlData.passageTextParts.metadata.siblings
