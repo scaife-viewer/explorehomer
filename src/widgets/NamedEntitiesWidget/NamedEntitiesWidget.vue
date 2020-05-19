@@ -1,5 +1,6 @@
 <template>
   <div class="named-entities">
+    <a href @click.prevent="selected = null">Clear</a>
     <NamedEntity
       v-for="entity in entities"
       :key="entity.id"
