@@ -54,7 +54,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../styles/variables';
+  @import '../../styles/variables';
   .named-entities {
     margin: 0 2rem;
     color: $gray-600;
