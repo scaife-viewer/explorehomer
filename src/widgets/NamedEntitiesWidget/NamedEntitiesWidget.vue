@@ -1,10 +1,12 @@
 <template>
   <div class="named-entities">
-    <div class="named-entity" v-for="entity in entities" :key="entity.id">
-      <div class="named-entity-title">{{ entity.title }}</div>
-      <div class="named-entity-description">{{ entity.description }}</div>
-      <a :href="entity.url" target="_blank">Read More</a>
-    </div>
+    <NamedEntity
+      v-for="entity in entities"
+      :key="entity.id"
+      :entity="entity"
+      :selected="selected === entity"
+      @select="onSelect"
+    />
   </div>
 </template>
 
@@ -12,10 +14,24 @@
   import gql from 'graphql-tag';
   import { URN } from '@scaife-viewer/scaife-widgets';
   import { MODULE_NS } from '@/reader/constants';
+  import NamedEntity from './NamedEntity.vue';
 
   export default {
     scaifeConfig: {
       displayName: 'Named Entities',
+    },
+    data() {
+      return {
+        selected: null,
+      };
+    },
+    components: {
+      NamedEntity,
+    },
+    methods: {
+      onSelect(entity) {
+        this.selected = entity;
+      },
     },
     computed: {
       // TODO: Dedupe from Reader.vue
@@ -60,13 +76,5 @@
     color: $gray-600;
     font-size: 12px;
     width: calc(100% - 4rem);
-
-    .named-entity {
-      margin-bottom: 1rem;
-    }
-    .named-entity-title {
-      font-size: 14px;
-      color: $gray-800;
-    }
   }
 </style>
