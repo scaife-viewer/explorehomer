@@ -21,6 +21,7 @@
   } from '@scaife-viewer/scaife-widgets';
   import ReaderWidget from '@/reader/widgets/ReaderWidget.vue';
   import TokenAnnotationWidget from '@/widgets/TokenAnnotationWidget.vue';
+  import NamedEntitiesWidget from '@/widgets/NamedEntitiesWidget.vue';
   import { FETCH_METADATA, FETCH_LIBRARY } from '@/constants';
 
   export default {
@@ -39,6 +40,7 @@
           LibraryWidget,
           PassageAncestorsWidget,
           PassageChildrenWidget,
+          NamedEntitiesWidget,
           // TOCWidget,
         ];
       },
