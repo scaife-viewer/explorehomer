@@ -6,7 +6,6 @@
       :data="entities"
       @filter-data="onFilter"
     />
-    <a href @click.prevent="selected = null">Clear</a>
     <NamedEntity
       v-for="entity in filteredEntities"
       :key="entity.id"
@@ -41,7 +40,11 @@
     },
     methods: {
       onSelect(entity) {
-        this.selected = entity;
+        if (this.selected === entity) {
+          this.selected = null;
+        } else {
+          this.selected = entity;
+        }
       },
       onFilter(data) {
         this.filteredEntities = data;
@@ -100,7 +103,6 @@
   @import '../../styles/variables';
   .named-entities {
     margin: 0 2rem;
-    color: $gray-600;
     font-size: 12px;
     width: calc(100% - 4rem);
   }
