@@ -18,8 +18,14 @@
     },
     computed: {
       selected() {
+        if (!this.selectedToken) {
+          return false;
+        }
+        const { entities, veRef } = this.selectedToken;
+        const entity = entities[0];
         return (
-          this.selectedToken && this.selectedToken.veRef === this.token.veRef
+          veRef === this.token.veRef ||
+          (entity && entity === this.token.entities[0])
         );
       },
       selectedToken() {

@@ -60,8 +60,21 @@
         immediate: true,
         handler() {
           this.filteredEntities = this.entities;
-        }
-      }
+        },
+      },
+      selectedEntities: {
+        immediate: true,
+        handler() {
+          if (this.selectedEntities.length > 0) {
+            const first = this.selectedEntities[0];
+            this.filteredEntities = this.entities.filter(e => e.id === first);
+            [this.selected] = this.filteredEntities;
+          } else {
+            this.filteredEntities = this.entities;
+            this.selected = null;
+          }
+        },
+      },
     },
     computed: {
       // TODO: Dedupe from Reader.vue
@@ -94,6 +107,12 @@
         return this.gqlData
           ? this.gqlData.namedEntities.edges.map(e => e.node)
           : [];
+      },
+      selectedToken() {
+        return this.$store.state[MODULE_NS].selectedToken;
+      },
+      selectedEntities() {
+        return (this.selectedToken && this.selectedToken.entities) || [];
       },
     },
   };
