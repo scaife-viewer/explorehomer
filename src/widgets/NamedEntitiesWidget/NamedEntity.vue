@@ -22,7 +22,7 @@
         required: true,
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
