@@ -6,9 +6,17 @@ import {
   UPDATE_METADATA,
   FETCH_LIBRARY,
   SET_PASSAGE,
+  SET_DISPLAY_MODE_INTERLINEAR,
+  SET_DISPLAY_MODE_DEFAULT,
 } from '@/constants';
 
 export default {
+  [SET_DISPLAY_MODE_DEFAULT]: ({ commit }) => {
+    commit(SET_DISPLAY_MODE_DEFAULT);
+  },
+  [SET_DISPLAY_MODE_INTERLINEAR]: ({ commit }) => {
+    commit(SET_DISPLAY_MODE_INTERLINEAR);
+  },
   [FETCH_METADATA]: ({ commit }) => {
     gqlclient
       .query({
