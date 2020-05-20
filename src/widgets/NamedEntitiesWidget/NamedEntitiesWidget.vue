@@ -1,8 +1,14 @@
 <template>
   <div class="named-entities">
+    <Lookahead
+      placeholder="Search named entities"
+      :reducer="lookaheadReducer"
+      :data="entities"
+      @filter-data="onFilter"
+    />
     <a href @click.prevent="selected = null">Clear</a>
     <NamedEntity
-      v-for="entity in entities"
+      v-for="entity in filteredEntities"
       :key="entity.id"
       :entity="entity"
       :selected="selected === entity"
@@ -14,6 +20,8 @@
 <script>
   import gql from 'graphql-tag';
   import { URN } from '@scaife-viewer/scaife-widgets';
+  // eslint-disable-next-line max-len
+  import Lookahead from '@scaife-viewer/scaife-widgets/src/components/Lookahead.vue';
   import { MODULE_NS } from '@/reader/constants';
   import NamedEntity from './NamedEntity.vue';
 
@@ -24,15 +32,33 @@
     data() {
       return {
         selected: null,
+        filteredEntities: [],
       };
     },
     components: {
+      Lookahead,
       NamedEntity,
     },
     methods: {
       onSelect(entity) {
         this.selected = entity;
       },
+      onFilter(data) {
+        this.filteredEntities = data;
+      },
+      lookaheadReducer(data, query) {
+        return data.filter(entity =>
+          entity.title.toLowerCase().includes(query.toLowerCase()),
+        );
+      },
+    },
+    watch: {
+      entities: {
+        immediate: true,
+        handler() {
+          this.filteredEntities = this.entities;
+        }
+      }
     },
     computed: {
       // TODO: Dedupe from Reader.vue
