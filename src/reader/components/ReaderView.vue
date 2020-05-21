@@ -50,10 +50,10 @@
           TextSizeWidget,
           TextWidthWidget,
           DisplayModeWidget,
-          WordListWidget,
-          TokenAnnotationWidget,
-          NewAlexandriaWidget,
           NamedEntitiesWidget,
+          TokenAnnotationWidget,
+          WordListWidget,
+          NewAlexandriaWidget,
         ];
       },
     },
