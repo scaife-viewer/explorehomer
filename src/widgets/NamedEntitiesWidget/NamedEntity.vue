@@ -1,7 +1,8 @@
 <template>
   <div class="named-entity" :class="{ selected }">
     <div class="named-entity-title" @click.prevent="$emit('select', entity)">
-      {{ entity.title }}
+      <span>{{ entity.title }}</span>
+      <span v-if="selected">x</span>
     </div>
     <div class="named-entity-body" v-if="selected">
       <div class="named-entity-description">{{ entity.description }}</div>
@@ -40,6 +41,8 @@
     margin: 0.375rem 0;
   }
   .named-entity-title {
+    display: flex;
+    justify-content: space-between;
     font-size: 14px;
     color: $gray-800;
     cursor: pointer;
