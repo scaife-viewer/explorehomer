@@ -70,6 +70,9 @@
                         veRef
                         value
                         position
+                        lemma
+                        partOfSpeech
+                        tag
                         namedEntities {
                           edges {
                             node {
@@ -111,9 +114,9 @@
         return this.gqlData.passageTextParts.edges.map(line => {
           const { id, kind, ref } = line.node;
           const tokens = line.node.tokens.edges.map(edge => {
-            const { value, veRef, position, namedEntities } = edge.node;
+            const { value, veRef, position, lemma, partOfSpeech, tag, namedEntities } = edge.node;
             const entities = namedEntities.edges.map(e => e.node.id);
-            return { value, veRef, position, entities };
+            return { value, veRef, position, lemma, partOfSpeech, tag, entities };
           });
           return { id, kind, ref, tokens };
         });
