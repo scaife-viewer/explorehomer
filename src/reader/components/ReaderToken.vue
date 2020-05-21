@@ -27,7 +27,7 @@
     },
     computed: {
       interlinear() {
-        return this.$store.state.interlinear;
+        return this.$store.state.displayMode === 'interlinear';
       },
       selected() {
         if (!this.selectedToken) {

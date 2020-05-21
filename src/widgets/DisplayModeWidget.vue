@@ -1,16 +1,13 @@
 <template>
   <div class="display-mode-widget">
-    <span v-if="interlinear" class="click" @click="toggleInterlinear">
+    <span :class="{ active: defaultMode }" @click="setDefault">
       Default
     </span>
-    <span v-else class="active">
-      Default
-    </span>
-    <span v-if="!interlinear" class="click" @click="toggleInterlinear">
+    <span :class="{ active: interlinear }" @click="setInterlinear">
       Interlinear
     </span>
-    <span v-else class="active">
-      Interlinear
+    <span :class="{ active: namedEntities }" @click="setNamedEntities">
+      Named Entities
     </span>
   </div>
 </template>
@@ -18,6 +15,7 @@
 <script>
   import {
     SET_DISPLAY_MODE_INTERLINEAR,
+    SET_DISPLAY_MODE_NAMED_ENTITIES,
     SET_DISPLAY_MODE_DEFAULT,
   } from '@/constants';
 
@@ -29,22 +27,27 @@
     },
     computed: {
       interlinear() {
-        return this.$store.state.interlinear;
+        return this.$store.state.displayMode === 'interlinear';
       },
-      sourceMode() {
-        return !this.interlinear ? 'Interlinear' : ' Default';
+      namedEntities() {
+        return this.$store.state.displayMode === 'named-entities';
       },
-      destinationMode() {
-        return this.interlinear ? 'Default' : 'Interlinear';
+      defaultMode() {
+        return this.$store.state.displayMode === 'default';
+      },
+      displayMode() {
+        return this.$store.state.displayMode;
       },
     },
     methods: {
-      // TODO: Move out of store and into route
-      toggleInterlinear() {
-        const action = this.interlinear
-          ? SET_DISPLAY_MODE_DEFAULT
-          : SET_DISPLAY_MODE_INTERLINEAR;
-        this.$store.dispatch(action);
+      setDefault() {
+        this.$store.dispatch(SET_DISPLAY_MODE_DEFAULT);
+      },
+      setInterlinear() {
+        this.$store.dispatch(SET_DISPLAY_MODE_INTERLINEAR);
+      },
+      setNamedEntities() {
+        this.$store.dispatch(SET_DISPLAY_MODE_NAMED_ENTITIES);
       },
     },
   };
@@ -56,7 +59,7 @@
   .active {
     color: $gray-800;
   }
-  .click {
+  .display-mode-widget span {
     cursor: pointer;
   }
   .display-mode-widget {

@@ -7,10 +7,14 @@ import {
   FETCH_LIBRARY,
   SET_PASSAGE,
   SET_DISPLAY_MODE_INTERLINEAR,
+  SET_DISPLAY_MODE_NAMED_ENTITIES,
   SET_DISPLAY_MODE_DEFAULT,
 } from '@/constants';
 
 export default {
+  [SET_DISPLAY_MODE_NAMED_ENTITIES]: ({ commit }) => {
+    commit(SET_DISPLAY_MODE_NAMED_ENTITIES);
+  },
   [SET_DISPLAY_MODE_DEFAULT]: ({ commit }) => {
     commit(SET_DISPLAY_MODE_DEFAULT);
   },
