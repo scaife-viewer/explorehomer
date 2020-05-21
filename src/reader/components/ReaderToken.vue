@@ -1,5 +1,9 @@
 <template>
-  <span class="token" :class="{ selected, interlinear }" @click="onSelect">
+  <span
+    class="token"
+    :class="{ selected, interlinear, entity: namedEntities && hasEntity }"
+    @click="onSelect"
+  >
     <template v-if="interlinear">
       <span class="ref">{{ token.veRef }}</span>
       <span class="text">{{ token.value }}</span>
@@ -29,6 +33,12 @@
       interlinear() {
         return this.$store.state.displayMode === 'interlinear';
       },
+      namedEntities() {
+        return this.$store.state.displayMode === 'named-entities';
+      },
+      hasEntity() {
+        return this.token.entities.length > 0;
+      },
       selected() {
         if (!this.selectedToken) {
           return false;
@@ -48,13 +58,18 @@
 </script>
 
 <style lang="scss" scoped>
+  @import '../../styles/variables';
   .token {
     cursor: pointer;
     &.selected {
       font-weight: bold;
     }
   }
-
+  .token.entity {
+    background: $entity;
+    padding: 0 4px;
+    border-radius: 3px;
+  }
   .token.interlinear {
     display: inline-block;
     padding: 2px 4px;
