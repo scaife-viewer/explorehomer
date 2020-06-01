@@ -1,14 +1,14 @@
 <template>
   <div class="display-mode-widget">
-    <span :class="{ active: defaultMode }" @click="setDefault">
+    <div :class="{ active: defaultMode }" @click="setDefault">
       Default
-    </span>
-    <span :class="{ active: interlinear }" @click="setInterlinear">
+    </div>
+    <div :class="{ active: interlinear }" @click="setInterlinear">
       Interlinear
-    </span>
-    <span :class="{ active: namedEntities }" @click="setNamedEntities">
+    </div>
+    <div :class="{ active: namedEntities }" @click="setNamedEntities">
       Named Entities
-    </span>
+    </div>
   </div>
 </template>
 
@@ -59,15 +59,17 @@
   .active {
     color: $gray-800;
   }
-  .display-mode-widget span {
-    cursor: pointer;
-  }
   .display-mode-widget {
     margin: 0 2em;
     flex: 1;
     color: $gray-500;
-  }
-  span {
-    padding-right: 20px;
+
+    div {
+      padding-right: 20px;
+      cursor: pointer;
+      // @@@ this should be standard across all widgets
+      font-family: $font-family-serif;
+      font-size: 14px;
+    }
   }
 </style>
