@@ -3,4 +3,5 @@ export default {
   passage: null,
   libraryTree: null,
   displayMode: 'default',
+  selectedNamedEntities: [],
 };

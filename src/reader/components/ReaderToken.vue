@@ -1,7 +1,11 @@
 <template>
   <span
     class="token"
-    :class="{ selected, interlinear, entity: namedEntities && hasEntity }"
+    :class="{
+      selected,
+      interlinear,
+      entity: namedEntities && hasSelectedEntity,
+    }"
     @click="onSelect"
   >
     <template v-if="interlinear">
@@ -19,25 +23,36 @@
 
 <script>
   import { SELECT_TOKEN, MODULE_NS } from '../constants';
+  import { SELECT_NAMED_ENTITIES } from '../../constants';
 
   export default {
     props: ['token'],
     methods: {
       onSelect() {
+        this.$store.dispatch(SELECT_NAMED_ENTITIES, {
+          entities: this.token.entities,
+        });
         this.$store.dispatch(`${MODULE_NS}/${SELECT_TOKEN}`, {
           token: this.token,
         });
       },
     },
     computed: {
+      selectedEntities() {
+        return this.$store.state.selectedNamedEntities;
+      },
       interlinear() {
         return this.$store.state.displayMode === 'interlinear';
       },
       namedEntities() {
         return this.$store.state.displayMode === 'named-entities';
       },
-      hasEntity() {
-        return this.token.entities.length > 0;
+      hasSelectedEntity() {
+        return (
+          this.token.entities.filter(
+            id => this.selectedEntities.filter(sid => sid === id).length > 0,
+          ).length > 0
+        );
       },
       selected() {
         if (!this.selectedToken) {

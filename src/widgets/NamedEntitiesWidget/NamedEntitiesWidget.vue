@@ -10,7 +10,6 @@
       v-for="entity in filteredEntities"
       :key="entity.id"
       :entity="entity"
-      :selected="selected === entity"
       @select="onSelect"
     />
   </div>
@@ -22,6 +21,7 @@
   // eslint-disable-next-line max-len
   import Lookahead from '@scaife-viewer/scaife-widgets/src/components/Lookahead.vue';
   import { MODULE_NS } from '@/reader/constants';
+  import { SELECT_NAMED_ENTITIES, CLEAR_NAMED_ENTITIES } from '../../constants';
   import NamedEntity from './NamedEntity.vue';
 
   export default {
@@ -30,7 +30,6 @@
     },
     data() {
       return {
-        selected: null,
         filteredEntities: [],
       };
     },
@@ -40,10 +39,12 @@
     },
     methods: {
       onSelect(entity) {
-        if (this.selected === entity) {
-          this.selected = null;
+        if (this.selectedEntities.filter(id => entity.id === id).length > 0) {
+          this.$store.dispatch(CLEAR_NAMED_ENTITIES);
         } else {
-          this.selected = entity;
+          this.$store.dispatch(SELECT_NAMED_ENTITIES, {
+            entities: [entity.id],
+          });
         }
       },
       onFilter(data) {
@@ -62,19 +63,19 @@
           this.filteredEntities = this.entities;
         },
       },
-      selectedEntities: {
-        immediate: true,
-        handler() {
-          if (this.selectedEntities.length > 0) {
-            const first = this.selectedEntities[0];
-            this.filteredEntities = this.entities.filter(e => e.id === first);
-            [this.selected] = this.filteredEntities;
-          } else {
-            this.filteredEntities = this.entities;
-            this.selected = null;
-          }
-        },
-      },
+      // selectedEntities: {
+      //   immediate: true,
+      //   handler() {
+      //     if (this.selectedEntities.length > 0) {
+      //       const first = this.selectedEntities[0];
+      //     this.filteredEntities = this.entities.filter(e => e.id === first);
+      //       [this.selected] = this.filteredEntities;
+      //     } else {
+      //       this.filteredEntities = this.entities;
+      //       this.selected = null;
+      //     }
+      //   },
+      // },
     },
     computed: {
       // TODO: Dedupe from Reader.vue
@@ -108,12 +109,15 @@
           ? this.gqlData.namedEntities.edges.map(e => e.node)
           : [];
       },
+      selectedEntities() {
+        return this.$store.state.selectedNamedEntities;
+      },
       selectedToken() {
         return this.$store.state[MODULE_NS].selectedToken;
       },
-      selectedEntities() {
-        return (this.selectedToken && this.selectedToken.entities) || [];
-      },
+      // selectedEntities() {
+      //   return (this.selectedToken && this.selectedToken.entities) || [];
+      // },
     },
   };
 </script>

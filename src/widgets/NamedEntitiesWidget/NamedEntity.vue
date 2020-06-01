@@ -18,11 +18,16 @@
         type: Object,
         required: true,
       },
-      selected: {
-        type: Boolean,
-        required: true,
-      },
     },
+    computed: {
+      selected() {
+        return (
+          this.$store.state.selectedNamedEntities.filter(
+            id => this.entity.id === id,
+          ).length > 0
+        );
+      },
+    }
   };
 </script>
 

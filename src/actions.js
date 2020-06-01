@@ -9,9 +9,17 @@ import {
   SET_DISPLAY_MODE_INTERLINEAR,
   SET_DISPLAY_MODE_NAMED_ENTITIES,
   SET_DISPLAY_MODE_DEFAULT,
+  SELECT_NAMED_ENTITIES,
+  CLEAR_NAMED_ENTITIES,
 } from '@/constants';
 
 export default {
+  [SELECT_NAMED_ENTITIES]: ({ commit }, { entities }) => {
+    commit(SELECT_NAMED_ENTITIES, entities);
+  },
+  [CLEAR_NAMED_ENTITIES]: ({ commit }) => {
+    commit(CLEAR_NAMED_ENTITIES);
+  },
   [SET_DISPLAY_MODE_NAMED_ENTITIES]: ({ commit }) => {
     commit(SET_DISPLAY_MODE_NAMED_ENTITIES);
   },
