@@ -1432,10 +1432,25 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@scaife-viewer/scaife-widgets@0.12.0":
+"@scaife-viewer/scaife-widgets@git://github.com/scaife-viewer/scaife-widgets#0ef75bc348aef7e117b668199719dcc87e3f3a17":
   version "0.12.0"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/scaife-widgets/-/scaife-widgets-0.12.0.tgz#1b4bd922c71434379c3d8989b6173f8af96e04d8"
-  integrity sha512-p1ktf5CFjPluDNvKg5gwI+q9+F6U0zcmscuVwRA7aZMIO7EKBi10CWG1pxzTlv3cuKQkGmBX5jS3nYR5t741Ew==
+  resolved "git://github.com/scaife-viewer/scaife-widgets#0ef75bc348aef7e117b668199719dcc87e3f3a17"
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^1.2.25"
+    "@fortawesome/free-solid-svg-icons" "^5.11.2"
+    "@fortawesome/vue-fontawesome" "^0.1.8"
+    "@vue/eslint-config-airbnb" "^5.0.0"
+    core-js "^3.3.2"
+    graphql "^14.5.8"
+    graphql-tag "^2.10.1"
+    lodash.debounce "^4.0.8"
+    node-sass "^4.13.0"
+    query-string "^6.11.0"
+    vue "^2.6.10"
+
+"@scaife-viewer/scaife-widgets@git://github.com/scaife-viewer/scaife-widgets#65562539ea12a1902225d6d4089b78bcbcb633d3":
+  version "0.12.0"
+  resolved "git://github.com/scaife-viewer/scaife-widgets#65562539ea12a1902225d6d4089b78bcbcb633d3"
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.25"
     "@fortawesome/free-solid-svg-icons" "^5.11.2"
