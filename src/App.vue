@@ -17,6 +17,8 @@
 
 <style src="@scaife-viewer/scaife-widgets/dist/scaife-widgets.css"></style>
 <style lang="scss">
+  @import './styles/variables';
+
   html,
   body {
     margin: 0;
@@ -33,5 +35,8 @@
   }
   div.main-layout > .widget {
     border-top: none;
+  }
+  a {
+    color: $explorehomer-brand;
   }
 </style>
