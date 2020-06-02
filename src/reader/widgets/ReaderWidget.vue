@@ -3,7 +3,13 @@
     <section class="reader-left">
       <div class="reader-container u-flex">
         <Paginator :urn="previous" direction="left" />
-        <Reader :lines="lines" :textSize="textSize" :textWidth="textWidth" />
+        <LoaderBall v-if="gqlLoading" />
+        <Reader
+          v-else
+          :lines="lines"
+          :textSize="textSize"
+          :textWidth="textWidth"
+        />
         <Paginator :urn="next" direction="right" />
       </div>
     </section>
@@ -143,5 +149,13 @@
     & nav:last-child {
       margin-left: auto;
     }
+    ::v-deep .ball-pulse {
+      margin-left: auto;
+      padding-top: 40px;
+    }
+    ::v-deep .paginator {
+      align-self: flex-start;
+    }
   }
 </style>
+
