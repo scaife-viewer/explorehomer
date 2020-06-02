@@ -29,7 +29,7 @@
         this.$router.push({
           to: 'reader',
           query: {
-            urn: this.urn.absolute,
+            urn: this.urn.toString(),
           },
         });
       }
@@ -51,12 +51,12 @@
         if (this.urn) {
           this.$store.dispatch(
             SET_PASSAGE,
-            { urn: this.urn.absolute },
+            { urn: this.urn.toString() },
             { root: true },
           );
           return gql`
             {
-              passageTextParts(reference: "${this.urn.absolute}") {
+              passageTextParts(reference: "${this.urn}") {
               metadata
               edges {
                 node {

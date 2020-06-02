@@ -1432,10 +1432,10 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@scaife-viewer/scaife-widgets@0.11.1":
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/scaife-widgets/-/scaife-widgets-0.11.1.tgz#d8ed391ce8739c77320f3f782c8fe2940bc99db5"
-  integrity sha512-g/kIAHM0lCBDgc+Yzoea/b5ETBl3zVQlMhjDkhYVtaZeBcgQUWqiV9GpRu1x/ORyXEVVf7iEkd846G2dhdsEyw==
+"@scaife-viewer/scaife-widgets@0.12.0":
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/scaife-widgets/-/scaife-widgets-0.12.0.tgz#1b4bd922c71434379c3d8989b6173f8af96e04d8"
+  integrity sha512-p1ktf5CFjPluDNvKg5gwI+q9+F6U0zcmscuVwRA7aZMIO7EKBi10CWG1pxzTlv3cuKQkGmBX5jS3nYR5t741Ew==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.25"
     "@fortawesome/free-solid-svg-icons" "^5.11.2"
