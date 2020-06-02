@@ -27,7 +27,7 @@
         return this.line.tokens;
       },
       interlinear() {
-        return this.$store.state.interlinear;
+        return this.$store.state.displayMode === 'interlinear';
       },
     },
   };

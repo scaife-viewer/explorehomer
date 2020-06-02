@@ -18,4 +18,12 @@ $gray-800: #343a40;
 $gray-900: #212529;
 $black: #000;
 
+$entity: #FF6;
+$selected-token: #6FF;
+$selected-entity: #9F9;
+
+@mixin highlight($color) {
+  box-shadow: 0 -10px 0px $color inset;
+}
+
 $explorehomer-brand: #b45141;

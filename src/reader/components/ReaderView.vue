@@ -21,6 +21,7 @@
   } from '@scaife-viewer/scaife-widgets';
   import ReaderWidget from '@/reader/widgets/ReaderWidget.vue';
   import TokenAnnotationWidget from '@/widgets/TokenAnnotationWidget.vue';
+  import NamedEntitiesWidget from '@/widgets/NamedEntitiesWidget';
   import DisplayModeWidget from '@/widgets/DisplayModeWidget.vue';
   import { FETCH_METADATA, FETCH_LIBRARY } from '@/constants';
 
@@ -49,8 +50,9 @@
           TextSizeWidget,
           TextWidthWidget,
           DisplayModeWidget,
-          WordListWidget,
+          NamedEntitiesWidget,
           TokenAnnotationWidget,
+          WordListWidget,
           NewAlexandriaWidget,
         ];
       },
