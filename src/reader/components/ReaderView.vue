@@ -37,8 +37,8 @@
       },
       leftWidgets() {
         return [
-          PassageReferenceWidget,
           LibraryWidget,
+          PassageReferenceWidget,
           PassageAncestorsWidget,
           PassageChildrenWidget,
           // TOCWidget,
