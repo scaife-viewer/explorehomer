@@ -60,7 +60,13 @@
 </script>
 
 <style lang="scss" scoped>
+  ::v-deep .word-list-container .word-list {
+    font-size: 0;
+  }
   ::v-deep .word-list-container .word-list p.u-flex {
     display: inline;
+    font-size: 12px;
+    line-height: 18px;
+    margin: 0;
   }
 </style>
