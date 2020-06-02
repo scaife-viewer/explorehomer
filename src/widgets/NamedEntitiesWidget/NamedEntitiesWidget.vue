@@ -1,7 +1,7 @@
 <template>
   <div class="named-entities">
     <Lookahead
-      placeholder="Search named entities"
+      placeholder="Filter named entities"
       :reducer="lookaheadReducer"
       :data="entities"
       @filter-data="onFilter"
