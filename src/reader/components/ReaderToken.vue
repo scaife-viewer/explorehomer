@@ -4,7 +4,8 @@
     :class="{
       selected,
       interlinear,
-      entity: namedEntities && hasSelectedEntity,
+      entity: namedEntities && isEntity,
+      'selected-entity': namedEntities && hasSelectedEntity,
     }"
     @click="onSelect"
   >
@@ -16,7 +17,7 @@
       <span class="analysis">{{ token.tag || '-' }}</span>
     </template>
     <template v-else>
-      {{ token.value }}
+      <span class="text">{{ token.value }}</span>{{ ' ' }}
     </template>
   </span>
 </template>
@@ -47,6 +48,9 @@
       namedEntities() {
         return this.$store.state.displayMode === 'named-entities';
       },
+      isEntity() {
+        return this.token.entities.length > 0;
+      },
       hasSelectedEntity() {
         return (
           this.token.entities.filter(
@@ -74,16 +78,17 @@
 
 <style lang="scss" scoped>
   @import '../../styles/variables';
-  .token {
+  .token .text {
     cursor: pointer;
-    &.selected {
-      font-weight: bold;
-    }
   }
-  .token.entity {
-    background: $entity;
-    padding: 0 4px;
-    border-radius: 3px;
+  .token.selected .text {
+    @include highlight($selected-token);
+  }
+  .token.entity .text {
+    @include highlight($entity);
+  }
+  .token.selected-entity .text {
+    @include highlight($selected-entity);
   }
   .token.interlinear {
     display: inline-block;
