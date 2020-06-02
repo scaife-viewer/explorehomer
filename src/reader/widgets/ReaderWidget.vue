@@ -155,6 +155,17 @@
     }
     ::v-deep .paginator {
       align-self: flex-start;
+      a {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        height: calc(100vh - 30px);
+        align-items: center;
+        font-size: 36px;
+        &:hover {
+          background: $gray-100;
+        }
+      }
     }
   }
 </style>
