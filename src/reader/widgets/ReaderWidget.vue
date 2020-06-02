@@ -30,6 +30,13 @@
       Reader,
     },
     scaifeConfig: {},
+    watch: {
+      urn() {
+        this.$nextTick(() => {
+          this.$parent.$el.scrollTop = 0;
+        });
+      },
+    },
     beforeUpdate() {
       if (this.urn && !this.$route.query.urn) {
         this.$router.push({
