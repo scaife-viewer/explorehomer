@@ -1,5 +1,6 @@
 <template>
   <FixedSkeleton
+    class="main"
     :main-widget="mainWidget"
     :left-widgets="leftWidgets"
     :right-widgets="rightWidgets"
@@ -57,3 +58,9 @@
     },
   };
 </script>
+
+<style lang="scss" scoped>
+  ::v-deep .word-list-container .word-list p.u-flex {
+    display: inline;
+  }
+</style>
