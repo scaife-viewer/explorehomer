@@ -3,7 +3,17 @@
     <section class="reader-left">
       <div class="reader-container u-flex">
         <Paginator :urn="previous" direction="left" />
-        <Reader :lines="lines" :textSize="textSize" :textWidth="textWidth" />
+        <LoaderBall v-if="gqlLoading" />
+        <template v-else-if="imageMode">
+          <Reader :lines="lines" :textSize="textSize" :textWidth="textWidth" />
+          <ImageViewer :imageUrl="imageUrl" />
+        </template>
+        <Reader
+          v-else
+          :lines="lines"
+          :textSize="textSize"
+          :textWidth="textWidth"
+        />
         <Paginator :urn="next" direction="right" />
       </div>
     </section>
@@ -15,6 +25,7 @@
 
   import WIDGETS_NS, { Paginator, URN } from '@scaife-viewer/scaife-widgets';
   import Reader from '@/reader/components/Reader.vue';
+  import ImageViewer from '@/components/ImageViewer.vue';
   import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
   import { MODULE_NS } from '@/reader/constants';
 
@@ -22,6 +33,7 @@
     components: {
       Paginator,
       Reader,
+      ImageViewer,
     },
     scaifeConfig: {},
     beforeUpdate() {
@@ -41,7 +53,25 @@
         );
       }
     },
+    data() {
+      return {
+        imageUrl: null,
+      };
+    },
+    watch: {
+      gqlData() {
+        this.imageUrl = null;
+        fetch(this.gqlData.imageAnnotations.edges[0].node.canvasIdentifier)
+          .then(response => response.json())
+          .then(data => {
+            this.imageUrl = data.images[0].resource['@id'];
+          });
+      },
+    },
     computed: {
+      imageMode() {
+        return true;
+      },
       urn() {
         return this.$route.query.urn
           ? new URN(this.$route.query.urn)
@@ -88,6 +118,21 @@
               pageInfo {
                 hasNextPage
                 endCursor
+              }
+            }
+            imageAnnotations(reference: "${this.urn}") {
+              edges {
+                node {
+                  idx
+                  canvasIdentifier
+                  textParts {
+                    edges {
+                      node {
+                        ref
+                      }
+                    }
+                  }
+                }
               }
             }
           }
