@@ -26,7 +26,7 @@
   import OpenSeadragon from 'openseadragon';
 
   export default {
-    props: ['imageUrl'],
+    props: ['imageIdentifier'],
     data() {
       return {
         viewer: null,
@@ -35,7 +35,7 @@
       };
     },
     watch: {
-      imageUrl: {
+      imageIdentifier: {
         immediate: true,
         handler() {
           this.updateImage();
@@ -65,8 +65,8 @@
     },
     methods: {
       updateImage() {
-        if (this.imageUrl && this.viewer) {
-          this.viewer.open({ type: 'image', url: this.imageUrl });
+        if (this.imageIdentifier && this.viewer) {
+          this.viewer.open({ type: 'image', url: this.imageIdentifier });
         }
       },
       initViewer() {

@@ -6,7 +6,7 @@
         <LoaderBall v-if="gqlLoading" />
         <template v-else-if="imageMode">
           <Reader :lines="lines" :textSize="textSize" :textWidth="textWidth" />
-          <ImageViewer :imageUrl="imageUrl" />
+          <ImageViewer :imageIdentifier="imageIdentifier" />
         </template>
         <Reader
           v-else
@@ -53,24 +53,12 @@
         );
       }
     },
-    data() {
-      return {
-        imageUrl: null,
-      };
-    },
-    watch: {
-      gqlData() {
-        this.imageUrl = null;
-        fetch(this.gqlData.imageAnnotations.edges[0].node.canvasIdentifier)
-          .then(response => response.json())
-          .then(data => {
-            this.imageUrl = data.images[0].resource['@id'];
-          });
-      },
-    },
     computed: {
       imageMode() {
         return true;
+      },
+      imageIdentifier() {
+        return this.gqlData.imageAnnotations.edges[0].node.imageIdentifier;
       },
       urn() {
         return this.$route.query.urn
@@ -124,7 +112,7 @@
               edges {
                 node {
                   idx
-                  canvasIdentifier
+                  imageIdentifier
                   textParts {
                     edges {
                       node {
