@@ -1,4 +1,5 @@
 import ApolloClient from 'apollo-boost';
+import LoaderBall from './components/LoaderBall.vue';
 
 const client = new ApolloClient({
   uri:
@@ -9,7 +10,11 @@ const client = new ApolloClient({
 const GraphQLPlugin = {
   install: Vue => {
     Vue.mixin({
-      data: () => ({ gqlData: null }),
+      components: { LoaderBall },
+      data: () => ({
+        gqlLoading: false,
+        gqlData: null,
+      }),
       computed: {
         gqlQuery: () => null,
       },
@@ -18,8 +23,10 @@ const GraphQLPlugin = {
           immediate: true,
           handler() {
             if (this.gqlQuery) {
+              this.gqlLoading = true;
               this.$gql(this.gqlQuery).then(data => {
                 this.gqlData = data;
+                this.gqlLoading = false;
               });
             }
           },
