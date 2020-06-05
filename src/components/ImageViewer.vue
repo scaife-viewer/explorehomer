@@ -66,7 +66,7 @@
     methods: {
       updateImage() {
         if (this.imageIdentifier && this.viewer) {
-          this.viewer.open({ type: 'image', url: this.imageIdentifier });
+          this.viewer.open([`${this.imageIdentifier}info.json`]);
         }
       },
       initViewer() {

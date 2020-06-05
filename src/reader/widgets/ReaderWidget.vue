@@ -3,8 +3,7 @@
     <section class="reader-left">
       <div class="reader-container u-flex">
         <Paginator :urn="previous" direction="left" />
-        <LoaderBall v-if="gqlLoading" />
-        <template v-else-if="imageMode">
+        <template v-if="imageMode">
           <Reader :lines="lines" :textSize="textSize" :textWidth="textWidth" />
           <ImageViewer :imageIdentifier="imageIdentifier" />
         </template>
@@ -58,7 +57,9 @@
         return true;
       },
       imageIdentifier() {
-        return this.gqlData.imageAnnotations.edges[0].node.imageIdentifier;
+        return this.gqlData
+          ? this.gqlData.imageAnnotations.edges[0].node.imageIdentifier
+          : null;
       },
       urn() {
         return this.$route.query.urn
