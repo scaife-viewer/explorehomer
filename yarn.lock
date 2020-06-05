@@ -1448,9 +1448,9 @@
     query-string "^6.11.0"
     vue "^2.6.10"
 
-"@scaife-viewer/scaife-widgets@git://github.com/scaife-viewer/scaife-widgets#65562539ea12a1902225d6d4089b78bcbcb633d3":
+"@scaife-viewer/scaife-widgets@git://github.com/scaife-viewer/scaife-widgets#51b4f3a94ff7f397f31bdeaf8880cba9158d52f7":
   version "0.12.0"
-  resolved "git://github.com/scaife-viewer/scaife-widgets#65562539ea12a1902225d6d4089b78bcbcb633d3"
+  resolved "git://github.com/scaife-viewer/scaife-widgets#51b4f3a94ff7f397f31bdeaf8880cba9158d52f7"
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.25"
     "@fortawesome/free-solid-svg-icons" "^5.11.2"
