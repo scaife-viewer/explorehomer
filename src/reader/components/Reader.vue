@@ -22,7 +22,7 @@
 
 <style lang="scss" scoped>
   div.reader {
-    width: 100%;
+    flex: 1;
   }
   .text {
     font-family: $font-family-serif;

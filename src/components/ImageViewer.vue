@@ -97,9 +97,11 @@
   @import '../styles/variables.scss';
 
   .open-seadragon {
+      flex: 1;
+      height: 100vh;
     .viewer {
-      width: 800px;
-      height: 600px;
+      width: 100%;
+      height: 100vh;
     }
 
     .error {
