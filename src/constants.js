@@ -6,5 +6,6 @@ export const SET_PASSAGE = 'setPassage';
 export const SET_DISPLAY_MODE_INTERLINEAR = 'setDisplayModeInterlinear';
 export const SET_DISPLAY_MODE_NAMED_ENTITIES = 'setDisplayModeNamedEntities';
 export const SET_DISPLAY_MODE_DEFAULT = 'setDisplayModeDefault';
+export const SET_DISPLAY_MODE_FOLIO = 'setDisplayModeFolio';
 export const SELECT_NAMED_ENTITIES = 'selectNamedEntities';
 export const CLEAR_NAMED_ENTITIES = 'clearNamedEntities';

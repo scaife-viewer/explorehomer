@@ -6,6 +6,9 @@
     <div :class="{ active: interlinear }" @click="setInterlinear">
       Interlinear
     </div>
+    <div :class="{ active: folio }" @click="setFolio">
+      Folio
+    </div>
     <div :class="{ active: namedEntities }" @click="setNamedEntities">
       Named Entities
     </div>
@@ -16,6 +19,7 @@
   import {
     SET_DISPLAY_MODE_INTERLINEAR,
     SET_DISPLAY_MODE_NAMED_ENTITIES,
+    SET_DISPLAY_MODE_FOLIO,
     SET_DISPLAY_MODE_DEFAULT,
   } from '@/constants';
 
@@ -32,6 +36,9 @@
       namedEntities() {
         return this.$store.state.displayMode === 'named-entities';
       },
+      folio() {
+        return this.$store.state.displayMode === 'folio';
+      },
       defaultMode() {
         return this.$store.state.displayMode === 'default';
       },
@@ -45,6 +52,9 @@
       },
       setInterlinear() {
         this.$store.dispatch(SET_DISPLAY_MODE_INTERLINEAR);
+      },
+      setFolio() {
+        this.$store.dispatch(SET_DISPLAY_MODE_FOLIO);
       },
       setNamedEntities() {
         this.$store.dispatch(SET_DISPLAY_MODE_NAMED_ENTITIES);

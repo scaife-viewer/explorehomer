@@ -4,6 +4,16 @@
       <div class="reader-container u-flex">
         <Paginator :urn="previous" direction="left" />
         <LoaderBall v-if="gqlLoading" />
+        <template v-else-if="imageMode">
+          <Reader :lines="lines" :textSize="textSize" :textWidth="textWidth" />
+          <ImageViewer
+            v-if="imageIdentifier"
+            :imageIdentifier="imageIdentifier"
+          />
+          <div class="no-image-annotations" v-else>
+            No image annotations were found for the selected passage.
+          </div>
+        </template>
         <Reader
           v-else
           :lines="lines"
@@ -21,6 +31,7 @@
 
   import WIDGETS_NS, { Paginator, URN } from '@scaife-viewer/scaife-widgets';
   import Reader from '@/reader/components/Reader.vue';
+  import ImageViewer from '@/components/ImageViewer.vue';
   import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
   import { MODULE_NS } from '@/reader/constants';
 
@@ -28,6 +39,7 @@
     components: {
       Paginator,
       Reader,
+      ImageViewer,
     },
     scaifeConfig: {},
     watch: {
@@ -55,6 +67,14 @@
       }
     },
     computed: {
+      imageMode() {
+        return this.$store.state.displayMode === 'folio';
+      },
+      imageIdentifier() {
+        return this.gqlData && this.gqlData.imageAnnotations.edges.length
+          ? this.gqlData.imageAnnotations.edges[0].node.imageIdentifier
+          : null;
+      },
       urn() {
         return this.$route.query.urn
           ? new URN(this.$route.query.urn)
@@ -101,6 +121,21 @@
               pageInfo {
                 hasNextPage
                 endCursor
+              }
+            }
+            imageAnnotations(reference: "${this.urn}") {
+              edges {
+                node {
+                  idx
+                  imageIdentifier
+                  textParts {
+                    edges {
+                      node {
+                        ref
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -200,6 +235,10 @@
         }
       }
     }
+  }
+  .no-image-annotations {
+    font-size: 0.8em;
+    font-style: italic;
   }
 </style>
 
