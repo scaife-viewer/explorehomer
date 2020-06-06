@@ -6,7 +6,13 @@
         <LoaderBall v-if="gqlLoading" />
         <template v-else-if="imageMode">
           <Reader :lines="lines" :textSize="textSize" :textWidth="textWidth" />
-          <ImageViewer :imageIdentifier="imageIdentifier" />
+          <ImageViewer
+            v-if="imageIdentifier"
+            :imageIdentifier="imageIdentifier"
+          />
+          <div class="no-image-annotations" v-else>
+            No image annotations were found for the selected passage.
+          </div>
         </template>
         <Reader
           v-else
@@ -65,7 +71,7 @@
         return this.$store.state.displayMode === 'folio';
       },
       imageIdentifier() {
-        return this.gqlData
+        return this.gqlData && this.gqlData.imageAnnotations.edges.length
           ? this.gqlData.imageAnnotations.edges[0].node.imageIdentifier
           : null;
       },
@@ -229,6 +235,10 @@
         }
       }
     }
+  }
+  .no-image-annotations {
+    font-size: 0.8em;
+    font-style: italic;
   }
 </style>
 
