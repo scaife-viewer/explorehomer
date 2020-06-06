@@ -3,7 +3,8 @@
     <section class="reader-left">
       <div class="reader-container u-flex">
         <Paginator :urn="previous" direction="left" />
-        <template v-if="imageMode">
+        <LoaderBall v-if="gqlLoading" />
+        <template v-else-if="imageMode">
           <Reader :lines="lines" :textSize="textSize" :textWidth="textWidth" />
           <ImageViewer :imageIdentifier="imageIdentifier" />
         </template>
@@ -35,6 +36,13 @@
       ImageViewer,
     },
     scaifeConfig: {},
+    watch: {
+      urn() {
+        this.$nextTick(() => {
+          this.$parent.$el.scrollTop = 0;
+        });
+      },
+    },
     beforeUpdate() {
       if (this.urn && !this.$route.query.urn) {
         this.$router.push({
@@ -203,5 +211,24 @@
     & nav:last-child {
       margin-left: auto;
     }
+    ::v-deep .ball-pulse {
+      margin-left: auto;
+      padding-top: 40px;
+    }
+    ::v-deep .paginator {
+      align-self: flex-start;
+      a {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        height: calc(100vh - 30px);
+        align-items: center;
+        font-size: 36px;
+        &:hover {
+          background: $gray-100;
+        }
+      }
+    }
   }
 </style>
+
