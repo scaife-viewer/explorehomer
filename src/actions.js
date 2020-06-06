@@ -75,6 +75,7 @@ export default {
         ),
       );
   },
+  // @@@ should this really be something within scaife-widgets?
   [FETCH_LIBRARY]: ({ commit }) => {
     gqlclient
       .query({
@@ -86,7 +87,13 @@ export default {
           }
         `,
       })
-      .then(data => commit(FETCH_LIBRARY, data.data.tree.tree, { root: true }));
+      .then(data => {
+        const nid = data.data.tree.tree[0];
+        const textGroupsTree = nid.children.reduce((a, b) => {
+          return a.concat(b.children);
+        }, []);
+        commit(FETCH_LIBRARY, textGroupsTree, { root: true });
+      });
   },
   [SET_PASSAGE]: ({ commit }, { urn }) => commit(SET_PASSAGE, urn),
 };
