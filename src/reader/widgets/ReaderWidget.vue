@@ -3,7 +3,13 @@
     <section class="reader-left">
       <div class="reader-container u-flex">
         <Paginator :urn="previous" direction="left" />
-        <Reader :lines="lines" :textSize="textSize" :textWidth="textWidth" />
+        <LoaderBall v-if="gqlLoading" />
+        <Reader
+          v-else
+          :lines="lines"
+          :textSize="textSize"
+          :textWidth="textWidth"
+        />
         <Paginator :urn="next" direction="right" />
       </div>
     </section>
@@ -24,12 +30,19 @@
       Reader,
     },
     scaifeConfig: {},
+    watch: {
+      urn() {
+        this.$nextTick(() => {
+          this.$parent.$el.scrollTop = 0;
+        });
+      },
+    },
     beforeUpdate() {
       if (this.urn && !this.$route.query.urn) {
         this.$router.push({
           to: 'reader',
           query: {
-            urn: this.urn.absolute,
+            urn: this.urn.toString(),
           },
         });
       }
@@ -51,12 +64,12 @@
         if (this.urn) {
           this.$store.dispatch(
             SET_PASSAGE,
-            { urn: this.urn.absolute },
+            { urn: this.urn.toString() },
             { root: true },
           );
           return gql`
             {
-              passageTextParts(reference: "${this.urn.absolute}") {
+              passageTextParts(reference: "${this.urn}") {
               metadata
               edges {
                 node {
@@ -64,7 +77,25 @@
                   kind
                   urn
                   ref
-                  textContent
+                  tokens {
+                    edges {
+                      node {
+                        veRef
+                        value
+                        position
+                        lemma
+                        partOfSpeech
+                        tag
+                        namedEntities {
+                          edges {
+                            node {
+                              id
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
               pageInfo {
@@ -90,9 +121,34 @@
         return this.$store.getters[`${WIDGETS_NS}/readerTextWidth`];
       },
       lines() {
-        return this.gqlData
-          ? this.gqlData.passageTextParts.edges.map(line => line.node)
-          : [];
+        if (!this.gqlData) {
+          return [];
+        }
+        return this.gqlData.passageTextParts.edges.map(line => {
+          const { id, kind, ref } = line.node;
+          const tokens = line.node.tokens.edges.map(edge => {
+            const {
+              value,
+              veRef,
+              position,
+              lemma,
+              partOfSpeech,
+              tag,
+              namedEntities,
+            } = edge.node;
+            const entities = namedEntities.edges.map(e => e.node.id);
+            return {
+              value,
+              veRef,
+              position,
+              lemma,
+              partOfSpeech,
+              tag,
+              entities,
+            };
+          });
+          return { id, kind, ref, tokens };
+        });
       },
       siblings() {
         return this.gqlData && this.gqlData.passageTextParts.metadata.siblings
@@ -126,5 +182,24 @@
     & nav:last-child {
       margin-left: auto;
     }
+    ::v-deep .ball-pulse {
+      margin-left: auto;
+      padding-top: 40px;
+    }
+    ::v-deep .paginator {
+      align-self: flex-start;
+      a {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        height: calc(100vh - 30px);
+        align-items: center;
+        font-size: 36px;
+        &:hover {
+          background: $gray-100;
+        }
+      }
+    }
   }
 </style>
+

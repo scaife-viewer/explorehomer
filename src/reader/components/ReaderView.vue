@@ -1,5 +1,6 @@
 <template>
   <FixedSkeleton
+    class="main"
     :main-widget="mainWidget"
     :left-widgets="leftWidgets"
     :right-widgets="rightWidgets"
@@ -20,6 +21,9 @@
     WordListWidget,
   } from '@scaife-viewer/scaife-widgets';
   import ReaderWidget from '@/reader/widgets/ReaderWidget.vue';
+  import TokenAnnotationWidget from '@/widgets/TokenAnnotationWidget.vue';
+  import NamedEntitiesWidget from '@/widgets/NamedEntitiesWidget';
+  import DisplayModeWidget from '@/widgets/DisplayModeWidget.vue';
   import { FETCH_METADATA, FETCH_LIBRARY } from '@/constants';
 
   export default {
@@ -34,8 +38,8 @@
       },
       leftWidgets() {
         return [
-          PassageReferenceWidget,
           LibraryWidget,
+          PassageReferenceWidget,
           PassageAncestorsWidget,
           PassageChildrenWidget,
           // TOCWidget,
@@ -46,6 +50,9 @@
           MetadataWidget,
           TextSizeWidget,
           TextWidthWidget,
+          DisplayModeWidget,
+          NamedEntitiesWidget,
+          TokenAnnotationWidget,
           WordListWidget,
           NewAlexandriaWidget,
         ];
@@ -53,3 +60,15 @@
     },
   };
 </script>
+
+<style lang="scss" scoped>
+  ::v-deep .word-list-container .word-list {
+    font-size: 0;
+  }
+  ::v-deep .word-list-container .word-list p.u-flex {
+    display: inline;
+    font-size: 12px;
+    line-height: 18px;
+    margin: 0;
+  }
+</style>
