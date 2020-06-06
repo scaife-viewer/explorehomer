@@ -54,7 +54,7 @@
     },
     computed: {
       imageMode() {
-        return true;
+        return this.$store.state.displayMode === 'folio';
       },
       imageIdentifier() {
         return this.gqlData
