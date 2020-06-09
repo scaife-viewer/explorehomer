@@ -9,6 +9,9 @@
     <div :class="{ active: folio }" @click="setFolio">
       Folio Images
     </div>
+    <div :class="{ active: metrical }" @click="setMetrical">
+      Metrical Annotation
+    </div>
     <div :class="{ active: namedEntities }" @click="setNamedEntities">
       Named Entities
     </div>
@@ -21,6 +24,7 @@
     SET_DISPLAY_MODE_NAMED_ENTITIES,
     SET_DISPLAY_MODE_FOLIO,
     SET_DISPLAY_MODE_DEFAULT,
+    SET_DISPLAY_MODE_METRICAL,
   } from '@/constants';
 
   export default {
@@ -30,20 +34,23 @@
       singleton: true,
     },
     computed: {
-      interlinear() {
-        return this.$store.state.displayMode === 'interlinear';
-      },
-      namedEntities() {
-        return this.$store.state.displayMode === 'named-entities';
-      },
-      folio() {
-        return this.$store.state.displayMode === 'folio';
-      },
-      defaultMode() {
-        return this.$store.state.displayMode === 'default';
-      },
       displayMode() {
         return this.$store.state.displayMode;
+      },
+      interlinear() {
+        return this.displayMode === 'interlinear';
+      },
+      namedEntities() {
+        return this.displayMode === 'named-entities';
+      },
+      folio() {
+        return this.displayMode === 'folio';
+      },
+      defaultMode() {
+        return this.displayMode === 'default';
+      },
+      metrical() {
+        return this.displayMode === 'metrical';
       },
     },
     methods: {
@@ -66,6 +73,9 @@
         this.$store.dispatch(SET_DISPLAY_MODE_NAMED_ENTITIES);
         document.getElementsByClassName('main-layout')[0]
           .classList.remove('main-layout-wide');
+      },
+      setMetrical() {
+        this.$store.dispatch(SET_DISPLAY_MODE_METRICAL);
       },
     },
   };
