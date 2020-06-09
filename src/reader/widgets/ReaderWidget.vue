@@ -29,9 +29,10 @@
 <script>
   import gql from 'graphql-tag';
 
-  import WIDGETS_NS, { Paginator, URN } from '@scaife-viewer/scaife-widgets';
+  import WIDGETS_NS, { URN } from '@scaife-viewer/scaife-widgets';
   import Reader from '@/reader/components/Reader.vue';
   import ImageViewer from '@/components/ImageViewer.vue';
+  import Paginator from '@/components/Paginator.vue';
   import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
   import { MODULE_NS } from '@/reader/constants';
 
@@ -220,20 +221,6 @@
     ::v-deep .ball-pulse {
       margin-left: auto;
       padding-top: 40px;
-    }
-    ::v-deep .paginator {
-      align-self: flex-start;
-      a {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        height: calc(100vh - 30px);
-        align-items: center;
-        font-size: 36px;
-        &:hover {
-          background: $gray-100;
-        }
-      }
     }
   }
   .no-image-annotations {

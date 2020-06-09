@@ -7,7 +7,7 @@
       Interlinear
     </div>
     <div :class="{ active: folio }" @click="setFolio">
-      Folio
+      Folio Images
     </div>
     <div :class="{ active: namedEntities }" @click="setNamedEntities">
       Named Entities
@@ -49,19 +49,39 @@
     methods: {
       setDefault() {
         this.$store.dispatch(SET_DISPLAY_MODE_DEFAULT);
+        document.getElementsByClassName('main-layout')[0]
+          .classList.remove('main-layout-wide');
       },
       setInterlinear() {
         this.$store.dispatch(SET_DISPLAY_MODE_INTERLINEAR);
+        document.getElementsByClassName('main-layout')[0]
+          .classList.remove('main-layout-wide');
       },
       setFolio() {
         this.$store.dispatch(SET_DISPLAY_MODE_FOLIO);
+        document.getElementsByClassName('main-layout')[0]
+          .classList.add('main-layout-wide');
       },
       setNamedEntities() {
         this.$store.dispatch(SET_DISPLAY_MODE_NAMED_ENTITIES);
+        document.getElementsByClassName('main-layout')[0]
+          .classList.remove('main-layout-wide');
       },
     },
   };
 </script>
+
+<style lang="scss">
+  .main-layout.main-layout-wide {
+    flex: 4;
+    .reader {
+      padding-right: 1rem;
+    }
+    .open-seadragon {
+      padding-left: 1rem;
+    }
+  }
+</style>
 
 <style lang="scss" scoped>
   @import '../styles/variables';
