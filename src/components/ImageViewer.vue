@@ -99,6 +99,8 @@
   .open-seadragon {
       flex: 1;
       height: 100vh;
+
+    padding: 0 1rem;
     .viewer {
       width: 100%;
       height: 100vh;
