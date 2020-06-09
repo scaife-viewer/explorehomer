@@ -2,7 +2,7 @@
   <article class="u-flex">
     <section class="reader-left">
       <div class="reader-container u-flex">
-        <Paginator :urn="previous" direction="left" />
+        <Paginator v-if="previous" :urn="previous" direction="left" />
         <LoaderBall v-if="gqlLoading" />
         <template v-else-if="imageMode">
           <Reader :lines="lines" :textSize="textSize" :textWidth="textWidth" />
@@ -14,7 +14,7 @@
           :textSize="textSize"
           :textWidth="textWidth"
         />
-        <Paginator :urn="next" direction="right" />
+        <Paginator v-if="next" :urn="next" direction="right" />
       </div>
     </section>
   </article>
