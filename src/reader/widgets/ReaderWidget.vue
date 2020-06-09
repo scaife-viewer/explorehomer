@@ -4,6 +4,16 @@
       <div class="reader-container u-flex">
         <Paginator :urn="previous" direction="left" />
         <LoaderBall v-if="gqlLoading" />
+        <template v-else-if="imageMode">
+          <Reader :lines="lines" :textSize="textSize" :textWidth="textWidth" />
+          <ImageViewer
+            v-if="imageIdentifier"
+            :imageIdentifier="imageIdentifier"
+          />
+          <div class="no-image-annotations" v-else>
+            No image annotations were found for the selected passage.
+          </div>
+        </template>
         <Reader
           v-else
           :lines="lines"
@@ -19,8 +29,10 @@
 <script>
   import gql from 'graphql-tag';
 
-  import WIDGETS_NS, { Paginator, URN } from '@scaife-viewer/scaife-widgets';
+  import WIDGETS_NS, { URN } from '@scaife-viewer/scaife-widgets';
   import Reader from '@/reader/components/Reader.vue';
+  import ImageViewer from '@/components/ImageViewer.vue';
+  import Paginator from '@/components/Paginator.vue';
   import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
   import { MODULE_NS } from '@/reader/constants';
 
@@ -28,6 +40,7 @@
     components: {
       Paginator,
       Reader,
+      ImageViewer,
     },
     scaifeConfig: {},
     watch: {
@@ -55,6 +68,14 @@
       }
     },
     computed: {
+      imageMode() {
+        return this.$store.state.displayMode === 'folio';
+      },
+      imageIdentifier() {
+        return this.gqlData && this.gqlData.imageAnnotations.edges.length
+          ? this.gqlData.imageAnnotations.edges[0].node.imageIdentifier
+          : null;
+      },
       urn() {
         return this.$route.query.urn
           ? new URN(this.$route.query.urn)
@@ -101,6 +122,21 @@
               pageInfo {
                 hasNextPage
                 endCursor
+              }
+            }
+            imageAnnotations(reference: "${this.urn}") {
+              edges {
+                node {
+                  idx
+                  imageIdentifier
+                  textParts {
+                    edges {
+                      node {
+                        ref
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -186,20 +222,10 @@
       margin-left: auto;
       padding-top: 40px;
     }
-    ::v-deep .paginator {
-      align-self: flex-start;
-      a {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        height: calc(100vh - 30px);
-        align-items: center;
-        font-size: 36px;
-        &:hover {
-          background: $gray-100;
-        }
-      }
-    }
+  }
+  .no-image-annotations {
+    font-size: 0.8em;
+    font-style: italic;
   }
 </style>
 

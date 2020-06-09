@@ -1,13 +1,15 @@
 <template>
-  <div
-    class="reader"
-    :class="['text', `text-${textSize}`, `text-width-${textWidth}`]"
-  >
-    <ReaderLine
-      v-for="(line, index) in lines"
-      :key="`${index}-${line.label}`"
-      :line="line"
-    />
+  <div class="reader">
+    <div
+      class="reader-container text"
+      :class="[`text-${textSize}`, `text-width-${textWidth}`]"
+    >
+      <ReaderLine
+        v-for="(line, index) in lines"
+        :key="`${index}-${line.label}`"
+        :line="line"
+      />
+    </div>
   </div>
 </template>
 
@@ -22,7 +24,7 @@
 
 <style lang="scss" scoped>
   div.reader {
-    width: 100%;
+    flex: 1;
   }
   .text {
     font-family: $font-family-serif;
