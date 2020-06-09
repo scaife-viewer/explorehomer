@@ -98,6 +98,14 @@
                   kind
                   urn
                   ref
+                  metricalAnnotations {
+                    edges {
+                      node {
+                        metricalPattern
+                        htmlContent
+                      }
+                    }
+                  }
                   tokens {
                     edges {
                       node {
@@ -161,7 +169,7 @@
           return [];
         }
         return this.gqlData.passageTextParts.edges.map(line => {
-          const { id, kind, ref } = line.node;
+          const { id, kind, ref, metricalAnnotations } = line.node;
           const tokens = line.node.tokens.edges.map(edge => {
             const {
               value,
@@ -183,7 +191,13 @@
               entities,
             };
           });
-          return { id, kind, ref, tokens };
+          return {
+            id,
+            kind,
+            ref,
+            tokens,
+            metricalAnnotations: metricalAnnotations.edges.map(e => e.node),
+          };
         });
       },
       siblings() {

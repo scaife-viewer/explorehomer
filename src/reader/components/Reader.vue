@@ -4,7 +4,9 @@
       class="reader-container text"
       :class="[`text-${textSize}`, `text-width-${textWidth}`]"
     >
+      <ul class="metrical" v-if="metrical" v-html="metricalData" />
       <ReaderLine
+        v-else
         v-for="(line, index) in lines"
         :key="`${index}-${line.label}`"
         :line="line"
@@ -19,6 +21,19 @@
   export default {
     components: { ReaderLine },
     props: ['lines', 'textSize', 'textWidth'],
+    computed: {
+      metrical() {
+        return this.$store.state.displayMode === 'metrical';
+      },
+      metricalData() {
+        if (this.metrical) {
+          return this.lines
+            .map(l => l.metricalAnnotations[0].htmlContent)
+            .join('\n');
+        }
+        return '';
+      }
+    }
   };
 </script>
 
@@ -83,5 +98,45 @@
 
   .text-width-full {
     max-width: 100%;
+  }
+</style>
+
+<style lang="scss">
+  .metrical {
+    span.foot {
+      box-sizing: border-box;
+    }
+    span.syll {
+      box-sizing: border-box;
+    }
+
+    /* show foot and syllable divisions */
+
+    li div {
+      word-spacing: 0.6em;
+    }
+    span.syll {
+      padding: 1px 3px;
+    }
+    span.syll:first-child {
+      border-left: 2px solid black;
+    }
+    span.syll.caesura:first-child {
+      border-left: 3px solid blue;
+    }
+    span.syll:not(:first-child) {
+      border-left: 1px dotted black;
+    }
+    span.syll.caesura:not(:first-child) {
+      border-left: 3px dotted blue;
+    }
+
+    /* show syllable length */
+    span.syll.long {
+      background-color: #CCC;
+    }
+    span.syll:not(.long) {
+      background-color: #EEE;
+    }
   }
 </style>
