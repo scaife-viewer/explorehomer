@@ -97,10 +97,8 @@
   @import '../styles/variables.scss';
 
   .open-seadragon {
-      flex: 1;
-      height: 100vh;
-
-    padding: 0 1rem;
+    flex: 1;
+    height: 100vh;
     .viewer {
       width: 100%;
       height: 100vh;
