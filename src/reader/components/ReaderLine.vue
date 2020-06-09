@@ -5,11 +5,7 @@
     </section>
     <div class="line u-flex" v-else>
       <div class="line-ref">{{ line.ref }}</div>
-      <div
-        class="line-text metrical"
-        v-if="metrical"
-        v-html="line.metricalAnnotations[0].htmlContent"
-      />
+      <div class="line-text metrical" v-if="metrical" v-html="metricalHtml" />
       <div class="line-text" v-else>
         <ReaderToken
           v-for="token in tokens"
@@ -34,8 +30,16 @@
       interlinear() {
         return this.$store.state.displayMode === 'interlinear';
       },
+      metricalHtml() {
+        return (
+          this.line.metricalAnnotations[0] &&
+          this.line.metricalAnnotations[0].htmlContent
+        );
+      },
       metrical() {
-        return this.$store.state.displayMode === 'metrical';
+        return (
+          this.$store.state.displayMode === 'metrical' && this.metricalHtml
+        );
       },
     },
   };
