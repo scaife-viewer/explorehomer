@@ -7,7 +7,7 @@
       Interlinear
     </div>
     <div :class="{ active: folio }" @click="setFolio">
-      Folio
+      Folio Images
     </div>
     <div :class="{ active: namedEntities }" @click="setNamedEntities">
       Named Entities
