@@ -4,7 +4,7 @@
       class="reader-container text"
       :class="[`text-${textSize}`, `text-width-${textWidth}`]"
     >
-      <ol class="metrical" v-if="metrical" v-html="metricalData" />
+      <ul class="metrical" v-if="metrical" v-html="metricalData" />
       <ReaderLine
         v-else
         v-for="(line, index) in lines"
