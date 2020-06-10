@@ -15,6 +15,9 @@
     <div :class="{ active: namedEntities }" @click="setNamedEntities">
       Named Entities
     </div>
+    <div :class="{ active: sentence }" @click="setSentence">
+      Sentence Alignments
+    </div>
   </div>
 </template>
 
@@ -25,6 +28,7 @@
     SET_DISPLAY_MODE_FOLIO,
     SET_DISPLAY_MODE_DEFAULT,
     SET_DISPLAY_MODE_METRICAL,
+    SET_DISPLAY_MODE_SENTENCE_ALIGNMENTS,
   } from '@/constants';
 
   export default {
@@ -52,30 +56,42 @@
       metrical() {
         return this.displayMode === 'metrical';
       },
+      sentence() {
+        return this.displayMode === 'sentence-alignments';
+      },
     },
     methods: {
-      setDefault() {
-        this.$store.dispatch(SET_DISPLAY_MODE_DEFAULT);
-        document.getElementsByClassName('main-layout')[0]
-          .classList.remove('main-layout-wide');
-      },
-      setInterlinear() {
-        this.$store.dispatch(SET_DISPLAY_MODE_INTERLINEAR);
-        document.getElementsByClassName('main-layout')[0]
-          .classList.remove('main-layout-wide');
-      },
-      setFolio() {
-        this.$store.dispatch(SET_DISPLAY_MODE_FOLIO);
+      setWideLayout() {
         document.getElementsByClassName('main-layout')[0]
           .classList.add('main-layout-wide');
       },
-      setNamedEntities() {
-        this.$store.dispatch(SET_DISPLAY_MODE_NAMED_ENTITIES);
+      setNormalLayout() {
         document.getElementsByClassName('main-layout')[0]
           .classList.remove('main-layout-wide');
       },
+      setDefault() {
+        this.$store.dispatch(SET_DISPLAY_MODE_DEFAULT);
+        this.setNormalLayout();
+      },
+      setInterlinear() {
+        this.$store.dispatch(SET_DISPLAY_MODE_INTERLINEAR);
+        this.setNormalLayout();
+      },
+      setFolio() {
+        this.$store.dispatch(SET_DISPLAY_MODE_FOLIO);
+        this.setWideLayout();
+      },
+      setNamedEntities() {
+        this.$store.dispatch(SET_DISPLAY_MODE_NAMED_ENTITIES);
+        this.setNormalLayout();
+      },
       setMetrical() {
         this.$store.dispatch(SET_DISPLAY_MODE_METRICAL);
+        this.setNormalLayout();
+      },
+      setSentence() {
+        this.$store.dispatch(SET_DISPLAY_MODE_SENTENCE_ALIGNMENTS);
+        this.setWideLayout();
       },
     },
   };

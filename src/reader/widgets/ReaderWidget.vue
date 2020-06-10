@@ -14,6 +14,7 @@
             No image annotations were found for the selected passage.
           </div>
         </template>
+        <Alignments v-else-if="alignmentMode" :alignments="alignments" />
         <Reader
           v-else
           :lines="lines"
@@ -31,6 +32,7 @@
 
   import WIDGETS_NS, { URN } from '@scaife-viewer/scaife-widgets';
   import Reader from '@/reader/components/Reader.vue';
+  import Alignments from '@/reader/components/Alignments.vue';
   import ImageViewer from '@/components/ImageViewer.vue';
   import Paginator from '@/components/Paginator.vue';
   import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
@@ -38,6 +40,7 @@
 
   export default {
     components: {
+      Alignments,
       Paginator,
       Reader,
       ImageViewer,
@@ -68,6 +71,9 @@
       }
     },
     computed: {
+      alignmentMode() {
+        return this.$store.state.displayMode === 'sentence-alignments';
+      },
       imageMode() {
         return this.$store.state.displayMode === 'folio';
       },
@@ -132,6 +138,13 @@
                 endCursor
               }
             }
+            textAlignmentChunks(reference: "${this.urn}") {
+              edges {
+                node {
+                  items
+                }
+              }
+            }
             imageAnnotations(reference: "${this.urn}") {
               edges {
                 node {
@@ -163,6 +176,12 @@
       },
       textWidth() {
         return this.$store.getters[`${WIDGETS_NS}/readerTextWidth`];
+      },
+      alignments() {
+        if (!this.gqlData) {
+          return [];
+        }
+        return this.gqlData.textAlignmentChunks.edges.map(e => e.node.items);
       },
       lines() {
         if (!this.gqlData) {
