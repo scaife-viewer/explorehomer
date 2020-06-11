@@ -1,13 +1,12 @@
 <template>
-  <div
-    class="alignments"
-    :class="[`text-${textSize}`, `text-width-${textWidth}`]"
-  >
+  <div class="alignments">
     <Alignment
       v-for="(alignment, index) in alignments"
       :key="index"
       :left="alignment[0]"
       :right="alignment[1]"
+      :textSize="textSize"
+      :textWidth="textWidth"
     />
   </div>
 </template>

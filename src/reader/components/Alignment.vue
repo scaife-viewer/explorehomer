@@ -2,14 +2,14 @@
   <div class="alignment">
     <div class="alignment-ref">{{ right[0][0] }}</div>
     <div class="columns">
-      <div class="left">
-        <div class="line" :class="line[2]" v-for="line in left" :key="line[0]">
+      <div :class="['left', `text-${textSize}`, `text-width-${textWidth}`]">
+        <div v-for="line in left" :key="line[0]" :class="['line', line[2]]">
           <span class="line-ref">{{ line[0] }}</span>
           <span class="line-text">{{ line[1] }}</span>
         </div>
       </div>
-      <div class="right">
-        <div class="line" :class="line[2]" v-for="line in right" :key="line[0]">
+      <div :class="['right', `text-${textSize}`, `text-width-${textWidth}`]">
+        <div v-for="line in right" :key="line[0]" :class="['line', line[2]]">
           {{ line[1] }}
         </div>
       </div>
@@ -19,7 +19,7 @@
 
 <script>
   export default {
-    props: ['left', 'right'],
+    props: ['left', 'right', 'textSize', 'textWidth'],
   }
 </script>
 
