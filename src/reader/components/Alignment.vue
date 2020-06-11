@@ -24,6 +24,7 @@
 </script>
 
 <style lang="scss" scoped>
+  @import '../../styles/variables';
   .alignment {
     margin-bottom: 20px;
     .columns {
@@ -37,6 +38,7 @@
       }
       .right {
         padding-left: 0.5rem;
+        padding-right: 0.25rem;
       }
     }
   }
@@ -60,5 +62,8 @@
     .line-text {
       margin-left: 1rem;
     }
+  }
+  .line {
+    font-family: $font-family-serif;
   }
 </style>

@@ -1,5 +1,8 @@
 <template>
-  <div class="alignments">
+  <div
+    class="alignments"
+    :class="[`text-${textSize}`, `text-width-${textWidth}`]"
+  >
     <Alignment
       v-for="(alignment, index) in alignments"
       :key="index"
@@ -13,11 +16,42 @@
   import Alignment from './Alignment.vue';
 
   export default {
-    props: ['alignments'],
+    props: ['alignments', 'textSize', 'textWidth'],
     components: { Alignment },
   }
 </script>
 
 <style lang="scss" scoped>
+  .text-xs {
+    font-size: 12px;
+  }
+  .text-sm {
+    font-size: 14px;
+  }
+  .text-md {
+    font-size: 16px;
+  }
+  .text-lg {
+    font-size: 20px;
+  }
+  .text-xl {
+    font-size: 24px;
+  }
 
+  // TODO: media queries for defaults?
+  .text-width-narrow {
+    max-width: 20em;
+  }
+
+  .text-width-normal {
+    max-width: 30em;
+  }
+
+  .text-width-wide {
+    max-width: 40em;
+  }
+
+  .text-width-full {
+    max-width: 100%;
+  }
 </style>
