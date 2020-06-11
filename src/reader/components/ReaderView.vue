@@ -24,6 +24,7 @@
   import TokenAnnotationWidget from '@/widgets/TokenAnnotationWidget.vue';
   import NamedEntitiesWidget from '@/widgets/NamedEntitiesWidget';
   import DisplayModeWidget from '@/widgets/DisplayModeWidget.vue';
+  import ScholiaWidget from '@/widgets/ScholiaWidget.vue';
   import { FETCH_METADATA, FETCH_LIBRARY } from '@/constants';
 
   export default {
@@ -55,6 +56,7 @@
           TokenAnnotationWidget,
           WordListWidget,
           NewAlexandriaWidget,
+          ScholiaWidget,
         ];
       },
     },
