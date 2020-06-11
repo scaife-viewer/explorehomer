@@ -66,4 +66,20 @@
   .line {
     font-family: $font-family-serif;
   }
+
+  .text-xs .line {
+    line-height: 1.5;
+  }
+  .text-sm .line {
+    line-height: 1.6;
+  }
+  .text-md .line {
+    line-height: 1.7;
+  }
+  .text-lg .line {
+    line-height: 1.8;
+  }
+  .text-xl .line {
+    line-height: 1.9;
+  }
 </style>
