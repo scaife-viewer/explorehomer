@@ -14,7 +14,12 @@
             No image annotations were found for the selected passage.
           </div>
         </template>
-        <Alignments v-else-if="alignmentMode" :alignments="alignments" />
+        <Alignments
+          v-else-if="alignmentMode"
+          :alignments="alignments"
+          :textSize="textSize"
+          :textWidth="textWidth"
+        />
         <Reader
           v-else
           :lines="lines"

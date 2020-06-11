@@ -22,6 +22,7 @@
 </template>
 
 <script>
+  import WIDGETS_NS from '@scaife-viewer/scaife-widgets';
   import {
     SET_DISPLAY_MODE_INTERLINEAR,
     SET_DISPLAY_MODE_NAMED_ENTITIES,
@@ -69,29 +70,45 @@
         document.getElementsByClassName('main-layout')[0]
           .classList.remove('main-layout-wide');
       },
+      setWideText() {
+        this.$store.dispatch(`${WIDGETS_NS}/setTextWidth`, {
+          width: 'wide',
+        });
+      },
+      setNormalText() {
+        this.$store.dispatch(`${WIDGETS_NS}/setTextWidth`, {
+          width: 'normal',
+        });
+      },
       setDefault() {
         this.$store.dispatch(SET_DISPLAY_MODE_DEFAULT);
         this.setNormalLayout();
+        this.setNormalText()
       },
       setInterlinear() {
         this.$store.dispatch(SET_DISPLAY_MODE_INTERLINEAR);
         this.setNormalLayout();
+        this.setNormalText()
       },
       setFolio() {
         this.$store.dispatch(SET_DISPLAY_MODE_FOLIO);
         this.setWideLayout();
+        this.setNormalText()
       },
       setNamedEntities() {
         this.$store.dispatch(SET_DISPLAY_MODE_NAMED_ENTITIES);
         this.setNormalLayout();
+        this.setNormalText()
       },
       setMetrical() {
         this.$store.dispatch(SET_DISPLAY_MODE_METRICAL);
         this.setNormalLayout();
+        this.setWideText();
       },
       setSentence() {
         this.$store.dispatch(SET_DISPLAY_MODE_SENTENCE_ALIGNMENTS);
         this.setWideLayout();
+        this.setNormalText()
       },
     },
   };
