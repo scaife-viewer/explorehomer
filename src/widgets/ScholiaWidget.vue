@@ -2,7 +2,7 @@
   <div class="scholia">
     <div v-if="!lines">No commentary found.</div>
     <div v-for="line in lines" :key="line.idx" class="line">
-      <span class="lemma">{{ line.lemma }}</span>
+      <span class="lemma">{{ line.lemma }} </span>
       <span class="comment">{{ line.comment }}</span>
     </div>
   </div>
@@ -66,6 +66,7 @@
   }
   .line {
     font-family: $font-family-serif;
+    font-size: 14px;
     .lemma {
       font-weight: 700;
     }
