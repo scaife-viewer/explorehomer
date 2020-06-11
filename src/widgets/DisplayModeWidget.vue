@@ -9,18 +9,27 @@
     <div :class="{ active: folio }" @click="setFolio">
       Folio Images
     </div>
+    <div :class="{ active: metrical }" @click="setMetrical">
+      Metrical Annotation
+    </div>
     <div :class="{ active: namedEntities }" @click="setNamedEntities">
       Named Entities
+    </div>
+    <div :class="{ active: sentence }" @click="setSentence">
+      Sentence Alignments
     </div>
   </div>
 </template>
 
 <script>
+  import WIDGETS_NS from '@scaife-viewer/scaife-widgets';
   import {
     SET_DISPLAY_MODE_INTERLINEAR,
     SET_DISPLAY_MODE_NAMED_ENTITIES,
     SET_DISPLAY_MODE_FOLIO,
     SET_DISPLAY_MODE_DEFAULT,
+    SET_DISPLAY_MODE_METRICAL,
+    SET_DISPLAY_MODE_SENTENCE_ALIGNMENTS,
   } from '@/constants';
 
   export default {
@@ -30,42 +39,76 @@
       singleton: true,
     },
     computed: {
-      interlinear() {
-        return this.$store.state.displayMode === 'interlinear';
-      },
-      namedEntities() {
-        return this.$store.state.displayMode === 'named-entities';
-      },
-      folio() {
-        return this.$store.state.displayMode === 'folio';
-      },
-      defaultMode() {
-        return this.$store.state.displayMode === 'default';
-      },
       displayMode() {
         return this.$store.state.displayMode;
       },
+      interlinear() {
+        return this.displayMode === 'interlinear';
+      },
+      namedEntities() {
+        return this.displayMode === 'named-entities';
+      },
+      folio() {
+        return this.displayMode === 'folio';
+      },
+      defaultMode() {
+        return this.displayMode === 'default';
+      },
+      metrical() {
+        return this.displayMode === 'metrical';
+      },
+      sentence() {
+        return this.displayMode === 'sentence-alignments';
+      },
     },
     methods: {
-      setDefault() {
-        this.$store.dispatch(SET_DISPLAY_MODE_DEFAULT);
-        document.getElementsByClassName('main-layout')[0]
-          .classList.remove('main-layout-wide');
-      },
-      setInterlinear() {
-        this.$store.dispatch(SET_DISPLAY_MODE_INTERLINEAR);
-        document.getElementsByClassName('main-layout')[0]
-          .classList.remove('main-layout-wide');
-      },
-      setFolio() {
-        this.$store.dispatch(SET_DISPLAY_MODE_FOLIO);
+      setWideLayout() {
         document.getElementsByClassName('main-layout')[0]
           .classList.add('main-layout-wide');
       },
-      setNamedEntities() {
-        this.$store.dispatch(SET_DISPLAY_MODE_NAMED_ENTITIES);
+      setNormalLayout() {
         document.getElementsByClassName('main-layout')[0]
           .classList.remove('main-layout-wide');
+      },
+      setWideText() {
+        this.$store.dispatch(`${WIDGETS_NS}/setTextWidth`, {
+          width: 'wide',
+        });
+      },
+      setNormalText() {
+        this.$store.dispatch(`${WIDGETS_NS}/setTextWidth`, {
+          width: 'normal',
+        });
+      },
+      setDefault() {
+        this.$store.dispatch(SET_DISPLAY_MODE_DEFAULT);
+        this.setNormalLayout();
+        this.setNormalText()
+      },
+      setInterlinear() {
+        this.$store.dispatch(SET_DISPLAY_MODE_INTERLINEAR);
+        this.setNormalLayout();
+        this.setNormalText()
+      },
+      setFolio() {
+        this.$store.dispatch(SET_DISPLAY_MODE_FOLIO);
+        this.setWideLayout();
+        this.setNormalText()
+      },
+      setNamedEntities() {
+        this.$store.dispatch(SET_DISPLAY_MODE_NAMED_ENTITIES);
+        this.setNormalLayout();
+        this.setNormalText()
+      },
+      setMetrical() {
+        this.$store.dispatch(SET_DISPLAY_MODE_METRICAL);
+        this.setNormalLayout();
+        this.setWideText();
+      },
+      setSentence() {
+        this.$store.dispatch(SET_DISPLAY_MODE_SENTENCE_ALIGNMENTS);
+        this.setWideLayout();
+        this.setNormalText()
       },
     },
   };

@@ -5,7 +5,8 @@
     </section>
     <div class="line u-flex" v-else>
       <div class="line-ref">{{ line.ref }}</div>
-      <div class="line-text">
+      <div class="line-text metrical" v-if="metrical" v-html="metricalHtml" />
+      <div class="line-text" v-else>
         <ReaderToken
           v-for="token in tokens"
           :key="token.veRef"
@@ -28,6 +29,17 @@
       },
       interlinear() {
         return this.$store.state.displayMode === 'interlinear';
+      },
+      metricalHtml() {
+        return (
+          this.line.metricalAnnotations[0] &&
+          this.line.metricalAnnotations[0].htmlContent
+        );
+      },
+      metrical() {
+        return (
+          this.$store.state.displayMode === 'metrical' && this.metricalHtml
+        );
       },
     },
   };
@@ -52,5 +64,45 @@
 
   .tokens {
     margin: 20px 0;
+  }
+</style>
+
+<style lang="scss">
+  .metrical {
+    span.foot {
+      box-sizing: border-box;
+    }
+    span.syll {
+      box-sizing: border-box;
+    }
+
+    /* show foot and syllable divisions */
+
+    li div {
+      word-spacing: 0.6em;
+    }
+    span.syll {
+      padding: 1px 3px;
+    }
+    span.syll:first-child {
+      border-left: 2px solid black;
+    }
+    span.syll.caesura:first-child {
+      border-left: 3px solid blue;
+    }
+    span.syll:not(:first-child) {
+      border-left: 1px dotted black;
+    }
+    span.syll.caesura:not(:first-child) {
+      border-left: 3px dotted blue;
+    }
+
+    /* show syllable length */
+    span.syll.long {
+      background-color: #CCC;
+    }
+    span.syll:not(.long) {
+      background-color: #EEE;
+    }
   }
 </style>

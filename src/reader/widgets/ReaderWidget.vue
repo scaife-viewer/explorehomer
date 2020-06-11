@@ -14,6 +14,12 @@
             No image annotations were found for the selected passage.
           </div>
         </template>
+        <Alignments
+          v-else-if="alignmentMode"
+          :alignments="alignments"
+          :textSize="textSize"
+          :textWidth="textWidth"
+        />
         <Reader
           v-else
           :lines="lines"
@@ -31,6 +37,7 @@
 
   import WIDGETS_NS, { URN } from '@scaife-viewer/scaife-widgets';
   import Reader from '@/reader/components/Reader.vue';
+  import Alignments from '@/reader/components/Alignments.vue';
   import ImageViewer from '@/components/ImageViewer.vue';
   import Paginator from '@/components/Paginator.vue';
   import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
@@ -38,6 +45,7 @@
 
   export default {
     components: {
+      Alignments,
       Paginator,
       Reader,
       ImageViewer,
@@ -68,6 +76,9 @@
       }
     },
     computed: {
+      alignmentMode() {
+        return this.$store.state.displayMode === 'sentence-alignments';
+      },
       imageMode() {
         return this.$store.state.displayMode === 'folio';
       },
@@ -98,6 +109,14 @@
                   kind
                   urn
                   ref
+                  metricalAnnotations {
+                    edges {
+                      node {
+                        metricalPattern
+                        htmlContent
+                      }
+                    }
+                  }
                   tokens {
                     edges {
                       node {
@@ -122,6 +141,13 @@
               pageInfo {
                 hasNextPage
                 endCursor
+              }
+            }
+            textAlignmentChunks(reference: "${this.urn}") {
+              edges {
+                node {
+                  items
+                }
               }
             }
             imageAnnotations(reference: "${this.urn}") {
@@ -156,12 +182,18 @@
       textWidth() {
         return this.$store.getters[`${WIDGETS_NS}/readerTextWidth`];
       },
+      alignments() {
+        if (!this.gqlData) {
+          return [];
+        }
+        return this.gqlData.textAlignmentChunks.edges.map(e => e.node.items);
+      },
       lines() {
         if (!this.gqlData) {
           return [];
         }
         return this.gqlData.passageTextParts.edges.map(line => {
-          const { id, kind, ref } = line.node;
+          const { id, kind, ref, metricalAnnotations } = line.node;
           const tokens = line.node.tokens.edges.map(edge => {
             const {
               value,
@@ -183,7 +215,13 @@
               entities,
             };
           });
-          return { id, kind, ref, tokens };
+          return {
+            id,
+            kind,
+            ref,
+            tokens,
+            metricalAnnotations: metricalAnnotations.edges.map(e => e.node),
+          };
         });
       },
       siblings() {
