@@ -1,2 +1,4 @@
 [context."master".environment]
   VUE_APP_ATLAS_GRAPHQL_ENDPOINT = "https://explorehomer-atlas.scaife-viewer.org/graphql/"
+[context."place-ne".environment]
+  VUE_APP_ATLAS_GRAPHQL_ENDPOINT = "https://explorehomer-feature-ge-xej0vl.herokuapp.com/graphql/"
