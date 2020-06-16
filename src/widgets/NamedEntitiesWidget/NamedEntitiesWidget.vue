@@ -83,6 +83,8 @@
                   title
                   description
                   url
+                  kind
+                  data
                 }
               }
             }

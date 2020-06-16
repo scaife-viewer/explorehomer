@@ -1,7 +1,10 @@
 <template>
   <div class="named-entity" :class="{ selected }">
     <div class="named-entity-title" @click.prevent="$emit('select', entity)">
-      <span>{{ entity.title }}</span>
+      <span>
+        <icon class="icon" v-if="iconName" :name="iconName" />
+        {{ entity.title }}
+      </span>
       <span v-if="selected">x</span>
     </div>
     <div class="named-entity-body" v-if="selected">
@@ -12,6 +15,10 @@
 </template>
 
 <script>
+  const iconMap = {
+    PERSON: 'user',
+    PLACE: 'map-marker-alt',
+  };
   export default {
     props: {
       entity: {
@@ -20,6 +27,9 @@
       },
     },
     computed: {
+      iconName() {
+        return iconMap[this.entity.kind];
+      },
       selected() {
         return (
           this.$store.state.selectedNamedEntities.filter(
@@ -41,6 +51,12 @@
      .named-entity-description {
        color: $gray-700;
      }
+     .icon {
+       color: $gray-800;
+     }
+  }
+  .icon {
+    color: $gray-600;
   }
   .named-entity {
     margin: 0.375rem 0;
