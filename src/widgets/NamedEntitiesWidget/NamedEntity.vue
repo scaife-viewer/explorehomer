@@ -10,11 +10,25 @@
     <div class="named-entity-body" v-if="selected">
       <div class="named-entity-description">{{ entity.description }}</div>
       <a :href="entity.url" target="_blank">Read More</a>
+      <div class="map" v-if="place">
+        <MglMap
+          :accessToken="accessToken"
+          :mapStyle="mapStyle"
+          :zoom="10"
+          :center="center"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+  import Mapbox from 'mapbox-gl';
+  import { MglMap } from 'vue-mapbox';
+
+  const accessToken =
+    // eslint-disable-next-line max-len
+    'pk.eyJ1IjoicGFsdG1hbiIsImEiOiJja2JpNDVpbmUwOGF1MnJwZm91c3VybDVrIn0.KRcXBGtiUWFXkp2uaE5LLw';
   const iconMap = {
     PERSON: 'user',
     PLACE: 'map-marker-alt',
@@ -26,7 +40,27 @@
         required: true,
       },
     },
+    components: { MglMap },
+    created() {
+      this.mapbox = Mapbox;
+    },
     computed: {
+      place() {
+        return this.entity.kind === 'PLACE';
+      },
+      center() {
+        return (
+          this.entity.data &&
+          this.entity.data.coordinates &&
+          this.entity.data.coordinates.split(', ').map(c => parseFloat(c))
+        );
+      },
+      accessToken() {
+        return accessToken;
+      },
+      mapStyle() {
+        return 'mapbox://styles/paltman/ckbi4thqt156y1ijz5wldui14';
+      },
       iconName() {
         return iconMap[this.entity.kind];
       },
@@ -43,6 +77,9 @@
 
 <style lang="scss" scoped>
   @import '../../styles/variables';
+  .map {
+    height: 250px;
+  }
   .named-entity.selected {
    background: $gray-100;
    margin-left: -10px;
