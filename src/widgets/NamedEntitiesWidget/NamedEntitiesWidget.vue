@@ -83,6 +83,8 @@
                   title
                   description
                   url
+                  kind
+                  data
                 }
               }
             }
@@ -105,6 +107,8 @@
     },
   };
 </script>
+
+<style src="mapbox-gl/dist/mapbox-gl.css"></style>
 
 <style lang="scss" scoped>
   @import '../../styles/variables';
