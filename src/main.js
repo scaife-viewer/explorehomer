@@ -3,6 +3,7 @@ import {
   faChevronLeft,
   faChevronDown,
   faChevronRight,
+  faVolumeUp,
 } from '@fortawesome/free-solid-svg-icons';
 
 import SkeletonPlugin from 'scaife-skeleton';
@@ -13,7 +14,12 @@ import App from '@/App.vue';
 import router from '@/router';
 import store from '@/store';
 
-const iconMap = [faChevronLeft, faChevronDown, faChevronRight].reduce(
+const iconMap = [
+  faChevronLeft,
+  faChevronDown,
+  faChevronRight,
+  faVolumeUp]
+.reduce(
   (map, obj) => {
     // eslint-disable-next-line no-param-reassign
     map[obj.iconName] = obj;

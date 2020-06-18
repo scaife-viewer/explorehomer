@@ -1,8 +1,5 @@
 <template>
-  <div class="audio-widget" :class="audioOn ? 'audio-on' : 'audio-off'">
-    <button @click.prevent="audioOn = !audioOn">
-      Turn {{ audioOn ? 'Off' : 'On' }}
-    </button>
+  <div class="audio-widget">
     <audio
       ref="sound"
       controls
@@ -20,27 +17,19 @@
   import { URN } from '@scaife-viewer/scaife-widgets';
   import { MODULE_NS } from '@/reader/constants';
 
+  import { PLAY_AUDIO, STOP_AUDIO } from '@/constants';
+
   export default {
     scaifeConfig: {
       displayName: 'Audio',
     },
     data() {
       return {
-        audioOn: false,
         nowPlayingIndex: 0,
         currentTime: 0,
       };
     },
-    watch: {
-      audioOn: {
-        immediate: true,
-        handler() {
-          if (this.audioOn) {
-            this.start();
-          }
-        },
-      },
-    },
+    watch: {},
     methods: {
       start() {
         this.$refs.sound.play();
@@ -51,7 +40,12 @@
       onTimeUpdate() {
         this.currentTime = this.$refs.sound.currentTime;
       },
+      onStarted() {
+        const ref = this.audios[this.nowPlayingIndex].data.references[0];
+        this.$store.dispatch(PLAY_AUDIO, { ref });
+      },
       onEnded() {
+        this.$store.dispatch(STOP_AUDIO);
         if (this.nowPlayingIndex < this.audios.length - 1) {
           this.nowPlayingIndex += 1;
           this.$nextTick(() => {
@@ -64,6 +58,7 @@
       this.$nextTick(() => {
         this.$refs.sound.addEventListener('timeupdate', this.onTimeUpdate);
         this.$refs.sound.addEventListener('ended', this.onEnded);
+        this.$refs.sound.addEventListener('play', this.onStarted);
       });
     },
     beforeDestroy() {

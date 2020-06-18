@@ -4,4 +4,5 @@ export default {
   libraryTree: null,
   displayMode: 'default',
   selectedNamedEntities: [],
+  nowPlaying: null,
 };

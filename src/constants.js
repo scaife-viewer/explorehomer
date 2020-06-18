@@ -12,3 +12,5 @@ export const SET_DISPLAY_MODE_SENTENCE_ALIGNMENTS =
   'setDisplayModeSentenceAlignments';
 export const SELECT_NAMED_ENTITIES = 'selectNamedEntities';
 export const CLEAR_NAMED_ENTITIES = 'clearNamedEntities';
+export const PLAY_AUDIO = 'playAudio';
+export const STOP_AUDIO = 'stopAudio';

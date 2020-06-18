@@ -10,9 +10,17 @@ import {
   SET_DISPLAY_MODE_DEFAULT,
   SELECT_NAMED_ENTITIES,
   CLEAR_NAMED_ENTITIES,
+  STOP_AUDIO,
+  PLAY_AUDIO,
 } from '@/constants';
 
 export default {
+  [STOP_AUDIO]: state => {
+    state.nowPlaying = null;
+  },
+  [PLAY_AUDIO]: (state, ref) => {
+    state.nowPlaying = ref;
+  },
   [SELECT_NAMED_ENTITIES]: (state, entities) => {
     state.selectedNamedEntities = entities;
   },
