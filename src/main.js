@@ -4,6 +4,8 @@ import {
   faChevronDown,
   faChevronRight,
   faVolumeUp,
+  faUser,
+  faMapMarkerAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
 import SkeletonPlugin from 'scaife-skeleton';
@@ -18,15 +20,15 @@ const iconMap = [
   faChevronLeft,
   faChevronDown,
   faChevronRight,
-  faVolumeUp]
-.reduce(
-  (map, obj) => {
-    // eslint-disable-next-line no-param-reassign
-    map[obj.iconName] = obj;
-    return map;
-  },
-  {},
-);
+  faVolumeUp,
+  faUser,
+  faMapMarkerAlt,
+].reduce((map, obj) => {
+  return {
+    ...map,
+    [obj.iconName]: obj,
+  };
+}, {});
 
 Vue.use(SkeletonPlugin, { iconMap });
 Vue.use(GraphQLPlugin);
