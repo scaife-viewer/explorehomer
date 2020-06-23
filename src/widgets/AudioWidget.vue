@@ -29,7 +29,22 @@
         currentTime: 0,
       };
     },
-    watch: {},
+    watch: {
+      currentSelection: {
+        immediate: true,
+        handler() {
+          if (this.currentSelection !== null) {
+            const index = this.audios.findIndex(a => {
+              return a.data.references[0] === this.currentSelection;
+            });
+            if (index > -1) {
+              this.nowPlayingIndex = index;
+              this.$nextTick(() => this.start());
+            }
+          }
+        },
+      },
+    },
     methods: {
       start() {
         this.$refs.sound.play();
@@ -67,6 +82,9 @@
       this.$refs.sound.removeEventListener('ended', this.onEnded);
     },
     computed: {
+      currentSelection() {
+        return this.$store.state.selectedLine;
+      },
       nowPlaying() {
         if (this.nowPlayingIndex >= this.audios.length) {
           return null;

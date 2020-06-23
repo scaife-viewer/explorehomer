@@ -4,7 +4,7 @@
       <ReaderToken v-for="token in tokens" :key="token.veRef" :token="token" />
     </section>
     <div class="line u-flex" v-else>
-      <div class="line-ref">
+      <div class="line-ref" @click="onLineSelect">
         <icon v-if="playingAudio" name="volume-up" />
         {{ line.ref }}
       </div>
@@ -21,12 +21,24 @@
 </template>
 
 <script>
+  import { URN } from '@scaife-viewer/scaife-widgets';
+  import { SELECT_LINE } from '@/constants';
   import ReaderToken from './ReaderToken.vue';
 
   export default {
     props: ['line'],
     components: { ReaderToken },
+    methods: {
+      onLineSelect() {
+        this.$store.dispatch(SELECT_LINE, {
+          ref: `${this.urn.version}${this.line.ref}`,
+        });
+      },
+    },
     computed: {
+      urn() {
+        return this.$route.query.urn ? new URN(this.$route.query.urn) : null;
+      },
       playingAudio() {
         if (this.$store.state.nowPlaying === null) {
           return false;
@@ -70,6 +82,7 @@
       min-width: 4em;
       margin-left: 1em;
       text-align: right;
+      cursor: pointer;
       > svg {
         margin-left: -10px;
         margin-right: 10px;

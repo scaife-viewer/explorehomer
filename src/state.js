@@ -5,4 +5,5 @@ export default {
   displayMode: 'default',
   selectedNamedEntities: [],
   nowPlaying: null,
+  selectedLine: null,
 };

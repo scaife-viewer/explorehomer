@@ -14,3 +14,4 @@ export const SELECT_NAMED_ENTITIES = 'selectNamedEntities';
 export const CLEAR_NAMED_ENTITIES = 'clearNamedEntities';
 export const PLAY_AUDIO = 'playAudio';
 export const STOP_AUDIO = 'stopAudio';
+export const SELECT_LINE = 'selectLine';

@@ -12,9 +12,13 @@ import {
   CLEAR_NAMED_ENTITIES,
   STOP_AUDIO,
   PLAY_AUDIO,
+  SELECT_LINE,
 } from '@/constants';
 
 export default {
+  [SELECT_LINE]: (state, ref) => {
+    state.selectedLine = ref;
+  },
   [STOP_AUDIO]: state => {
     state.nowPlaying = null;
   },
