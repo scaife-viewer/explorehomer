@@ -1,17 +1,20 @@
 <template>
   <div class="named-entities">
-    <Lookahead
-      placeholder="Filter named entities"
-      :reducer="lookaheadReducer"
-      :data="entities"
-      @filter-data="onFilter"
-    />
-    <NamedEntity
-      v-for="entity in filteredEntities"
-      :key="entity.id"
-      :entity="entity"
-      @select="onSelect"
-    />
+    <div v-if="entities.length === 0">No named entities</div>
+    <template v-else>
+      <Lookahead
+        placeholder="Filter named entities"
+        :reducer="lookaheadReducer"
+        :data="entities"
+        @filter-data="onFilter"
+      />
+      <NamedEntity
+        v-for="entity in filteredEntities"
+        :key="entity.id"
+        :entity="entity"
+        @select="onSelect"
+      />
+    </template>
   </div>
 </template>
 

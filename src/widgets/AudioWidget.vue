@@ -8,7 +8,8 @@
     >
       No audio support
     </audio>
-    <small class="audio-attribution">
+    <div v-if="nowPlaying === null">No audio available</div>
+    <small v-else class="audio-attribution">
       <!-- @@@ extract attribution from audio annotations  -->
       &copy; 2016
       <a href="https://hypotactic.com/" target="_blank">David Chamberlain</a>

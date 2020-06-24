@@ -1,6 +1,7 @@
 <template>
   <table class="selected-tokens">
-    <tr colspan="3" v-if="selectedToken">
+    <tr v-if="tokens.length === 0">No annotations</tr>
+    <tr colspan="3" v-else-if="selectedToken">
       <a href @click.prevent="onClear">Clear Filter</a>
     </tr>
     <tr v-for="token in tokens" :key="token.veRef">
