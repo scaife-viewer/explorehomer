@@ -19,6 +19,11 @@
         <p>{{ errorMessage }}</p>
       </div>
     </div>
+    <small class="attribution">
+      <a href="http://www.homermultitext.org" target="_blank">
+        Homer Multitext Project / Center for Hellenic Studies
+      </a>
+    </small>
   </div>
 </template>
 

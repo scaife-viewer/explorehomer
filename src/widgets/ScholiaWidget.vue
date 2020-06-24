@@ -1,10 +1,17 @@
 <template>
   <div class="scholia">
     <div v-if="!lines">No commentary found.</div>
-    <div v-for="line in lines" :key="line.idx" class="line">
-      <span class="lemma">{{ line.lemma }} </span>
-      <span class="comment">{{ line.comment }}</span>
-    </div>
+    <template v-else>
+      <div v-for="line in lines" :key="line.idx" class="line">
+        <span class="lemma">{{ line.lemma }} </span>
+        <span class="comment">{{ line.comment }}</span>
+      </div>
+      <small class="attribution">
+        <a href="http://www.homermultitext.org" target="_blank">
+          Homer Multitext Project / Center for Hellenic Studies
+        </a>
+      </small>
+    </template>
   </div>
 </template>
 
