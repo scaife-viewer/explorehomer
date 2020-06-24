@@ -137,6 +137,7 @@
             passageTextParts(reference: "${this.urn}") {
               edges {
                 node {
+                  id
                   audioAnnotations {
                     edges {
                       node {
