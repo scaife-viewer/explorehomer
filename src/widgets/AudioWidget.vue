@@ -8,6 +8,7 @@
     >
       No audio support
     </audio>
+    <small>{{ attribution }}</small>
   </div>
 </template>
 
@@ -85,11 +86,17 @@
       currentSelection() {
         return this.$store.state.selectedLine;
       },
-      nowPlaying() {
+      audio() {
         if (this.nowPlayingIndex >= this.audios.length) {
           return null;
         }
-        return this.audios[this.nowPlayingIndex].assetUrl;
+        return this.audios[this.nowPlayingIndex];
+      },
+      nowPlaying() {
+        return this.audio && this.audio.assetUrl;
+      },
+      attribution() {
+        return this.audio && this.audio.data.attribution;
       },
       sound() {
         return this.$refs.sound;
