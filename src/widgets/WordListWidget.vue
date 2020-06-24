@@ -37,7 +37,7 @@
         if (this.selectedToken === null) {
           return this.wordList;
         }
-        return this.wordList.filter(w => w.text === this.selectedToken.value);
+        return this.wordList.filter(w => w.text === this.selectedToken.lemma);
       },
       enabled() {
         // TODO: Stubbed until metadata ingestion update.
