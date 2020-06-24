@@ -3,6 +3,7 @@ import {
   faChevronLeft,
   faChevronDown,
   faChevronRight,
+  faVolumeUp,
   faUser,
   faMapMarkerAlt,
 } from '@fortawesome/free-solid-svg-icons';
@@ -19,12 +20,14 @@ const iconMap = [
   faChevronLeft,
   faChevronDown,
   faChevronRight,
+  faVolumeUp,
   faUser,
   faMapMarkerAlt,
 ].reduce((map, obj) => {
-  // eslint-disable-next-line no-param-reassign
-  map[obj.iconName] = obj;
-  return map;
+  return {
+    ...map,
+    [obj.iconName]: obj,
+  };
 }, {});
 
 Vue.use(SkeletonPlugin, { iconMap });

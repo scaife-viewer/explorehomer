@@ -10,9 +10,21 @@ import {
   SET_DISPLAY_MODE_DEFAULT,
   SELECT_NAMED_ENTITIES,
   CLEAR_NAMED_ENTITIES,
+  STOP_AUDIO,
+  PLAY_AUDIO,
+  SELECT_LINE,
 } from '@/constants';
 
 export default {
+  [SELECT_LINE]: (state, ref) => {
+    state.selectedLine = ref;
+  },
+  [STOP_AUDIO]: state => {
+    state.nowPlaying = null;
+  },
+  [PLAY_AUDIO]: (state, ref) => {
+    state.nowPlaying = ref;
+  },
   [SELECT_NAMED_ENTITIES]: (state, entities) => {
     state.selectedNamedEntities = entities;
   },
