@@ -26,6 +26,7 @@
   import DisplayModeWidget from '@/widgets/DisplayModeWidget.vue';
   import ScholiaWidget from '@/widgets/ScholiaWidget.vue';
   import WordListWidget from '@/widgets/WordListWidget.vue';
+  import AudioWidget from '@/widgets/AudioWidget.vue';
   import { FETCH_METADATA, FETCH_LIBRARY } from '@/constants';
 
   export default {
@@ -52,6 +53,7 @@
           MetadataWidget,
           TextSizeWidget,
           TextWidthWidget,
+          AudioWidget,
           DisplayModeWidget,
           NamedEntitiesWidget,
           TokenAnnotationWidget,
