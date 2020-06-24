@@ -8,7 +8,15 @@
     >
       No audio support
     </audio>
-    <small>{{ attribution }}</small>
+    <small class="audio-attribution">
+      <!-- @@@ extract attribution from audio annotations  -->
+      &copy; 2016
+      <a href="https://hypotactic.com/" target="_blank">David Chamberlain</a>
+      under
+      <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank"
+        >CC BY 4.0 License</a
+      >
+    </small>
   </div>
 </template>
 
@@ -145,7 +153,7 @@
         return null;
       },
     },
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
