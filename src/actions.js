@@ -14,9 +14,21 @@ import {
   SET_DISPLAY_MODE_DEFAULT,
   SELECT_NAMED_ENTITIES,
   CLEAR_NAMED_ENTITIES,
+  PLAY_AUDIO,
+  STOP_AUDIO,
+  SELECT_LINE,
 } from '@/constants';
 
 export default {
+  [SELECT_LINE]: ({ commit }, { ref }) => {
+    commit(SELECT_LINE, ref);
+  },
+  [STOP_AUDIO]: ({ commit }) => {
+    commit(STOP_AUDIO);
+  },
+  [PLAY_AUDIO]: ({ commit }, { ref }) => {
+    commit(PLAY_AUDIO, ref);
+  },
   [SELECT_NAMED_ENTITIES]: ({ commit }, { entities }) => {
     commit(SELECT_NAMED_ENTITIES, entities);
   },

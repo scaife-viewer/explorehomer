@@ -1,10 +1,13 @@
 <template>
-  <div class="reader-line">
+  <div class="reader-line" :class="{ 'playing-audio': playingAudio }">
     <section class="tokens" v-if="interlinear">
       <ReaderToken v-for="token in tokens" :key="token.veRef" :token="token" />
     </section>
     <div class="line u-flex" v-else>
-      <div class="line-ref">{{ line.ref }}</div>
+      <div class="line-ref" @click="onLineSelect">
+        <icon v-if="playingAudio" name="volume-up" />
+        {{ line.ref }}
+      </div>
       <div class="line-text metrical" v-if="metrical" v-html="metricalHtml" />
       <div class="line-text" v-else>
         <ReaderToken
@@ -18,12 +21,32 @@
 </template>
 
 <script>
+  import { URN } from '@scaife-viewer/scaife-widgets';
+  import { SELECT_LINE } from '@/constants';
   import ReaderToken from './ReaderToken.vue';
 
   export default {
     props: ['line'],
     components: { ReaderToken },
+    methods: {
+      onLineSelect() {
+        this.$store.dispatch(SELECT_LINE, {
+          ref: `${this.urn.version}${this.line.ref}`,
+        });
+      },
+    },
     computed: {
+      urn() {
+        return this.$route.query.urn ? new URN(this.$route.query.urn) : null;
+      },
+      playingAudio() {
+        if (this.$store.state.nowPlaying === null) {
+          return false;
+        }
+        const parts = this.$store.state.nowPlaying.split(':');
+        const ref = parts[parts.length - 1];
+        return this.line.ref === ref;
+      },
       tokens() {
         return this.line.tokens;
       },
@@ -46,6 +69,9 @@
 </script>
 
 <style lang="scss" scoped>
+  .playing-audio {
+      background: $gray-200;
+  }
   .line {
     display: flex;
     align-items: baseline;
@@ -56,6 +82,12 @@
       min-width: 4em;
       margin-left: 1em;
       text-align: right;
+      cursor: pointer;
+      > svg {
+        margin-left: -10px;
+        margin-right: 10px;
+        color: $gray-700;
+      }
     }
     .line-text {
       margin-left: 1em;
