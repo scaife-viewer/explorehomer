@@ -18,7 +18,6 @@
     TextSizeWidget,
     TextWidthWidget,
     // TOCWidget,
-    // WordListWidget,
   } from '@scaife-viewer/scaife-widgets';
   import ReaderWidget from '@/reader/widgets/ReaderWidget.vue';
   import TokenAnnotationWidget from '@/widgets/TokenAnnotationWidget.vue';
