@@ -32,7 +32,10 @@
   export default {
     name: 'ReaderView',
     beforeCreate() {
-      this.$store.dispatch(FETCH_METADATA);
+      if (!this.$route.query.urn) {
+        // load the first version returned from ATLAS
+        this.$store.dispatch(FETCH_METADATA);
+      }
       this.$store.dispatch(FETCH_LIBRARY);
     },
     computed: {

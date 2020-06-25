@@ -60,6 +60,9 @@
       versionMetadata: {
         immediate: true,
         handler() {
+          if (!this.versionMetadata) {
+            this.setVersionMetadata();
+          }
           // @@@ determine if we want this hooked
           // further into scaife-skeleton
           document.querySelector(
@@ -78,11 +81,7 @@
         });
       }
       if (this.version !== this.urn.version) {
-        this.$store.dispatch(
-          UPDATE_METADATA,
-          { urn: this.urn.version },
-          { root: true },
-        );
+        this.setVersionMetadata();
       }
     },
     computed: {
@@ -253,6 +252,15 @@
           : null;
       },
     },
+    methods: {
+      setVersionMetadata() {
+        this.$store.dispatch(
+          UPDATE_METADATA,
+          { urn: this.urn.version },
+          { root: true },
+        );
+      },
+    },
   };
 </script>
 
@@ -279,4 +287,3 @@
     font-style: italic;
   }
 </style>
-
