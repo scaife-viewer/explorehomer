@@ -224,19 +224,19 @@
           };
         });
       },
-      siblings() {
-        return this.gqlData && this.gqlData.passageTextParts.metadata.siblings
-          ? this.gqlData.passageTextParts.metadata.siblings
+      metadata() {
+        return this.gqlData && this.gqlData.passageTextParts.metadata
+          ? this.gqlData.passageTextParts.metadata
           : null;
       },
       previous() {
-        return this.siblings && this.siblings.previous
-          ? new URN(this.siblings.previous)
+        return this.metadata && this.metadata.previous
+          ? new URN(this.metadata.previous)
           : null;
       },
       next() {
-        return this.siblings && this.siblings.next
-          ? new URN(this.siblings.next)
+        return this.metadata && this.metadata.next
+          ? new URN(this.metadata.next)
           : null;
       },
     },
