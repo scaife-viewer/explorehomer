@@ -1,12 +1,13 @@
 <template>
   <div class="word-list-widget u-widget u-flex">
     <WordList v-if="filteredWordList.length > 0" :wordList="filteredWordList" />
-    <div v-else>No words</div>
+    <EmptyMessage v-else />
   </div>
 </template>
 
 <script>
   import WIDGETS_NS, { WordList } from '@scaife-viewer/scaife-widgets';
+  import EmptyMessage from '@/components/EmptyMessage.vue';
   import { MODULE_NS } from '@/reader/constants';
 
   export default {
@@ -15,6 +16,7 @@
       displayName: 'Word List',
     },
     components: {
+      EmptyMessage,
       WordList,
     },
     created() {

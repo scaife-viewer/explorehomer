@@ -1,6 +1,6 @@
 <template>
   <div class="named-entities">
-    <div v-if="entities.length === 0">No named entities</div>
+    <EmptyMessage v-if="entities.length === 0" />
     <template v-else>
       <Lookahead
         placeholder="Filter named entities"
@@ -23,6 +23,7 @@
   import { URN } from '@scaife-viewer/scaife-widgets';
   // eslint-disable-next-line max-len
   import Lookahead from '@scaife-viewer/scaife-widgets/src/components/Lookahead.vue';
+  import EmptyMessage from '@/components/EmptyMessage.vue';
   import { MODULE_NS } from '@/reader/constants';
   import { SELECT_NAMED_ENTITIES, CLEAR_NAMED_ENTITIES } from '../../constants';
   import NamedEntity from './NamedEntity.vue';
@@ -37,6 +38,7 @@
       };
     },
     components: {
+      EmptyMessage,
       Lookahead,
       NamedEntity,
     },

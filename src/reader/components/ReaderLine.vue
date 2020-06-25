@@ -8,16 +8,11 @@
         <icon v-if="playingAudio" name="volume-up" />
         {{ line.ref }}
       </div>
-      <template v-if="metricalMode">
-        <div
-          class="line-text metrical"
-          v-if="metricalHtml"
-          v-html="metricalHtml"
-        />
-        <div v-else class="line-text">
-          There aren't any metrical annotations for this line.
-        </div>
-      </template>
+      <div
+        class="line-text metrical"
+        v-if="metricalMode && metricalHtml"
+        v-html="metricalHtml"
+      />
       <div class="line-text" v-else>
         <ReaderToken
           v-for="token in tokens"

@@ -10,14 +10,10 @@
             v-if="imageIdentifier"
             :imageIdentifier="imageIdentifier"
           />
-          <div class="no-image-annotations" v-else>
-            No image annotations were found for the selected passage.
-          </div>
+          <EmptyMessage v-else />
         </template>
         <template v-else-if="alignmentMode">
-          <div v-if="alignments.length === 0">
-            There are no alignments for this passage.
-          </div>
+          <EmptyMessage v-if="alignments.length === 0" />
           <Alignments
             v-else
             :alignments="alignments"
@@ -43,6 +39,7 @@
   import WIDGETS_NS, { URN } from '@scaife-viewer/scaife-widgets';
   import Reader from '@/reader/components/Reader.vue';
   import Alignments from '@/reader/components/Alignments.vue';
+  import EmptyMessage from '@/components/EmptyMessage.vue';
   import ImageViewer from '@/components/ImageViewer.vue';
   import Paginator from '@/components/Paginator.vue';
   import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
@@ -51,6 +48,7 @@
   export default {
     components: {
       Alignments,
+      EmptyMessage,
       Paginator,
       Reader,
       ImageViewer,
@@ -265,10 +263,6 @@
       margin-left: auto;
       padding-top: 40px;
     }
-  }
-  .no-image-annotations {
-    font-size: 0.8em;
-    font-style: italic;
   }
 </style>
 

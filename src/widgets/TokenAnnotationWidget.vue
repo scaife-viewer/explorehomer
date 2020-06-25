@@ -1,6 +1,6 @@
 <template>
   <table class="selected-tokens">
-    <tr v-if="tokens.length === 0">No annotations</tr>
+    <tr v-if="tokens.length === 0"><EmptyMessage /></tr>
     <tr colspan="3" v-else-if="selectedToken">
       <a href @click.prevent="onClear">Clear Filter</a>
     </tr>
@@ -15,12 +15,14 @@
 <script>
   import gql from 'graphql-tag';
   import { URN } from '@scaife-viewer/scaife-widgets';
+  import EmptyMessage from '@/components/EmptyMessage.vue';
   import { MODULE_NS, CLEAR_TOKEN } from '@/reader/constants';
 
   export default {
     scaifeConfig: {
       displayName: 'Token Annotations',
     },
+    components: { EmptyMessage },
     methods: {
       onClear() {
         this.$store.dispatch(`${MODULE_NS}/${CLEAR_TOKEN}`);
