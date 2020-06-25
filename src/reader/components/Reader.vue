@@ -9,6 +9,16 @@
         :key="`${index}-${line.label}`"
         :line="line"
       />
+
+      <small v-if="showMetricalCredit" class="metrical-attribution">
+        <!-- @@@ extract attribution from audio annotations  -->
+        Metrical annotation &copy; 2016
+        <a href="https://hypotactic.com/" target="_blank">David Chamberlain</a>
+        under
+        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank"
+          >CC BY 4.0 License</a
+        >
+      </small>
     </div>
   </div>
 </template>
@@ -19,6 +29,16 @@
   export default {
     components: { ReaderLine },
     props: ['lines', 'textSize', 'textWidth'],
+    computed: {
+      showMetricalCredit() {
+        const metricalMode = this.$store.state.displayMode === 'metrical';
+        const hasContent = this.lines.filter(line => {
+          const { metricalAnnotations } = line;
+          return metricalAnnotations[0] && metricalAnnotations[0].htmlContent;
+        }).length > 0;
+        return metricalMode && hasContent;
+      }
+    }
   };
 </script>
 
@@ -66,6 +86,12 @@
   }
   .text-xl {
     font-size: 24px;
+  }
+
+  .metrical-attribution {
+    display: block;
+    margin-top: 1rem;
+    text-align: center;
   }
 
   // TODO: media queries for defaults?
