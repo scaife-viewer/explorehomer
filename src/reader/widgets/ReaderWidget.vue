@@ -57,6 +57,16 @@
           this.$parent.$el.scrollTop = 0;
         });
       },
+      versionMetadata: {
+        immediate: true,
+        handler() {
+          // @@@ determine if we want this hooked
+          // further into scaife-skeleton
+          document.querySelector(
+            '.main-widget-heading > span',
+          ).textContent = this.versionMetadata.label;
+        },
+      },
     },
     beforeUpdate() {
       if (this.urn && !this.$route.query.urn) {
@@ -223,6 +233,9 @@
             metricalAnnotations: metricalAnnotations.edges.map(e => e.node),
           };
         });
+      },
+      versionMetadata() {
+        return this.$store.state.metadata;
       },
       passageMetadata() {
         return this.gqlData && this.gqlData.passageTextParts.metadata
