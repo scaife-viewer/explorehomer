@@ -10,24 +10,24 @@
         :line="line"
       />
 
-      <small v-if="showMetricalCredit" class="metrical-attribution">
-        <!-- @@@ extract attribution from audio annotations  -->
+      <Attribution v-if="showMetricalCredit" class="metrical-attribution">
         Metrical annotation &copy; 2016
         <a href="https://hypotactic.com/" target="_blank">David Chamberlain</a>
         under
         <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank"
           >CC BY 4.0 License</a
         >
-      </small>
+      </Attribution>
     </div>
   </div>
 </template>
 
 <script>
+  import Attribution from '@/components/Attribution.vue';
   import ReaderLine from './ReaderLine.vue';
 
   export default {
-    components: { ReaderLine },
+    components: { Attribution, ReaderLine },
     props: ['lines', 'textSize', 'textWidth'],
     computed: {
       showMetricalCredit() {
@@ -89,7 +89,6 @@
   }
 
   .metrical-attribution {
-    display: block;
     margin-top: 1rem;
     text-align: center;
   }

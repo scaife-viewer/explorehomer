@@ -6,11 +6,11 @@
         <span class="lemma">{{ line.lemma }} </span>
         <span class="comment">{{ line.comment }}</span>
       </div>
-      <small class="attribution">
+      <Attribution>
         <a href="http://www.homermultitext.org" target="_blank">
           Homer Multitext Project / Center for Hellenic Studies
         </a>
-      </small>
+      </Attribution>
     </template>
   </div>
 </template>
@@ -18,6 +18,7 @@
 <script>
   import gql from 'graphql-tag';
   import { URN } from '@scaife-viewer/scaife-widgets';
+  import Attribution from '@/components/Attribution.vue';
   import { MODULE_NS } from '@/reader/constants';
 
   export default {
@@ -26,6 +27,7 @@
       location: 'sidebar',
       singleton: true,
     },
+    components: { Attribution },
     computed: {
       urn() {
         return this.$route.query.urn

@@ -19,16 +19,17 @@
         <p>{{ errorMessage }}</p>
       </div>
     </div>
-    <small class="attribution">
+    <Attribution>
       <a href="http://www.homermultitext.org" target="_blank">
         Homer Multitext Project / Center for Hellenic Studies
       </a>
-    </small>
+    </Attribution>
   </div>
 </template>
 
 <script>
   import OpenSeadragon from 'openseadragon';
+  import Attribution from '@/components/Attribution.vue';
 
   export default {
     props: ['imageIdentifier'],
@@ -39,6 +40,7 @@
         errorMessage: null,
       };
     },
+    components: { Attribution },
     watch: {
       imageIdentifier: {
         immediate: true,
