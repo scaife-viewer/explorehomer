@@ -9,7 +9,6 @@
 
 <script>
   import {
-    // LibraryWidget,
     MetadataWidget,
     NewAlexandriaWidget,
     PassageAncestorsWidget,
