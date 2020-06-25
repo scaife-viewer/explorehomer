@@ -1,6 +1,6 @@
 <template>
   <li>
-    <div class="node-container u-flex">
+    <div class="node-container u-flex" :class="{ highlight }">
       <template v-if="hasChildren">
         <span class="open-toggle" @click.prevent="toggle">
           <icon :name="icon" class="fa-xs" />
@@ -48,6 +48,9 @@
       },
     },
     computed: {
+      highlight() {
+        return this.readerUrn.version === this.urn;
+      },
       nodeUrnIndex() {
         return this.readerUrn.absolute.indexOf(
           this.urn.slice(0, this.urn.length - 1) // trim trailing colon
@@ -99,6 +102,9 @@
         color: $gray-700;
       }
     }
+  }
+  .highlight {
+    font-weight: 700;
   }
   .node {
     &.version {
