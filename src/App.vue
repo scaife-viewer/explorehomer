@@ -39,4 +39,7 @@
   a {
     color: $explorehomer-brand;
   }
+  div.passage-siblings-widget > .grid-cell-square > .active-sibling {
+    background-color: $explorehomer-brand;
+  }
 </style>
