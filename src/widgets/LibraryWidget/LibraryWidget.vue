@@ -52,9 +52,9 @@
   ul.node-tree {
     padding: 0;
     flex-wrap: nowrap;
-    margin-left: 0.33em;
+    margin-left: 1em;
     &.root {
-      margin: 0 0 0.33em 0;
+      margin: 0 0 0.92em 0;
     }
   }
 </style>

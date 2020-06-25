@@ -108,7 +108,7 @@
   }
   .node {
     &.version {
-      margin-left: 1em;
+      margin-left: 0.5em;
       font-size: 0.8em;
     }
     &.parent {
