@@ -1499,6 +1499,22 @@
     query-string "^6.11.0"
     vue "^2.6.10"
 
+"@scaife-viewer/scaife-widgets@git://github.com/scaife-viewer/scaife-widgets#077359cc14435964041a679e1cd4b37514f29afb":
+  version "0.13.1"
+  resolved "git://github.com/scaife-viewer/scaife-widgets#077359cc14435964041a679e1cd4b37514f29afb"
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^1.2.25"
+    "@fortawesome/free-solid-svg-icons" "^5.11.2"
+    "@fortawesome/vue-fontawesome" "^0.1.8"
+    "@vue/eslint-config-airbnb" "^5.0.0"
+    core-js "^3.3.2"
+    graphql "^14.5.8"
+    graphql-tag "^2.10.1"
+    lodash.debounce "^4.0.8"
+    node-sass "^4.13.0"
+    query-string "^6.11.0"
+    vue "^2.6.10"
+
 "@sinonjs/commons@^1.7.0":
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.7.2.tgz#505f55c74e0272b43f6c52d81946bed7058fc0e2"

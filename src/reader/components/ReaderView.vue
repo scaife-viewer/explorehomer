@@ -13,6 +13,7 @@
     MetadataWidget,
     NewAlexandriaWidget,
     PassageAncestorsWidget,
+    PassageSiblingsWidget,
     PassageChildrenWidget,
     PassageReferenceWidget,
     TextSizeWidget,
@@ -43,6 +44,7 @@
           LibraryWidget,
           PassageReferenceWidget,
           PassageAncestorsWidget,
+          PassageSiblingsWidget,
           PassageChildrenWidget,
           // TOCWidget,
         ];
