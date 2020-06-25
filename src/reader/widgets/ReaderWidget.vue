@@ -63,11 +63,13 @@
           if (!this.versionMetadata) {
             this.setVersionMetadata();
           }
-          // @@@ determine if we want this hooked
-          // further into scaife-skeleton
-          document.querySelector(
-            '.main-widget-heading > span',
-          ).textContent = this.versionMetadata.label;
+          else {
+            // @@@ determine if we want this hooked
+            // further into scaife-skeleton
+            document.querySelector(
+              '.main-widget-heading > span',
+            ).textContent = this.versionMetadata.label;
+          }
         },
       },
     },
