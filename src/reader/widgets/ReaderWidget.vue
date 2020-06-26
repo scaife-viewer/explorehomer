@@ -50,6 +50,7 @@
           </div>
           <div class="entity-mode-container">
             <Reader
+              class="entity-reader"
               :lines="lines"
               :textSize="textSize"
               :textWidth="textWidth"
@@ -347,19 +348,20 @@
     }
     &.map-direction-horizontal {
       .entity-mode-container {
-        flex-direction: column;
+        grid-template-columns: 1fr 1fr;
+        // flex-direction: column;
+        // max-height: calc(100vh - 100px);
         .map {
-          height: 300px;
-          width: 100%;
+          // flex: 1;
         }
       }
     }
     &.map-direction-vertical {
       .entity-mode-container {
-        flex-direction: row;
+        // flex-direction: row;
+        grid-template-rows: 1fr 1fr;
         .map {
-          height: 100vh;
-          flex: 1;
+          // flex: 1;
         }
       }
     }
@@ -370,7 +372,11 @@
       }
     }
     .entity-mode-container {
-      display: flex;
+      display: grid;
+      height: calc(100vh - 75px);
+      .entity-reader {
+        overflow-y: scroll;
+      }
       .map {
       }
     }
