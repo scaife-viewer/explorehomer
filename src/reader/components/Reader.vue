@@ -18,25 +18,45 @@
           >CC BY 4.0 License</a
         >
       </Attribution>
+      <EmptyMessage class="reader-empty-annotations" v-if="showMetricalEmpty" />
     </div>
   </div>
 </template>
 
 <script>
   import Attribution from '@/components/Attribution.vue';
+  import EmptyMessage from '@/components/EmptyMessage.vue';
   import ReaderLine from './ReaderLine.vue';
 
   export default {
-    components: { Attribution, ReaderLine },
+    components: { Attribution, EmptyMessage, ReaderLine },
     props: ['lines', 'textSize', 'textWidth'],
     computed: {
       showMetricalCredit() {
         const metricalMode = this.$store.state.displayMode === 'metrical';
-        const hasContent = this.lines.filter(line => {
-          const { metricalAnnotations } = line;
-          return metricalAnnotations[0] && metricalAnnotations[0].htmlContent;
-        }).length > 0;
+        const hasContent =
+          this.lines.filter(line => {
+            const { metricalAnnotations } = line;
+            return metricalAnnotations[0] && metricalAnnotations[0].htmlContent;
+          }).length > 0;
         return metricalMode && hasContent;
+      },
+      metricalMode() {
+        return this.$store.state.displayMode === 'metrical';
+      },
+      metricalLines() {
+        return this.lines.filter(line => {
+          const { metricalAnnotations } = line;
+          const annotation = metricalAnnotations[0];
+          const htmlContent = annotation && annotation.htmlContent;
+          return htmlContent !== undefined;
+        });
+      },
+      showMetricalEmpty() {
+        if (!this.metricalMode) {
+          return false;
+        }
+        return this.metricalLines.length === 0;
       }
     }
   };

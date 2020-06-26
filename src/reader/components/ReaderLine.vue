@@ -8,7 +8,11 @@
         <icon v-if="playingAudio" name="volume-up" />
         {{ line.ref }}
       </div>
-      <div class="line-text metrical" v-if="metrical" v-html="metricalHtml" />
+      <div
+        class="line-text metrical"
+        v-if="metricalMode && metricalHtml"
+        v-html="metricalHtml"
+      />
       <div class="line-text" v-else>
         <ReaderToken
           v-for="token in tokens"
@@ -59,10 +63,11 @@
           this.line.metricalAnnotations[0].htmlContent
         );
       },
+      metricalMode() {
+        return this.$store.state.displayMode === 'metrical';
+      },
       metrical() {
-        return (
-          this.$store.state.displayMode === 'metrical' && this.metricalHtml
-        );
+        return this.metricalMode && this.metricalHtml;
       },
     },
   };
