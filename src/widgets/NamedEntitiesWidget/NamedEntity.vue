@@ -16,7 +16,9 @@
           :mapStyle="mapStyle"
           :zoom="10"
           :center="center"
-        />
+        >
+          <MglMarker :coordinates="center" />
+        </MglMap>
       </div>
     </div>
   </div>
@@ -24,7 +26,7 @@
 
 <script>
   import Mapbox from 'mapbox-gl';
-  import { MglMap } from 'vue-mapbox';
+  import { MglMap, MglMarker } from 'vue-mapbox';
 
   const accessToken =
     // eslint-disable-next-line max-len
@@ -40,7 +42,7 @@
         required: true,
       },
     },
-    components: { MglMap },
+    components: { MglMap, MglMarker },
     created() {
       this.mapbox = Mapbox;
     },
