@@ -9,7 +9,6 @@
 
 <script>
   import {
-    LibraryWidget,
     MetadataWidget,
     NewAlexandriaWidget,
     PassageAncestorsWidget,
@@ -18,9 +17,9 @@
     TextSizeWidget,
     TextWidthWidget,
     // TOCWidget,
-    // WordListWidget,
   } from '@scaife-viewer/scaife-widgets';
   import ReaderWidget from '@/reader/widgets/ReaderWidget.vue';
+  import LibraryWidget from '@/widgets/LibraryWidget/LibraryWidget.vue';
   import TokenAnnotationWidget from '@/widgets/TokenAnnotationWidget.vue';
   import NamedEntitiesWidget from '@/widgets/NamedEntitiesWidget';
   import DisplayModeWidget from '@/widgets/DisplayModeWidget.vue';
