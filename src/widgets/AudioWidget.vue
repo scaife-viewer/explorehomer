@@ -8,7 +8,8 @@
     >
       No audio support
     </audio>
-    <small class="audio-attribution">
+    <EmptyMessage v-if="nowPlaying === null" />
+    <small v-else class="audio-attribution">
       <!-- @@@ extract attribution from audio annotations  -->
       &copy; 2016
       <a href="https://hypotactic.com/" target="_blank">David Chamberlain</a>
@@ -24,6 +25,7 @@
   import gql from 'graphql-tag';
 
   import { URN } from '@scaife-viewer/scaife-widgets';
+  import EmptyMessage from '@/components/EmptyMessage.vue';
   import { MODULE_NS } from '@/reader/constants';
 
   import { PLAY_AUDIO, STOP_AUDIO } from '@/constants';
@@ -32,6 +34,7 @@
     scaifeConfig: {
       displayName: 'Audio',
     },
+    components: { EmptyMessage },
     data() {
       return {
         nowPlayingIndex: 0,
