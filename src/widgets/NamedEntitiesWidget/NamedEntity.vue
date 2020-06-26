@@ -11,28 +11,15 @@
       <div class="named-entity-description">{{ entity.description }}</div>
       <a :href="entity.url" target="_blank">Read More</a>
       <div class="map" v-if="place">
-        <MglMap
-          :accessToken="accessToken"
-          :mapStyle="mapStyle"
-          :zoom="10"
-          :center="center"
-        >
-          <MglMarker :coordinates="center" />
-
-          <MglNavigationControl position="top-right" />
-        </MglMap>
+        <EntityMap :coordinates-list="[center]" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import Mapbox from 'mapbox-gl';
-  import { MglMap, MglMarker, MglNavigationControl } from 'vue-mapbox';
+  import EntityMap from '../../components/EntityMap.vue';
 
-  const accessToken =
-    // eslint-disable-next-line max-len
-    'pk.eyJ1IjoicGFsdG1hbiIsImEiOiJja2JpNDVpbmUwOGF1MnJwZm91c3VybDVrIn0.KRcXBGtiUWFXkp2uaE5LLw';
   const iconMap = {
     PERSON: 'user',
     PLACE: 'map-marker-alt',
@@ -44,14 +31,7 @@
         required: true,
       },
     },
-    components: {
-      MglMap,
-      MglMarker,
-      MglNavigationControl,
-    },
-    created() {
-      this.mapbox = Mapbox;
-    },
+    components: { EntityMap },
     computed: {
       place() {
         return this.entity.kind === 'PLACE';
@@ -62,12 +42,6 @@
           this.entity.data.coordinates &&
           this.entity.data.coordinates.split(', ').map(c => parseFloat(c))
         );
-      },
-      accessToken() {
-        return accessToken;
-      },
-      mapStyle() {
-        return 'mapbox://styles/paltman/ckbi4thqt156y1ijz5wldui14';
       },
       iconName() {
         return iconMap[this.entity.kind];

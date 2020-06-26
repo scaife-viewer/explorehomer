@@ -20,6 +20,45 @@
           :textSize="textSize"
           :textWidth="textWidth"
         />
+        <div
+          v-else-if="namedEntitiesMode"
+          class="entity-mode"
+          :class="`map-direction-${showMap ? showMap : 'none'}`"
+        >
+          <div class="toolbar">
+            <a
+              href
+              :class="{ active: showMap === null }"
+              @click.prevent="noMap"
+            >
+              No map
+            </a>
+            <a
+              href
+              :class="{ active: showMap === 'vertical' }"
+              @click.prevent="vMap"
+            >
+              Vertical Map
+            </a>
+            <a
+              href
+              :class="{ active: showMap === 'horizontal' }"
+              @click.prevent="hMap"
+            >
+              Horizontal Map
+            </a>
+          </div>
+          <div class="entity-mode-container">
+            <Reader
+              :lines="lines"
+              :textSize="textSize"
+              :textWidth="textWidth"
+            />
+            <div class="map" v-if="showMap">
+              <EntityMap :coordinates-list="coordinatesList" />
+            </div>
+          </div>
+        </div>
         <Reader
           v-else
           :lines="lines"
@@ -40,6 +79,7 @@
   import Alignments from '@/reader/components/Alignments.vue';
   import ImageViewer from '@/components/ImageViewer.vue';
   import Paginator from '@/components/Paginator.vue';
+  import EntityMap from '@/components/EntityMap.vue';
   import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
   import { MODULE_NS } from '@/reader/constants';
 
@@ -49,8 +89,25 @@
       Paginator,
       Reader,
       ImageViewer,
+      EntityMap,
     },
     scaifeConfig: {},
+    data() {
+      return {
+        showMap: null, // null | horizontal | vertical
+      };
+    },
+    methods: {
+      noMap() {
+        this.showMap = null;
+      },
+      vMap() {
+        this.showMap = 'vertical';
+      },
+      hMap() {
+        this.showMap = 'horizontal';
+      },
+    },
     watch: {
       urn() {
         this.$nextTick(() => {
@@ -82,6 +139,9 @@
       imageMode() {
         return this.$store.state.displayMode === 'folio';
       },
+      namedEntitiesMode() {
+        return this.$store.state.displayMode === 'named-entities';
+      },
       imageIdentifier() {
         return this.gqlData && this.gqlData.imageAnnotations.edges.length
           ? this.gqlData.imageAnnotations.edges[0].node.imageIdentifier
@@ -91,6 +151,18 @@
         return this.$route.query.urn
           ? new URN(this.$route.query.urn)
           : this.$store.getters[`${MODULE_NS}/firstPassageUrn`];
+      },
+      coordinatesList() {
+        return this.gqlData.passageTextParts.edges.map(e => {
+          return e.node.tokens.edges.map(te => {
+            return te.node.namedEntities.edges
+              .map(ne => ne.node)
+              .filter(n => n.kind === 'PLACE' && n.data.coordinates)
+              .map(n => {
+                return n.data.coordinates.split(', ').map(c => parseFloat(c));
+              });
+          });
+        }).flat().flat();
       },
       gqlQuery() {
         if (this.urn) {
@@ -130,6 +202,8 @@
                           edges {
                             node {
                               id
+                              kind
+                              data
                             }
                           }
                         }
@@ -264,6 +338,42 @@
   .no-image-annotations {
     font-size: 0.8em;
     font-style: italic;
+  }
+
+  .entity-mode {
+    flex: 1;
+    .map-direction-none {
+
+    }
+    &.map-direction-horizontal {
+      .entity-mode-container {
+        flex-direction: column;
+        .map {
+          height: 300px;
+          width: 100%;
+        }
+      }
+    }
+    &.map-direction-vertical {
+      .entity-mode-container {
+        flex-direction: row;
+        .map {
+          height: 100vh;
+          flex: 1;
+        }
+      }
+    }
+    .toolbar {
+      a.active {
+        font-weight: 700;
+        padding: 0 1rem;
+      }
+    }
+    .entity-mode-container {
+      display: flex;
+      .map {
+      }
+    }
   }
 </style>
 
