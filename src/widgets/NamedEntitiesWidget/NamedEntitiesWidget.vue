@@ -1,17 +1,20 @@
 <template>
   <div class="named-entities">
-    <Lookahead
-      placeholder="Filter named entities"
-      :reducer="lookaheadReducer"
-      :data="entities"
-      @filter-data="onFilter"
-    />
-    <NamedEntity
-      v-for="entity in filteredEntities"
-      :key="entity.id"
-      :entity="entity"
-      @select="onSelect"
-    />
+    <EmptyMessage v-if="entities.length === 0" />
+    <template v-else>
+      <Lookahead
+        placeholder="Filter named entities"
+        :reducer="lookaheadReducer"
+        :data="entities"
+        @filter-data="onFilter"
+      />
+      <NamedEntity
+        v-for="entity in filteredEntities"
+        :key="entity.id"
+        :entity="entity"
+        @select="onSelect"
+      />
+    </template>
   </div>
 </template>
 
@@ -20,6 +23,7 @@
   import { URN } from '@scaife-viewer/scaife-widgets';
   // eslint-disable-next-line max-len
   import Lookahead from '@scaife-viewer/scaife-widgets/src/components/Lookahead.vue';
+  import EmptyMessage from '@/components/EmptyMessage.vue';
   import { MODULE_NS } from '@/reader/constants';
   import { SELECT_NAMED_ENTITIES, CLEAR_NAMED_ENTITIES } from '../../constants';
   import NamedEntity from './NamedEntity.vue';
@@ -34,6 +38,7 @@
       };
     },
     components: {
+      EmptyMessage,
       Lookahead,
       NamedEntity,
     },
