@@ -9,7 +9,7 @@
       No audio support
     </audio>
     <EmptyMessage v-if="nowPlaying === null" />
-    <small v-else class="audio-attribution">
+    <Attribution v-else>
       <!-- @@@ extract attribution from audio annotations  -->
       &copy; 2016
       <a href="https://hypotactic.com/" target="_blank">David Chamberlain</a>
@@ -17,7 +17,7 @@
       <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank"
         >CC BY 4.0 License</a
       >
-    </small>
+    </Attribution>
   </div>
 </template>
 
@@ -29,12 +29,13 @@
   import { MODULE_NS } from '@/reader/constants';
 
   import { PLAY_AUDIO, STOP_AUDIO } from '@/constants';
+  import Attribution from '@/components/Attribution.vue';
 
   export default {
     scaifeConfig: {
       displayName: 'Audio',
     },
-    components: { EmptyMessage },
+    components: { Attribution, EmptyMessage },
     data() {
       return {
         nowPlayingIndex: 0,
