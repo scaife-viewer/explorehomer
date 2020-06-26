@@ -8,7 +8,7 @@
     >
       No audio support
     </audio>
-    <Attribution>
+    <Attribution v-if="nowPlaying">
       <!-- @@@ extract attribution from audio annotations  -->
       &copy; 2016
       <a href="https://hypotactic.com/" target="_blank">David Chamberlain</a>
