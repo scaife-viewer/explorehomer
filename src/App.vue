@@ -39,4 +39,10 @@
   a {
     color: $explorehomer-brand;
   }
+
+  .new-alexandria-widget {
+    font-family: $font-family-serif;
+    font-size: 14px;
+    line-height: 18px;
+  }
 </style>
