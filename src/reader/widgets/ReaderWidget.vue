@@ -10,10 +10,13 @@
             v-if="imageIdentifier"
             :imageIdentifier="imageIdentifier"
           />
-          <EmptyMessage v-else />
+          <EmptyMessage class="reader-empty-annotations" v-else />
         </template>
         <template v-else-if="alignmentMode">
-          <EmptyMessage v-if="alignments.length === 0" />
+          <EmptyMessage
+            class="reader-empty-annotations"
+            v-if="alignments.length === 0"
+          />
           <Alignments
             v-else
             :alignments="alignments"
@@ -266,3 +269,9 @@
   }
 </style>
 
+<style>
+ .reader-empty-annotations {
+   text-align: center;
+   margin-top: 1rem;
+ }
+</style>

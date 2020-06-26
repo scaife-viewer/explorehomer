@@ -10,7 +10,7 @@
         :line="line"
       />
 
-      <EmptyMessage v-if="showMetricalEmpty" />
+      <EmptyMessage class="reader-empty-annotations" v-if="showMetricalEmpty" />
     </div>
   </div>
 </template>
