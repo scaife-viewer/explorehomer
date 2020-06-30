@@ -6,6 +6,9 @@ import {
   faVolumeUp,
   faUser,
   faMapMarkerAlt,
+  faGripLines,
+  faGripLinesVertical,
+  faAlignJustify,
 } from '@fortawesome/free-solid-svg-icons';
 
 import SkeletonPlugin from 'scaife-skeleton';
@@ -23,6 +26,9 @@ const iconMap = [
   faVolumeUp,
   faUser,
   faMapMarkerAlt,
+  faGripLines,
+  faGripLinesVertical,
+  faAlignJustify,
 ].reduce((map, obj) => {
   return {
     ...map,

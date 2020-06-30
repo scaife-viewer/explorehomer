@@ -41,21 +41,21 @@
               :class="{ active: showMap === null }"
               @click.prevent="noMap"
             >
-              No map
+              <icon name="align-justify" />
             </a>
             <a
               href
               :class="{ active: showMap === 'vertical' }"
               @click.prevent="vMap"
             >
-              Vertical Map
+              <icon name="grip-lines" />
             </a>
             <a
               href
               :class="{ active: showMap === 'horizontal' }"
               @click.prevent="hMap"
             >
-              Horizontal Map
+              <icon name="grip-lines-vertical" />
             </a>
           </div>
           <div class="entity-mode-container">
@@ -378,9 +378,20 @@
       }
     }
     .toolbar {
+      a {
+        margin: 0 0.5rem;
+        padding: 0.25rem;
+        border-radius: 3px;
+        border: 1px solid transparent;
+      }
+      a:hover {
+        border-color: $explorehomer-brand;
+      }
       a.active {
         font-weight: 700;
-        padding: 0 1rem;
+        background: $explorehomer-brand;
+        color: $white;
+        border-color: transparent;
       }
     }
     .entity-mode-container {
