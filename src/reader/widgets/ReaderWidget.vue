@@ -1,6 +1,9 @@
 <template>
   <article class="u-flex">
     <section class="reader-left">
+      <h2 v-if="passageTitle" class="reader-heading main-widget-heading">
+        {{ passageTitle }}
+      </h2>
       <div class="reader-container u-flex">
         <Paginator :urn="previous" direction="left" />
         <LoaderBall v-if="gqlLoading" />
@@ -68,13 +71,6 @@
         handler() {
           if (!this.versionMetadata) {
             this.setVersionMetadata();
-          }
-          else {
-            // @@@ determine if we want this hooked
-            // further into scaife-skeleton
-            document.querySelector(
-              '.main-widget-heading > span',
-            ).textContent = this.versionMetadata.label;
           }
         },
       },
@@ -244,6 +240,9 @@
       versionMetadata() {
         return this.$store.state.metadata;
       },
+      passageTitle() {
+        return this.versionMetadata ? this.versionMetadata.label : null;
+      },
       passageMetadata() {
         return this.gqlData && this.gqlData.passageTextParts.metadata
           ? this.gqlData.passageTextParts.metadata
@@ -278,6 +277,9 @@
   }
   section {
     width: 100%;
+  }
+  .reader-heading {
+    flex: 1;
   }
   .reader-container {
     align-items: baseline;

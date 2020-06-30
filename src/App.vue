@@ -39,6 +39,11 @@
   div.main-layout > .widget {
     border-top: none;
   }
+  div.main-layout > .widget > .main-widget-heading {
+    // heading is currently unused, but the slot is defined
+    // in scaife-skeleton
+    display: none;
+  }
   a {
     color: $explorehomer-brand;
   }
