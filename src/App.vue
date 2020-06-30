@@ -44,5 +44,8 @@
     font-family: $font-family-serif;
     font-size: 14px;
     line-height: 18px;
+    .new-alexandria-container {
+      padding-right: 1rem;
+    }
   }
 </style>
