@@ -37,7 +37,6 @@
     methods: {
       onMapLoaded(event) {
         this.map = event.map;
-        console.log('fit bounds', this.coordinatesList);
         if (this.coordinatesList.length > 1) {
           this.map.fitBounds(this.coordinatesList);
         }
@@ -48,7 +47,6 @@
         immediate: true,
         handler() {
           this.$nextTick(() => {
-            console.log(this.map);
             if (this.map !== null) {
               if (this.coordinatesList.length > 1) {
                 this.map.fitBounds(this.coordinatesList);
