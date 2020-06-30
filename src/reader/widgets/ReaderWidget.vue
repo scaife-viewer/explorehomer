@@ -292,7 +292,7 @@
       padding-top: 40px;
     }
   }
-  .reader-empty-annotations {
+  ::v-deep .reader-empty-annotations {
     text-align: center;
     margin-top: 1rem;
   }
