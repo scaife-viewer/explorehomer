@@ -66,7 +66,7 @@
               :textWidth="textWidth"
             />
             <div class="map" v-if="showMap">
-              <EntityMap :coordinates-list="coordinatesList" />
+              <EntityMap :key="showMap" :coordinates-list="coordinatesList" />
             </div>
           </div>
         </div>
