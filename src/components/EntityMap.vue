@@ -41,7 +41,7 @@
         if (this.coordinatesList.length > 1) {
           this.map.fitBounds(this.coordinatesList);
         }
-      }
+      },
     },
     watch: {
       coordinatesList: {
@@ -55,7 +55,7 @@
               } else {
                 this.map.setCenter(this.coordinatesList[0]);
               }
-            };
+            }
           });
         },
       },
@@ -68,9 +68,7 @@
         return 'mapbox://styles/paltman/ckbi4thqt156y1ijz5wldui14';
       },
     },
-  }
+  };
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

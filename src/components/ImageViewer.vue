@@ -84,11 +84,11 @@
         const openHandler = () => {
           this.errorMessage = null;
           this.displayViewer = true;
-        }
+        };
         const openFailedHandler = err => {
           this.errorMessage = err.message;
           this.displayViewer = false;
-        }
+        };
         this.viewer.addHandler('open', openHandler, false);
         this.viewer.addHandler('open-failed', openFailedHandler, false);
       },
@@ -112,9 +112,9 @@
 
     .error {
       margin: 10px 0px;
-      padding:12px;
-      color: #D8000C;
-      background-color: #FFD2D2;
+      padding: 12px;
+      color: #d8000c;
+      background-color: #ffd2d2;
       vertical-align: middle;
       max-width: 40em;
     }

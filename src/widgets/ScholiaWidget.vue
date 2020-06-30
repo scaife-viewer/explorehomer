@@ -43,7 +43,7 @@
               comment: e.node.data.comment,
               lemma: e.node.data.lemma,
               references: e.node.data.references,
-            }
+            };
           })
         );
       },

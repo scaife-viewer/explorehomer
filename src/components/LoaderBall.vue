@@ -16,7 +16,7 @@
     background-color: #343a40;
   }
   .partial-loader {
-    margin-top: 1.0em;
+    margin-top: 1em;
     text-align: center;
     transform: translate3d(0, 0, 0);
   }

@@ -75,7 +75,7 @@
 
 <style lang="scss" scoped>
   .playing-audio {
-      background: $gray-200;
+    background: $gray-200;
   }
   .line {
     display: flex;
@@ -136,10 +136,10 @@
 
     /* show syllable length */
     span.syll.long {
-      background-color: #CCC;
+      background-color: #ccc;
     }
     span.syll:not(.long) {
-      background-color: #EEE;
+      background-color: #eee;
     }
   }
 </style>

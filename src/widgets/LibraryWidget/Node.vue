@@ -53,7 +53,7 @@
       },
       nodeUrnIndex() {
         return this.readerUrn.absolute.indexOf(
-          this.urn.slice(0, this.urn.length - 1) // trim trailing colon
+          this.urn.slice(0, this.urn.length - 1), // trim trailing colon
         );
       },
       readerUrn() {

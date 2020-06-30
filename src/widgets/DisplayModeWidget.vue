@@ -63,11 +63,13 @@
     },
     methods: {
       setWideLayout() {
-        document.getElementsByClassName('main-layout')[0]
+        document
+          .getElementsByClassName('main-layout')[0]
           .classList.add('main-layout-wide');
       },
       setNormalLayout() {
-        document.getElementsByClassName('main-layout')[0]
+        document
+          .getElementsByClassName('main-layout')[0]
           .classList.remove('main-layout-wide');
       },
       setWideText() {
@@ -83,22 +85,22 @@
       setDefault() {
         this.$store.dispatch(SET_DISPLAY_MODE_DEFAULT);
         this.setNormalLayout();
-        this.setNormalText()
+        this.setNormalText();
       },
       setInterlinear() {
         this.$store.dispatch(SET_DISPLAY_MODE_INTERLINEAR);
         this.setNormalLayout();
-        this.setNormalText()
+        this.setNormalText();
       },
       setFolio() {
         this.$store.dispatch(SET_DISPLAY_MODE_FOLIO);
         this.setWideLayout();
-        this.setNormalText()
+        this.setNormalText();
       },
       setNamedEntities() {
         this.$store.dispatch(SET_DISPLAY_MODE_NAMED_ENTITIES);
         this.setNormalLayout();
-        this.setNormalText()
+        this.setNormalText();
       },
       setMetrical() {
         this.$store.dispatch(SET_DISPLAY_MODE_METRICAL);
@@ -108,7 +110,7 @@
       setSentence() {
         this.$store.dispatch(SET_DISPLAY_MODE_SENTENCE_ALIGNMENTS);
         this.setWideLayout();
-        this.setNormalText()
+        this.setNormalText();
       },
     },
   };

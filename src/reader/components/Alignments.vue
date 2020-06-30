@@ -17,7 +17,7 @@
   export default {
     props: ['alignments', 'textSize', 'textWidth'],
     components: { Alignment },
-  }
+  };
 </script>
 
 <style lang="scss" scoped>

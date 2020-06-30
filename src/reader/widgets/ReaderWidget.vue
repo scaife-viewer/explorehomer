@@ -166,16 +166,19 @@
           : this.$store.getters[`${MODULE_NS}/firstPassageUrn`];
       },
       coordinatesList() {
-        return this.gqlData.passageTextParts.edges.map(e => {
-          return e.node.tokens.edges.map(te => {
-            return te.node.namedEntities.edges
-              .map(ne => ne.node)
-              .filter(n => n.kind === 'PLACE' && n.data.coordinates)
-              .map(n => {
-                return n.data.coordinates.split(', ').map(c => parseFloat(c));
-              });
-          });
-        }).flat().flat();
+        return this.gqlData.passageTextParts.edges
+          .map(e => {
+            return e.node.tokens.edges.map(te => {
+              return te.node.namedEntities.edges
+                .map(ne => ne.node)
+                .filter(n => n.kind === 'PLACE' && n.data.coordinates)
+                .map(n => {
+                  return n.data.coordinates.split(', ').map(c => parseFloat(c));
+                });
+            });
+          })
+          .flat()
+          .flat();
       },
       gqlQuery() {
         if (this.urn) {
@@ -356,7 +359,6 @@
   .entity-mode {
     flex: 1;
     .map-direction-none {
-
     }
     &.map-direction-horizontal {
       .entity-mode-container {
@@ -407,8 +409,8 @@
 </style>
 
 <style>
- .reader-empty-annotations {
-   text-align: center;
-   margin-top: 1rem;
- }
+  .reader-empty-annotations {
+    text-align: center;
+    margin-top: 1rem;
+  }
 </style>

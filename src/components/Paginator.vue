@@ -1,7 +1,7 @@
 <template>
   <nav class="paginator">
     <router-link
-       v-if="urn"
+      v-if="urn"
       :key="urn.toString()"
       :to="{ path: 'reader', query: { urn: urn.toString() } }"
     >

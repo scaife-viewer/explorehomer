@@ -53,7 +53,7 @@
           ).length > 0
         );
       },
-    }
+    },
   };
 </script>
 
@@ -63,16 +63,16 @@
     height: 250px;
   }
   .named-entity.selected {
-   background: $gray-100;
-   margin-left: -10px;
-   padding: 3px 7px;
-   border-left: 3px solid $gray-800;
-     .named-entity-description {
-       color: $gray-700;
-     }
-     .icon {
-       color: $gray-800;
-     }
+    background: $gray-100;
+    margin-left: -10px;
+    padding: 3px 7px;
+    border-left: 3px solid $gray-800;
+    .named-entity-description {
+      color: $gray-700;
+    }
+    .icon {
+      color: $gray-800;
+    }
   }
   .icon {
     color: $gray-600;

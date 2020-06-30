@@ -1,6 +1,8 @@
 <template>
   <table class="selected-tokens">
-    <tr v-if="tokens.length === 0"><EmptyMessage /></tr>
+    <tr v-if="tokens.length === 0">
+      <EmptyMessage />
+    </tr>
     <tr colspan="3" v-else-if="selectedToken">
       <a href @click.prevent="onClear">Clear Filter</a>
     </tr>

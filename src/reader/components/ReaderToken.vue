@@ -17,7 +17,8 @@
       <span class="analysis">{{ token.tag || '-' }}</span>
     </template>
     <template v-else>
-      <span class="text">{{ token.value }}</span>{{ ' ' }}
+      <span class="text">{{ token.value }}</span
+      >{{ ' ' }}
     </template>
   </span>
 </template>
