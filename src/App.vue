@@ -24,6 +24,9 @@
     margin: 0;
     padding: 0;
   }
+  :root {
+    --scaife-brand-color: #{$explorehomer-brand};
+  }
   #app {
     font-family: $font-family-sans;
     -webkit-font-smoothing: antialiased;
@@ -38,8 +41,5 @@
   }
   a {
     color: $explorehomer-brand;
-  }
-  div.passage-siblings-widget > .grid-cell-square > .active-sibling {
-    background-color: $explorehomer-brand;
   }
 </style>
