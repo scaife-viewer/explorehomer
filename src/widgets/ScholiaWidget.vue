@@ -1,16 +1,23 @@
 <template>
   <div class="scholia">
-    <div v-if="!lines">No commentary found.</div>
+    <EmptyMessage v-if="lines === null || lines.length === 0" />
     <div v-for="line in lines" :key="line.idx" class="line">
       <span class="lemma">{{ line.lemma }} </span>
       <span class="comment">{{ line.comment }}</span>
     </div>
+    <Attribution>
+      <a href="http://www.homermultitext.org" target="_blank">
+        Homer Multitext Project / Center for Hellenic Studies
+      </a>
+    </Attribution>
   </div>
 </template>
 
 <script>
   import gql from 'graphql-tag';
   import { URN } from '@scaife-viewer/scaife-widgets';
+  import Attribution from '@/components/Attribution.vue';
+  import EmptyMessage from '@/components/EmptyMessage.vue';
   import { MODULE_NS } from '@/reader/constants';
 
   export default {
@@ -19,6 +26,7 @@
       location: 'sidebar',
       singleton: true,
     },
+    components: { Attribution, EmptyMessage },
     computed: {
       urn() {
         return this.$route.query.urn
