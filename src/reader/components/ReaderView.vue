@@ -26,6 +26,7 @@
   import ScholiaWidget from '@/widgets/ScholiaWidget.vue';
   import AudioWidget from '@/widgets/AudioWidget.vue';
   import WordListWidget from '@/widgets/WordListWidget.vue';
+  import TOCWidget from '@/widgets/TOCWidget/TOCWidget.vue';
   import { FETCH_METADATA, FETCH_LIBRARY } from '@/constants';
 
   export default {
@@ -44,7 +45,7 @@
           PassageReferenceWidget,
           PassageAncestorsWidget,
           PassageChildrenWidget,
-          // TOCWidget,
+          TOCWidget,
         ];
       },
       rightWidgets() {
