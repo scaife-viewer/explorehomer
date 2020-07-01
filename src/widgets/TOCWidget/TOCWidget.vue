@@ -115,7 +115,7 @@
       },
       rootTocUrn() {
         // @@@ site level or dynamic from ATLAS
-        return 'urn:cite:dsp-dar:toc.root';
+        return 'urn:cite2:exploreHomer:toc.v1.root';
       },
       tocUrn() {
         return this.$route.query.toc || this.initialTocUrn;
@@ -126,7 +126,7 @@
         const toc = {
           ...tocObj,
         };
-        if (toc.urn === 'urn:cite:dsp-dar:toc.root') {
+        if (toc.urn === 'urn:cite2:exploreHomer:toc.v1.root') {
           toc.title = '';
         }
         return toc;
