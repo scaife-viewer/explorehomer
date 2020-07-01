@@ -21,10 +21,8 @@
 </template>
 
 <script>
+  import gql from 'graphql-tag';
   import { WIDGETS_NS } from '@scaife-viewer/scaife-widgets';
-
-  import utils from '../../utils';
-  import { ARABIC_LOCALE, WORK_METADATA_KEY_LOOKUP } from '../../constants';
 
   import TOC from './TOC.vue';
   import TOCHeader from './TOCHeader.vue';
@@ -52,7 +50,7 @@
     },
     computed: {
       gqlQuery() {
-        return `
+        return gql`
           {
             tocs(urn:  "${this.tocUrn}") {
               edges {
@@ -83,7 +81,9 @@
         const node = this.transformTOC(this.gqlData.tocs.edges[0].node);
         const toc = {
           ...node,
-          items: node.entries.edges.map(entry => this.transformEntry(entry.node)),
+          items: node.entries.edges.map(entry =>
+            this.transformEntry(entry.node),
+          ),
         };
         return toc;
       },
@@ -132,14 +132,7 @@
         return toc;
       },
       transformEntry(entryObj) {
-        const entry = { ...entryObj };
-        const isPassageEntry = !(this.isCiteUrn(entryObj.uri));
-        if (isPassageEntry) {
-          const urn = utils.rsplit(entryObj.uri, ':', 1)[0];
-          const workKey = WORK_METADATA_KEY_LOOKUP[urn];
-          entry.title = `${this.$i18n.getLocaleMessage(ARABIC_LOCALE)[workKey].title}: ${entry.title}`;
-        }
-        return entry;
+        return { ...entryObj };
       },
       isCiteUrn(urn) {
         return urn.startsWith('urn:cite:');
