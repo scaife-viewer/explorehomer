@@ -35,29 +35,11 @@
           class="entity-mode"
           :class="`map-direction-${showMap ? showMap : 'none'}`"
         >
-          <div class="toolbar" v-if="coordinatesList.length > 0">
-            <a
-              href
-              :class="{ active: showMap === null }"
-              @click.prevent="noMap"
-            >
-              <icon name="align-justify" />
-            </a>
-            <a
-              href
-              :class="{ active: showMap === 'vertical' }"
-              @click.prevent="vMap"
-            >
-              <icon name="grip-lines" />
-            </a>
-            <a
-              href
-              :class="{ active: showMap === 'horizontal' }"
-              @click.prevent="hMap"
-            >
-              <icon name="grip-lines-vertical" />
-            </a>
-          </div>
+          <EntityMapToolbar
+            v-if="coordinatesList.length > 0"
+            :showMap="showMap"
+            @show="onShowMap"
+          />
           <div class="entity-mode-container">
             <Reader
               class="entity-reader"
@@ -98,6 +80,7 @@
   import ImageViewer from '@/components/ImageViewer.vue';
   import Paginator from '@/components/Paginator.vue';
   import EntityMap from '@/components/EntityMap.vue';
+  import EntityMapToolbar from '@/components/EntityMapToolbar.vue';
   import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
   import { MODULE_NS } from '@/reader/constants';
 
@@ -109,6 +92,7 @@
       Reader,
       ImageViewer,
       EntityMap,
+      EntityMapToolbar,
     },
     scaifeConfig: {},
     data() {
@@ -118,14 +102,8 @@
       };
     },
     methods: {
-      noMap() {
-        this.showMap = null;
-      },
-      vMap() {
-        this.showMap = 'vertical';
-      },
-      hMap() {
-        this.showMap = 'horizontal';
+      onShowMap(kind) {
+        this.showMap = kind;
       },
       onMapPlaceSelect(id) {
         this.mapPlaceSelected = id;
@@ -385,32 +363,11 @@
         row-gap: 0.75rem;
       }
     }
-    .toolbar {
-      display: flex;
-      padding-bottom: 0.75rem;
-      a {
-        margin: 0 0.5rem;
-        padding: 0.25rem;
-        border-radius: 3px;
-        border: 1px solid transparent;
-      }
-      a:hover {
-        border-color: $explorehomer-brand;
-      }
-      a.active {
-        font-weight: 700;
-        background: $explorehomer-brand;
-        color: $white;
-        border-color: transparent;
-      }
-    }
     .entity-mode-container {
       display: grid;
       height: calc(100vh - 75px);
       .entity-reader {
         overflow-y: scroll;
-      }
-      .map {
       }
     }
   }
