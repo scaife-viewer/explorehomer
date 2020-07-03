@@ -35,7 +35,7 @@
           class="entity-mode"
           :class="`map-direction-${showMap ? showMap : 'none'}`"
         >
-          <div class="toolbar">
+          <div class="toolbar" v-if="coordinatesList.length > 0">
             <a
               href
               :class="{ active: showMap === null }"
@@ -380,6 +380,8 @@
       }
     }
     .toolbar {
+      display: flex;
+      padding-bottom: 0.75rem;
       a {
         margin: 0 0.5rem;
         padding: 0.25rem;
