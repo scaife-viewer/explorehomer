@@ -8,6 +8,7 @@
         v-for="(line, index) in lines"
         :key="`${index}-${line.label}`"
         :line="line"
+        :mapPlaceSelected="mapPlaceSelected"
       />
 
       <Attribution v-if="showMetricalCredit" class="metrical-attribution">
@@ -30,7 +31,7 @@
 
   export default {
     components: { Attribution, EmptyMessage, ReaderLine },
-    props: ['lines', 'textSize', 'textWidth'],
+    props: ['lines', 'textSize', 'textWidth', 'mapPlaceSelected'],
     computed: {
       showMetricalCredit() {
         const metricalMode = this.$store.state.displayMode === 'metrical';

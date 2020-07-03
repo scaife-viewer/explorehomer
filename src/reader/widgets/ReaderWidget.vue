@@ -64,9 +64,15 @@
               :lines="lines"
               :textSize="textSize"
               :textWidth="textWidth"
+              :mapPlaceSelected="mapPlaceSelected"
             />
             <div class="map" v-if="showMap">
-              <EntityMap :key="showMap" :coordinates-list="coordinatesList" />
+              <EntityMap
+                :key="showMap"
+                :coordinates-list="coordinatesList"
+                :selectedPlace="selectedPlace"
+                @placeSelected="onMapPlaceSelect"
+              />
             </div>
           </div>
         </div>
@@ -108,6 +114,7 @@
     data() {
       return {
         showMap: null, // null | horizontal | vertical
+        mapPlaceSelected: null,
       };
     },
     methods: {
@@ -119,6 +126,9 @@
       },
       hMap() {
         this.showMap = 'horizontal';
+      },
+      onMapPlaceSelect(id) {
+        this.mapPlaceSelected = id;
       },
     },
     watch: {
@@ -173,7 +183,11 @@
                 .map(ne => ne.node)
                 .filter(n => n.kind === 'PLACE' && n.data.coordinates)
                 .map(n => {
-                  return n.data.coordinates.split(', ').map(c => parseFloat(c));
+                  return [
+                    ...n.data.coordinates.split(', ').map(c => parseFloat(c)),
+                    n.id,
+                    n.title,
+                  ];
                 });
             });
           })
@@ -218,6 +232,7 @@
                           edges {
                             node {
                               id
+                              title
                               kind
                               data
                             }

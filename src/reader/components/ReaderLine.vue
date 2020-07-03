@@ -18,6 +18,7 @@
           v-for="token in tokens"
           :key="token.veRef"
           :token="token"
+          :mapPlaceSelected="mapPlaceSelected"
         />
       </div>
     </div>
@@ -30,7 +31,7 @@
   import ReaderToken from './ReaderToken.vue';
 
   export default {
-    props: ['line'],
+    props: ['line', 'mapPlaceSelected'],
     components: { ReaderToken },
     methods: {
       onLineSelect() {

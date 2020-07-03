@@ -4,6 +4,7 @@
     :class="{
       selected,
       interlinear,
+      'place-selected': placeSelected,
       entity: namedEntities && isEntity,
       'selected-entity': namedEntities && hasSelectedEntity,
     }"
@@ -28,7 +29,7 @@
   import { SELECT_NAMED_ENTITIES } from '../../constants';
 
   export default {
-    props: ['token'],
+    props: ['token', 'mapPlaceSelected'],
     methods: {
       onSelect() {
         this.$store.dispatch(SELECT_NAMED_ENTITIES, {
@@ -40,6 +41,15 @@
       },
     },
     computed: {
+      placeSelected() {
+        if (!this.isEntity || !this.namedEntities) {
+          return false;
+        }
+        return (
+          this.token.entities.filter(id => id === this.mapPlaceSelected)
+            .length > 0
+        );
+      },
       selectedEntities() {
         return this.$store.state.selectedNamedEntities;
       },
@@ -93,6 +103,9 @@
   }
   .token.selected-entity .text {
     @include highlight($selected-entity);
+  }
+  .token.entity.place-selected .text {
+    @include highlight($place-selected-entity);
   }
   .token.interlinear {
     display: inline-block;
