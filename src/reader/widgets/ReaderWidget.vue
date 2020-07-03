@@ -358,25 +358,16 @@
 
   .entity-mode {
     flex: 1;
-    .map-direction-none {
-    }
     &.map-direction-horizontal {
       .entity-mode-container {
         grid-template-columns: 1fr 1fr;
-        // flex-direction: column;
-        // max-height: calc(100vh - 100px);
-        .map {
-          // flex: 1;
-        }
+        column-gap: 0.75rem;
       }
     }
     &.map-direction-vertical {
       .entity-mode-container {
-        // flex-direction: row;
         grid-template-rows: 1fr 1fr;
-        .map {
-          // flex: 1;
-        }
+        row-gap: 0.75rem;
       }
     }
     .toolbar {
