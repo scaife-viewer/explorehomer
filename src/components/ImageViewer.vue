@@ -3,13 +3,18 @@
     <div id="image-toolbar" class="toolbar">
       <span v-show="displayViewer">
         <small>
-          <a id="zoom-in" class="link" title="Zoom in">Zoom In</a>
-          <span>&vert;&nbsp;</span>
-          <a id="zoom-out" class="link" title="Zoom out">Zoom Out</a>
-          <span>&vert;&nbsp;</span>
-          <a id="home" class="link" title="Go home">Home</a>
-          <span>&vert;&nbsp;</span>
-          <a id="full-page" class="link" title="Toggle full page">Full Page</a>
+          <a id="zoom-in" class="link" title="Zoom in">
+            <icon name="search-plus" />
+          </a>
+          <a id="home" class="link" title="Go home">
+            <icon name="search" />
+          </a>
+          <a id="zoom-out" class="link" title="Zoom out">
+            <icon name="search-minus" />
+          </a>
+          <a id="full-page" class="link" title="Toggle full page">
+            <icon name="window-maximize" />
+          </a>
         </small>
       </span>
       <div v-show="displayViewer" id="image-viewer" class="viewer"></div>
@@ -108,6 +113,18 @@
     .viewer {
       width: 100%;
       height: calc(100vh - 100px);
+    }
+
+    .link {
+      font-size: 18px;
+      cursor: pointer;
+      margin: 0 0.5rem;
+      padding: 0.25rem;
+      border-radius: 3px;
+    }
+    .link:hover {
+      color: $white;
+      background: $explorehomer-brand;
     }
 
     .error {
