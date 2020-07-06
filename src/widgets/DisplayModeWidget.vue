@@ -117,11 +117,9 @@
 <style lang="scss">
   .main-layout.main-layout-wide {
     flex: 4;
-    .reader {
-      padding-right: 1rem;
-    }
     .open-seadragon {
       padding-left: 1rem;
+      border-left: 1px solid $gray-300;
     }
   }
 </style>
