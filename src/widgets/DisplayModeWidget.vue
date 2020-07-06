@@ -121,6 +121,10 @@
       padding-left: 1rem;
       border-left: 1px solid $gray-300;
     }
+    .image .open-seadragon {
+      border: none;
+      padding-left: 0;
+    }
   }
 </style>
 
