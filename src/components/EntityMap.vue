@@ -13,6 +13,7 @@
       @click="onMarkerClick(coordinates)"
     >
       <MglPopup
+        v-if="coordinates[3]"
         :closeButton="false"
         :closeOnClick="true"
         :showed="selectedPlace === coordinates[2]"
