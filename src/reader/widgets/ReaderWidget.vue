@@ -46,14 +46,11 @@
               :lines="lines"
               :textSize="textSize"
               :textWidth="textWidth"
-              :mapPlaceSelected="mapPlaceSelected"
             />
             <div class="map" v-if="showMap">
-              <EntityMap
+              <SelectableEntityMap
                 :key="`${showMap}-${sidebars}`"
                 :coordinates-list="coordinatesList"
-                :selectedPlace="null"
-                @placeSelected="onMapPlaceSelect"
               />
             </div>
           </div>
@@ -79,7 +76,7 @@
   import EmptyMessage from '@/components/EmptyMessage.vue';
   import ImageViewer from '@/components/ImageViewer.vue';
   import Paginator from '@/components/Paginator.vue';
-  import EntityMap from '@/components/EntityMap.vue';
+  import SelectableEntityMap from '@/components/SelectableEntityMap.vue';
   import EntityMapToolbar from '@/components/EntityMapToolbar.vue';
   import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
   import { MODULE_NS } from '@/reader/constants';
@@ -91,22 +88,18 @@
       Paginator,
       Reader,
       ImageViewer,
-      EntityMap,
+      SelectableEntityMap,
       EntityMapToolbar,
     },
     scaifeConfig: {},
     data() {
       return {
         showMap: null, // null | horizontal | vertical
-        mapPlaceSelected: null,
       };
     },
     methods: {
       onShowMap(kind) {
         this.showMap = kind;
-      },
-      onMapPlaceSelect(id) {
-        this.mapPlaceSelected = id;
       },
     },
     watch: {

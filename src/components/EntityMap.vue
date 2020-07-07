@@ -61,7 +61,7 @@
         }
       },
       onMarkerClick(coordinates) {
-        this.$emit('placeSelected', coordinates[2]);
+        this.$emit('select', coordinates[2]);
       },
     },
     watch: {
