@@ -10,7 +10,7 @@
     <div class="named-entity-body" v-if="selected">
       <div class="named-entity-description">{{ entity.description }}</div>
       <a :href="entity.url" target="_blank">Read More</a>
-      <div class="map" v-if="place">
+      <div class="map" v-if="place && hasCoordinates">
         <EntityMap :coordinates-list="[center]" />
       </div>
     </div>
@@ -33,6 +33,9 @@
     },
     components: { EntityMap },
     computed: {
+      hasCoordinates() {
+        return this.center && this.center[0] !== undefined;
+      },
       place() {
         return this.entity.kind === 'PLACE';
       },
