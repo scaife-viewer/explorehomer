@@ -50,9 +50,9 @@
             />
             <div class="map" v-if="showMap">
               <EntityMap
-                :key="showMap"
+                :key="`${showMap}-${sidebars}`"
                 :coordinates-list="coordinatesList"
-                :selectedPlace="selectedPlace"
+                :selectedPlace="null"
                 @placeSelected="onMapPlaceSelect"
               />
             </div>
@@ -134,6 +134,20 @@
       }
     },
     computed: {
+      sidebars() {
+        // used for keys to force map redraw on sidebar changes
+        const { leftOpen, rightOpen } = this.$store.state.scaifeSkeleton;
+        if (leftOpen && rightOpen) {
+          return 'both';
+        }
+        if (leftOpen) {
+          return 'left';
+        }
+        if (rightOpen) {
+          return 'right';
+        }
+        return 'neither';
+      },
       alignmentMode() {
         return this.$store.state.displayMode === 'sentence-alignments';
       },

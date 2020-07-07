@@ -7,8 +7,8 @@
     @load="onMapLoaded"
   >
     <MglMarker
-      v-for="coordinates in coordinatesList"
-      :key="`${coordinates[2]}-${coordinates[3]}`"
+      v-for="(coordinates, index) in coordinatesList"
+      :key="`${coordinates[2]}-${coordinates[3]}-${index}`"
       :coordinates="[coordinates[0], coordinates[1]]"
       @click="onMarkerClick(coordinates)"
     >
@@ -53,7 +53,10 @@
       onMapLoaded(event) {
         this.map = event.map;
         if (this.coordinatesList.length > 1) {
-          this.map.fitBounds(this.coordinatesList);
+          const bbox = this.coordinatesList.map(c => {
+            return [c[0], c[1]];
+          });
+          this.map.fitBounds(bbox);
         }
       },
       onMarkerClick(coordinates) {
