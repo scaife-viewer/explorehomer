@@ -10,7 +10,7 @@ import {
   faBookOpen,
   faSearchMinus,
   faSearchPlus,
-  faSearch,
+  faHome,
   faWindowMaximize,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -33,7 +33,7 @@ const iconMap = [
   faBookOpen,
   faSearchMinus,
   faSearchPlus,
-  faSearch,
+  faHome,
   faWindowMaximize,
 ].reduce((map, obj) => {
   return {

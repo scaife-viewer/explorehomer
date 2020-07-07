@@ -3,11 +3,11 @@
     <div id="image-toolbar" class="toolbar">
       <span v-show="displayViewer">
         <small>
+          <a id="home" class="link" title="Go home">
+            <icon name="home" />
+          </a>
           <a id="zoom-in" class="link" title="Zoom in">
             <icon name="search-plus" />
-          </a>
-          <a id="home" class="link" title="Go home">
-            <icon name="search" />
           </a>
           <a id="zoom-out" class="link" title="Zoom out">
             <icon name="search-minus" />
