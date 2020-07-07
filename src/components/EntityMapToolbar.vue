@@ -1,7 +1,7 @@
 <template>
   <div class="entity-map-toolbar">
     <a href :class="{ active: noMap }" @click.prevent="$emit('show', null)">
-      <icon name="align-justify" />
+      <icon name="align-left" />
     </a>
     <a
       href
