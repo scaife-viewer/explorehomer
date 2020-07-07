@@ -1,24 +1,12 @@
 <template>
   <div class="image-viewer-toolbar">
-    <a
-      href
-      :class="{ active: showText }"
-      @click.prevent="$emit('show', 'text')"
-    >
+    <a href :class="{ active: showText }" @click.prevent="onShowText">
       <icon name="align-justify" />
     </a>
-    <a
-      href
-      :class="{ active: showImage }"
-      @click.prevent="$emit('show', 'image')"
-    >
+    <a href :class="{ active: showImage }" @click.prevent="onShowImage" >
       <icon name="book-open" />
     </a>
-    <a
-      href
-      :class="{ active: showBoth }"
-      @click.prevent="$emit('show', 'both')"
-    >
+    <a href :class="{ active: showBoth }" @click.prevent="onShowBoth" >
       <icon name="align-justify" /> |
       <icon name="book-open" />
     </a>
@@ -26,17 +14,34 @@
 </template>
 
 <script>
+  import {
+    IMAGE_VIEWER_STATE_TEXT,
+    IMAGE_VIEWER_STATE_IMAGE,
+    IMAGE_VIEWER_STATE_BOTH,
+  } from '@/constants';
+
   export default {
     props: ['show'],
     computed: {
       showText() {
-        return this.show === 'text';
+        return this.show === IMAGE_VIEWER_STATE_TEXT;
       },
       showImage() {
-        return this.show === 'image';
+        return this.show === IMAGE_VIEWER_STATE_IMAGE;
       },
       showBoth() {
-        return this.show === 'both';
+        return this.show === IMAGE_VIEWER_STATE_BOTH;
+      },
+    },
+    methods: {
+      onShowText() {
+        this.$emit('show', IMAGE_VIEWER_STATE_TEXT);
+      },
+      onShowImage() {
+        this.$emit('show', IMAGE_VIEWER_STATE_IMAGE);
+      },
+      onShowBoth() {
+        this.$emit('show', IMAGE_VIEWER_STATE_BOTH);
       },
     }
   }

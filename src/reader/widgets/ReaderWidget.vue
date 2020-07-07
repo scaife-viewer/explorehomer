@@ -64,7 +64,11 @@
   import ImageViewer from '@/components/ImageViewer.vue';
   import ImageViewerToolbar from '@/components/ImageViewerToolbar.vue';
   import Paginator from '@/components/Paginator.vue';
-  import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
+  import {
+    SET_PASSAGE,
+    UPDATE_METADATA,
+    IMAGE_VIEWER_STATE_BOTH,
+  } from '@/constants';
   import { MODULE_NS } from '@/reader/constants';
 
   export default {
@@ -79,7 +83,7 @@
     scaifeConfig: {},
     data() {
       return {
-        showImage: 'both', // text | image | both
+        showImage: IMAGE_VIEWER_STATE_BOTH,
       };
     },
     methods: {
