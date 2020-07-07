@@ -4,14 +4,32 @@
       <div class="reader-container u-flex">
         <Paginator :urn="previous" direction="left" />
         <LoaderBall v-if="gqlLoading" />
-        <template v-else-if="imageMode">
-          <Reader :lines="lines" :textSize="textSize" :textWidth="textWidth" />
+        <div class="image-mode" :class="showImage" v-else-if="imageMode">
+          <ImageViewerToolbar :show="showImage" @show="onShowImage" />
+          <div class="image-mode-container" v-if="showImage === 'both'">
+            <Reader
+              :lines="lines"
+              :textSize="textSize"
+              :textWidth="textWidth"
+            />
+            <ImageViewer
+              v-if="imageIdentifier"
+              :imageIdentifier="imageIdentifier"
+            />
+            <EmptyMessage class="reader-empty-annotations" v-else />
+          </div>
+          <Reader
+            v-else-if="showImage === 'text'"
+            :lines="lines"
+            :textSize="textSize"
+            :textWidth="textWidth"
+          />
           <ImageViewer
-            v-if="imageIdentifier"
+            v-else-if="showImage === 'image' && imageIdentifier"
             :imageIdentifier="imageIdentifier"
           />
           <EmptyMessage class="reader-empty-annotations" v-else />
-        </template>
+        </div>
         <template v-else-if="alignmentMode">
           <EmptyMessage
             class="reader-empty-annotations"
@@ -75,10 +93,15 @@
   import Alignments from '@/reader/components/Alignments.vue';
   import EmptyMessage from '@/components/EmptyMessage.vue';
   import ImageViewer from '@/components/ImageViewer.vue';
+  import ImageViewerToolbar from '@/components/ImageViewerToolbar.vue';
   import Paginator from '@/components/Paginator.vue';
   import SelectableEntityMap from '@/components/SelectableEntityMap.vue';
   import EntityMapToolbar from '@/components/EntityMapToolbar.vue';
-  import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
+  import {
+    SET_PASSAGE,
+    UPDATE_METADATA,
+    IMAGE_VIEWER_STATE_BOTH,
+  } from '@/constants';
   import { MODULE_NS } from '@/reader/constants';
 
   export default {
@@ -90,16 +113,21 @@
       ImageViewer,
       SelectableEntityMap,
       EntityMapToolbar,
+      ImageViewerToolbar,
     },
     scaifeConfig: {},
     data() {
       return {
         showMap: null, // null | horizontal | vertical
+        showImage: IMAGE_VIEWER_STATE_BOTH,
       };
     },
     methods: {
       onShowMap(kind) {
         this.showMap = kind;
+      },
+      onShowImage(kind) {
+        this.showImage = kind;
       },
     },
     watch: {
@@ -376,6 +404,26 @@
       .entity-reader {
         overflow-y: scroll;
       }
+    }
+  }
+
+  .image-mode {
+    flex: 1;
+    &.both {
+      .image-mode-container {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 0.75rem;
+      }
+    }
+    &.text,
+    &.image {
+      .image-mode-container {
+        grid-template-columns: 1fr;
+      }
+    }
+    .image-mode-container {
+      display: grid;
+      height: calc(100vh - 75px);
     }
   }
 </style>

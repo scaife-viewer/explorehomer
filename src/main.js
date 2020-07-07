@@ -9,6 +9,11 @@ import {
   faGripLines,
   faGripLinesVertical,
   faAlignLeft,
+  faBookOpen,
+  faSearchMinus,
+  faSearchPlus,
+  faHome,
+  faWindowMaximize,
 } from '@fortawesome/free-solid-svg-icons';
 
 import SkeletonPlugin from 'scaife-skeleton';
@@ -29,6 +34,11 @@ const iconMap = [
   faGripLines,
   faGripLinesVertical,
   faAlignLeft,
+  faBookOpen,
+  faSearchMinus,
+  faSearchPlus,
+  faHome,
+  faWindowMaximize,
 ].reduce((map, obj) => {
   return {
     ...map,
