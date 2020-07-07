@@ -15,3 +15,7 @@ export const CLEAR_NAMED_ENTITIES = 'clearNamedEntities';
 export const PLAY_AUDIO = 'playAudio';
 export const STOP_AUDIO = 'stopAudio';
 export const SELECT_LINE = 'selectLine';
+
+export const IMAGE_VIEWER_STATE_BOTH = 'both';
+export const IMAGE_VIEWER_STATE_TEXT = 'text';
+export const IMAGE_VIEWER_STATE_IMAGE = 'image';
