@@ -32,9 +32,9 @@
             entities: [entityId],
           });
         }
-      }
+      },
     },
-  }
+  };
 </script>
 
 <style lang="scss" scoped>

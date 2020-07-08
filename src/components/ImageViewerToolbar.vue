@@ -3,10 +3,10 @@
     <a href :class="{ active: showText }" @click.prevent="onShowText">
       <icon name="align-left" />
     </a>
-    <a href :class="{ active: showImage }" @click.prevent="onShowImage" >
+    <a href :class="{ active: showImage }" @click.prevent="onShowImage">
       <icon name="book-open" />
     </a>
-    <a href :class="{ active: showBoth }" @click.prevent="onShowBoth" >
+    <a href :class="{ active: showBoth }" @click.prevent="onShowBoth">
       <icon name="align-left" /> |
       <icon name="book-open" />
     </a>
@@ -43,8 +43,8 @@
       onShowBoth() {
         this.$emit('show', IMAGE_VIEWER_STATE_BOTH);
       },
-    }
-  }
+    },
+  };
 </script>
 
 <style lang="scss" scoped>

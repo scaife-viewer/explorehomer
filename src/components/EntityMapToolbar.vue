@@ -33,8 +33,8 @@
       showVertical() {
         return this.showMap === 'vertical';
       },
-    }
-  }
+    },
+  };
 </script>
 
 <style lang="scss" scoped>
