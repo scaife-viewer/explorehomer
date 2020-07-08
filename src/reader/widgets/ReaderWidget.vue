@@ -7,6 +7,9 @@
       <div class="reader-container u-flex">
         <Paginator :urn="previous" direction="left" />
         <LoaderBall v-if="gqlLoading" />
+        <ErrorMessage v-else-if="gqlError">
+          There was an error loading the requested data.
+        </ErrorMessage>
         <div class="image-mode" :class="showImage" v-else-if="imageMode">
           <ImageViewerToolbar :show="showImage" @show="onShowImage" />
           <div class="image-mode-container" v-if="showImage === 'both'">
@@ -64,6 +67,7 @@
   import Reader from '@/reader/components/Reader.vue';
   import Alignments from '@/reader/components/Alignments.vue';
   import EmptyMessage from '@/components/EmptyMessage.vue';
+  import ErrorMessage from '@/components/ErrorMessage.vue';
   import ImageViewer from '@/components/ImageViewer.vue';
   import ImageViewerToolbar from '@/components/ImageViewerToolbar.vue';
   import Paginator from '@/components/Paginator.vue';
@@ -78,6 +82,7 @@
     components: {
       Alignments,
       EmptyMessage,
+      ErrorMessage,
       Paginator,
       Reader,
       ImageViewer,
