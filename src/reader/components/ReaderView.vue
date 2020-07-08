@@ -10,8 +10,8 @@
 <script>
   import {
     MetadataWidget,
-    NewAlexandriaWidget,
     PassageAncestorsWidget,
+    PassageSiblingsWidget,
     PassageChildrenWidget,
     PassageReferenceWidget,
     TextSizeWidget,
@@ -26,12 +26,16 @@
   import ScholiaWidget from '@/widgets/ScholiaWidget.vue';
   import AudioWidget from '@/widgets/AudioWidget.vue';
   import WordListWidget from '@/widgets/WordListWidget.vue';
+  import NewAlexandriaWidget from '@/widgets/NewAlexandriaWidget.vue';
   import { FETCH_METADATA, FETCH_LIBRARY } from '@/constants';
 
   export default {
     name: 'ReaderView',
     beforeCreate() {
-      this.$store.dispatch(FETCH_METADATA);
+      if (!this.$route.query.urn) {
+        // load the first version returned from ATLAS
+        this.$store.dispatch(FETCH_METADATA);
+      }
       this.$store.dispatch(FETCH_LIBRARY);
     },
     computed: {
@@ -43,6 +47,7 @@
           LibraryWidget,
           PassageReferenceWidget,
           PassageAncestorsWidget,
+          PassageSiblingsWidget,
           PassageChildrenWidget,
           // TOCWidget,
         ];
