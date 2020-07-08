@@ -46,7 +46,19 @@ const iconMap = [
   };
 }, {});
 
-Vue.use(SkeletonPlugin, { iconMap });
+const config = {
+  entityMap: {
+    accessToken:
+      process.env.VUE_APP_ENTITY_MAP_ACCESS_TOKEN ||
+      // eslint-disable-next-line max-len
+      'pk.eyJ1IjoicGFsdG1hbiIsImEiOiJja2JpNDVpbmUwOGF1MnJwZm91c3VybDVrIn0.KRcXBGtiUWFXkp2uaE5LLw',
+    mapStyle:
+      process.env.VUE_APP_ENTITY_MAP_STYLE ||
+      'mapbox://styles/paltman/ckbi4thqt156y1ijz5wldui14',
+  },
+};
+
+Vue.use(SkeletonPlugin, { iconMap, config });
 Vue.use(GraphQLPlugin);
 
 const widgetEndpoints = {};

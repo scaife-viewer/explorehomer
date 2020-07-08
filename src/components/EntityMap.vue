@@ -34,10 +34,6 @@
     MglNavigationControl,
   } from 'vue-mapbox';
 
-  const accessToken =
-    // eslint-disable-next-line max-len
-    'pk.eyJ1IjoicGFsdG1hbiIsImEiOiJja2JpNDVpbmUwOGF1MnJwZm91c3VybDVrIn0.KRcXBGtiUWFXkp2uaE5LLw';
-
   export default {
     props: ['coordinatesList', 'selectedPlace'],
     components: {
@@ -84,11 +80,14 @@
       center() {
         return [this.coordinatesList[0][0], this.coordinatesList[0][1]];
       },
+      config() {
+        return this.$scaife.config.entityMap;
+      },
       accessToken() {
-        return accessToken;
+        return this.config.accessToken;
       },
       mapStyle() {
-        return 'mapbox://styles/paltman/ckbi4thqt156y1ijz5wldui14';
+        return this.config.mapStyle;
       },
     },
   };

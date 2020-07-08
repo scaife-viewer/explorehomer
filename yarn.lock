@@ -1014,7 +1014,7 @@
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.28.tgz#1091bdfe63b3f139441e9cba27aa022bff97d8b2"
   integrity sha512-gtis2/5yLdfI6n0ia0jH7NJs5i/Z/8M/ZbQL6jXQhCthEOe5Cr5NcQPhgTvFxNOtURE03/ZqUcEskdn2M+QaBg==
 
-"@fortawesome/fontawesome-svg-core@^1.2.15", "@fortawesome/fontawesome-svg-core@^1.2.25":
+"@fortawesome/fontawesome-svg-core@^1.2.25":
   version "1.2.26"
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-1.2.26.tgz#671569271d6b532cdea5e3deb8ff16f8b7ac251d"
   integrity sha512-3Dfd/v2IztP1TxKOxZiB5+4kaOZK9mNy0KU1vVK7nFlPWz3gzxrCWB+AloQhQUoJ8HhGqbzjliK89Vl7PExGbw==
@@ -1028,7 +1028,7 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.28"
 
-"@fortawesome/free-solid-svg-icons@^5.11.2", "@fortawesome/free-solid-svg-icons@^5.7.2":
+"@fortawesome/free-solid-svg-icons@^5.11.2":
   version "5.12.0"
   resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.12.0.tgz#8decac5844e60453cc0c7c51437d1461df053a35"
   integrity sha512-CnpsWs6GhTs9ekNB3d8rcO5HYqRkXbYKf2YNiAlTWbj5eVlPqsd/XH1F9If8jkcR1aegryAbln/qYeKVZzpM0g==
@@ -1042,7 +1042,7 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.28"
 
-"@fortawesome/vue-fontawesome@^0.1.5", "@fortawesome/vue-fontawesome@^0.1.8", "@fortawesome/vue-fontawesome@^0.1.9":
+"@fortawesome/vue-fontawesome@^0.1.8", "@fortawesome/vue-fontawesome@^0.1.9":
   version "0.1.9"
   resolved "https://registry.yarnpkg.com/@fortawesome/vue-fontawesome/-/vue-fontawesome-0.1.9.tgz#d3af6d4e50f337327de90447fe35fa1e117a2fbe"
   integrity sha512-h/emhmZz+DfB2zOGLWawNwXq82UYhn9waTfUjLLmeaIqtnIyNt6kYlpQT/vzJjLZRDRvY2IEJAh1di5qKpKVpA==
@@ -1486,6 +1486,23 @@
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@scaife-viewer/scaife-widgets/-/scaife-widgets-0.14.0.tgz#2d0f76f9ad8372d42409d14b545f52822fcb06e3"
   integrity sha512-wNvTgjvc1JEhwu106xDNbsMAiAbeNFUCeZ8nnNLZON2SzdWeEfjePLOh5dSKju4sasl5XSBNrGeImmt3K7jXog==
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^1.2.25"
+    "@fortawesome/free-solid-svg-icons" "^5.11.2"
+    "@fortawesome/vue-fontawesome" "^0.1.8"
+    "@vue/eslint-config-airbnb" "^5.0.0"
+    core-js "^3.3.2"
+    graphql "^14.5.8"
+    graphql-tag "^2.10.1"
+    lodash.debounce "^4.0.8"
+    node-sass "^4.13.0"
+    query-string "^6.11.0"
+    vue "^2.6.10"
+
+"@scaife-viewer/scaife-widgets@^0.13.0":
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/scaife-widgets/-/scaife-widgets-0.13.1.tgz#40da92bf603b8247ffc3aa2f69a661927873c194"
+  integrity sha512-2HKzXu+0RSalwghDi9GzbV8x5iKBKs2l1da2Bn9eLNhqtEWdE+a0zQj19tBphf8ztEnXbKVHAJZyWgfpqNgmCg==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.25"
     "@fortawesome/free-solid-svg-icons" "^5.11.2"
@@ -2785,13 +2802,12 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.9.0.tgz#24390e6ad61386b0a747265754d2a17219de862c"
   integrity sha512-Uvq6hVe90D0B2WEnUqtdgY1bATGz3mw33nH9Y+dmA+w5DHvUmBgkr5rM/KCHpCsiFNRUfokW/szpPPgMK2hm4A==
 
-axios@^0.18.0:
-  version "0.18.1"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.18.1.tgz#ff3f0de2e7b5d180e757ad98000f1081b87bcea3"
-  integrity sha512-0BfJq4NSfQXd+SkFdrvFbG7addhYSBA2mQwISr46pD6E5iqkWg02RAs8vyTT/j0RTnoYmeXauBuSv1qKwR179g==
+axios@^0.19.2:
+  version "0.19.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
+  integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
   dependencies:
     follow-redirects "1.5.10"
-    is-buffer "^2.0.2"
 
 babel-code-frame@^6.26.0:
   version "6.26.0"
@@ -6492,11 +6508,6 @@ is-buffer@^1.1.5:
   resolved "https://registry.yarnpkg.com/is-buffer/-/is-buffer-1.1.6.tgz#efaa2ea9daa0d7ab2ea13a97b2b8ad51fefbe8be"
   integrity sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==
 
-is-buffer@^2.0.2:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/is-buffer/-/is-buffer-2.0.4.tgz#3e572f23c8411a5cfd9557c849e3665e0b290623"
-  integrity sha512-Kq1rokWXOPXWuaMAqZiJW4XxsmD9zGx9q4aePabbn3qCRGedtH7Cm+zV8WETitMfu1wdh+Rvd6w5egwSngUX2A==
-
 is-callable@^1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/is-callable/-/is-callable-1.1.4.tgz#1e1adf219e1eeb684d691f9d6a05ff0d30a24d75"
@@ -9537,6 +9548,11 @@ pnp-webpack-plugin@^1.6.4:
   dependencies:
     ts-pnp "^1.1.6"
 
+portal-vue@^2.1.7:
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/portal-vue/-/portal-vue-2.1.7.tgz#ea08069b25b640ca08a5b86f67c612f15f4e4ad4"
+  integrity sha512-+yCno2oB3xA7irTt0EU5Ezw22L2J51uKAacE/6hMPMoO/mx3h4rXFkkBkT4GFsMDv/vEe8TNKC3ujJJ0PTwb6g==
+
 portfinder@^1.0.25:
   version "1.0.25"
   resolved "https://registry.yarnpkg.com/portfinder/-/portfinder-1.0.25.tgz#254fd337ffba869f4b9d37edc298059cb4d35eca"
@@ -10758,18 +10774,24 @@ saxes@^3.1.9:
   dependencies:
     xmlchars "^2.1.1"
 
-scaife-skeleton@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/scaife-skeleton/-/scaife-skeleton-0.7.0.tgz#aac6f95f343a4877727ab17f1715bf0ff0048d4f"
-  integrity sha512-peaMukwxpdjFbal6tz6JEsErPMIrupXG4WuI2dNeR/0XUzMfkSXvLvWTFMS3cHZLCtjPKdI38g8kxJk3lXQHKw==
+scaife-skeleton@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/scaife-skeleton/-/scaife-skeleton-0.10.0.tgz#d331370ea046bdf68bdb755516c60fec94bf8250"
+  integrity sha512-adZ3LyFcsbSeqnFgYJSA4+y9OnV7QoCvm6UhuNL0LDneuOs/AdUKuJMcvNDdlTDu7824CMS9oiKUkbIyTXuNgQ==
   dependencies:
-    "@fortawesome/fontawesome-svg-core" "^1.2.15"
-    "@fortawesome/free-solid-svg-icons" "^5.7.2"
-    "@fortawesome/vue-fontawesome" "^0.1.5"
-    axios "^0.18.0"
-    vue "^2.6.10"
-    vue-router "^3.0.2"
-    vuex "^3.0.1"
+    "@fortawesome/fontawesome-svg-core" "^1.2.28"
+    "@fortawesome/free-solid-svg-icons" "^5.13.0"
+    "@fortawesome/vue-fontawesome" "^0.1.9"
+    "@scaife-viewer/scaife-widgets" "^0.13.0"
+    "@vue/eslint-config-airbnb" "^5.0.2"
+    "@vue/eslint-config-prettier" "^6.0.0"
+    axios "^0.19.2"
+    eslint-plugin-prettier "^3.1.3"
+    eslint-plugin-vue "^6.2.2"
+    portal-vue "^2.1.7"
+    vue "^2.6.11"
+    vue-router "^3.3.2"
+    vuex "^3.4.0"
 
 schema-utils@^1.0.0:
   version "1.0.0"
@@ -12261,15 +12283,15 @@ vue-mapbox@^0.4.1:
   dependencies:
     map-promisified latest
 
-vue-router@^3.0.2:
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.1.3.tgz#e6b14fabc0c0ee9fda0e2cbbda74b350e28e412b"
-  integrity sha512-8iSa4mGNXBjyuSZFCCO4fiKfvzqk+mhL0lnKuGcQtO1eoj8nq3CmbEG8FwK5QqoqwDgsjsf1GDuisDX4cdb/aQ==
-
 vue-router@^3.1.6:
   version "3.1.6"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.1.6.tgz#45f5a3a3843e31702c061dd829393554e4328f89"
   integrity sha512-GYhn2ynaZlysZMkFE5oCHRUTqE8BWs/a9YbKpNLi0i7xD6KG1EzDqpHQmv1F5gXjr8kL5iIVS8EOtRaVUEXTqA==
+
+vue-router@^3.3.2:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.3.4.tgz#4e38abc34a11c41b6c3d8244449a2e363ba6250b"
+  integrity sha512-SdKRBeoXUjaZ9R/8AyxsdTqkOfMcI5tWxPZOUX5Ie1BTL5rPSZ0O++pbiZCeYeythiZIdLEfkDiQPKIaWk5hDg==
 
 vue-server-renderer@2.6.11:
   version "2.6.11"
@@ -12311,15 +12333,15 @@ vue@^2.6.10, vue@^2.6.11:
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
 
-vuex@^3.0.1:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.1.2.tgz#a2863f4005aa73f2587e55c3fadf3f01f69c7d4d"
-  integrity sha512-ha3jNLJqNhhrAemDXcmMJMKf1Zu4sybMPr9KxJIuOpVcsDQlTBYLLladav2U+g1AvdYDG5Gs0xBTb0M5pXXYFQ==
-
 vuex@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.3.0.tgz#665b4630ea1347317139fcc5cb495aab3ec5e513"
   integrity sha512-1MfcBt+YFd20DPwKe0ThhYm1UEXZya4gVKUvCy7AtS11YAOUR+9a6u4fsv1Rr6ePZCDNxW/M1zuIaswp6nNv8Q==
+
+vuex@^3.4.0:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.5.1.tgz#f1b8dcea649bc25254cf4f4358081dbf5da18b3d"
+  integrity sha512-w7oJzmHQs0FM9LXodfskhw9wgKBiaB+totOdb8sNzbTB2KDCEEwEs29NzBZFh/lmEK1t5tDmM1vtsO7ubG1DFw==
 
 w3c-hr-time@^1.0.1:
   version "1.0.1"
