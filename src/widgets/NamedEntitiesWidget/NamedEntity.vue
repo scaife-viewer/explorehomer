@@ -16,7 +16,11 @@
           :mapStyle="mapStyle"
           :zoom="10"
           :center="center"
-        />
+        >
+          <MglMarker :coordinates="center" />
+
+          <MglNavigationControl position="top-right" />
+        </MglMap>
       </div>
     </div>
   </div>
@@ -24,7 +28,7 @@
 
 <script>
   import Mapbox from 'mapbox-gl';
-  import { MglMap } from 'vue-mapbox';
+  import { MglMap, MglMarker, MglNavigationControl } from 'vue-mapbox';
 
   const accessToken =
     // eslint-disable-next-line max-len
@@ -40,7 +44,11 @@
         required: true,
       },
     },
-    components: { MglMap },
+    components: {
+      MglMap,
+      MglMarker,
+      MglNavigationControl,
+    },
     created() {
       this.mapbox = Mapbox;
     },
