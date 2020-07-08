@@ -28,6 +28,14 @@
       healedPassage: '',
     }),
     computed: {
+      needsHealing() {
+        // special-case handling for the Folios version of
+        // the Iliad
+        return (
+          this.originalPassage.version ===
+          'urn:cts:greekLit:tlg0012.tlg001.msA-folios:'
+        );
+      },
       originalPassage() {
         // the passage retrieved from the store
         return this.$store.getters[`${WIDGETS_NS}/passage`];
@@ -43,12 +51,7 @@
       originalPassage: {
         immediate: true,
         handler() {
-          // special-case handling for the Folios version of
-          // the Iliad
-          if (
-            this.originalPassage.version ===
-            'urn:cts:greekLit:tlg0012.tlg001.msA-folios:'
-          ) {
+          if (this.needsHealing) {
             this.healFolioURN();
           } else {
             this.healedPassage = this.originalPassage.toString();
