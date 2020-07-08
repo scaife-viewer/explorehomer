@@ -24,6 +24,9 @@
     margin: 0;
     padding: 0;
   }
+  :root {
+    --scaife-brand-color: #{$explorehomer-brand};
+  }
   #app {
     font-family: $font-family-sans;
     -webkit-font-smoothing: antialiased;
@@ -35,6 +38,11 @@
   }
   div.main-layout > .widget {
     border-top: none;
+  }
+  div.main-layout > .widget > .main-widget-heading {
+    // heading is currently unused, but the slot is defined
+    // in scaife-skeleton
+    display: none;
   }
   a {
     color: $explorehomer-brand;

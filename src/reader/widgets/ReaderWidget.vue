@@ -1,6 +1,9 @@
 <template>
   <article class="u-flex">
     <section class="reader-left">
+      <h2 v-if="passageTitle" class="reader-heading main-widget-heading">
+        {{ passageTitle }}
+      </h2>
       <div class="reader-container u-flex">
         <Paginator :urn="previous" direction="left" />
         <LoaderBall v-if="gqlLoading" />
@@ -90,12 +93,27 @@
       onShowImage(kind) {
         this.showImage = kind;
       },
+      setVersionMetadata() {
+        this.$store.dispatch(
+          UPDATE_METADATA,
+          { urn: this.urn.version },
+          { root: true },
+        );
+      },
     },
     watch: {
       urn() {
         this.$nextTick(() => {
           this.$parent.$el.scrollTop = 0;
         });
+      },
+      versionMetadata: {
+        immediate: true,
+        handler() {
+          if (!this.versionMetadata) {
+            this.setVersionMetadata();
+          }
+        },
       },
     },
     beforeUpdate() {
@@ -108,11 +126,7 @@
         });
       }
       if (this.version !== this.urn.version) {
-        this.$store.dispatch(
-          UPDATE_METADATA,
-          { urn: this.urn.version },
-          { root: true },
-        );
+        this.setVersionMetadata();
       }
     },
     computed: {
@@ -264,19 +278,25 @@
           };
         });
       },
-      siblings() {
-        return this.gqlData && this.gqlData.passageTextParts.metadata.siblings
-          ? this.gqlData.passageTextParts.metadata.siblings
+      versionMetadata() {
+        return this.$store.state.metadata;
+      },
+      passageTitle() {
+        return this.versionMetadata ? this.versionMetadata.label : null;
+      },
+      passageMetadata() {
+        return this.gqlData && this.gqlData.passageTextParts.metadata
+          ? this.gqlData.passageTextParts.metadata
           : null;
       },
       previous() {
-        return this.siblings && this.siblings.previous
-          ? new URN(this.siblings.previous)
+        return this.passageMetadata && this.passageMetadata.previous
+          ? new URN(this.passageMetadata.previous)
           : null;
       },
       next() {
-        return this.siblings && this.siblings.next
-          ? new URN(this.siblings.next)
+        return this.passageMetadata && this.passageMetadata.next
+          ? new URN(this.passageMetadata.next)
           : null;
       },
     },
@@ -290,6 +310,9 @@
   section {
     width: 100%;
   }
+  .reader-heading {
+    flex: 1;
+  }
   .reader-container {
     align-items: baseline;
     justify-content: left;
@@ -300,6 +323,10 @@
       margin-left: auto;
       padding-top: 40px;
     }
+  }
+  ::v-deep .reader-empty-annotations {
+    text-align: center;
+    margin-top: 1rem;
   }
   .image-mode {
     flex: 1;
@@ -320,11 +347,4 @@
       height: calc(100vh - 75px);
     }
   }
-</style>
-
-<style>
- .reader-empty-annotations {
-   text-align: center;
-   margin-top: 1rem;
- }
 </style>
