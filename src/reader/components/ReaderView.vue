@@ -10,7 +10,6 @@
 <script>
   import {
     MetadataWidget,
-    NewAlexandriaWidget,
     PassageAncestorsWidget,
     PassageSiblingsWidget,
     PassageChildrenWidget,
@@ -27,6 +26,7 @@
   import ScholiaWidget from '@/widgets/ScholiaWidget.vue';
   import AudioWidget from '@/widgets/AudioWidget.vue';
   import WordListWidget from '@/widgets/WordListWidget.vue';
+  import NewAlexandriaWidget from '@/widgets/NewAlexandriaWidget.vue';
   import { FETCH_METADATA, FETCH_LIBRARY } from '@/constants';
 
   export default {
