@@ -17,5 +17,6 @@
     padding: 1rem 3rem;
     text-align: center;
     font-size: 18px;
+    margin-top: 40px;
   }
 </style>
