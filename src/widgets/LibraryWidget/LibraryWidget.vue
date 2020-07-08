@@ -1,6 +1,7 @@
 <template>
   <div class="library-widget u-widget u-flex">
-    <ul class="node-tree root" v-if="libraryTree">
+    <LoaderBall v-if="gqlLoading" />
+    <ul class="node-tree root" v-else-if="libraryTree">
       <Node v-for="(node, index) in libraryTree" :key="index" :node="node" />
     </ul>
   </div>
@@ -18,14 +19,6 @@
     scaifeConfig: {
       displayName: 'Library',
     },
-    methods: {
-      getTextGroupsTree() {
-        const nid = this.gqlData.tree.tree[0];
-        return nid.children.reduce((a, b) => {
-          return a.concat(b.children);
-        }, []);
-      },
-    },
     computed: {
       gqlQuery() {
         return gql`
@@ -37,7 +30,10 @@
         `;
       },
       libraryTree() {
-        return this.gqlData ? this.getTextGroupsTree() : [];
+        const nid = this.gqlData.tree.tree[0] || { children: [] };
+        return nid.children.reduce((a, b) => {
+          return a.concat(b.children);
+        }, []);
       },
     },
   };
