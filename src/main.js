@@ -8,6 +8,7 @@ import {
   faMapMarkerAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import * as Sentry from '@sentry/browser';
+import { Integrations as ApmIntegrations } from '@sentry/apm';
 import { Vue as VueIntegration } from '@sentry/integrations';
 
 import SkeletonPlugin from 'scaife-skeleton';
@@ -49,7 +50,12 @@ Vue.prototype.$isEmpty = obj =>
 Sentry.init({
   dsn:
     'https://09f738fbe09c4dc0b22d0fa05efc8de7@o418387.ingest.sentry.io/5321255',
-  integrations: [new VueIntegration({ Vue, attachProps: true })],
+  integrations: [
+    new VueIntegration({ Vue, attachProps: true }),
+    new ApmIntegrations.Tracing(),
+  ],
+  // @@@ trace everything all the time
+  tracesSampleRate: 1.0,
 });
 
 new Vue({
