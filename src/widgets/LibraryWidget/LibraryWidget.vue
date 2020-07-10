@@ -13,7 +13,7 @@
   export default {
     name: 'LibraryWidget',
     apollo: {
-      tree: {
+      libraryData: {
         query: gql`
           {
             tree(urn: "urn:cts:", upTo: "version") {
@@ -21,6 +21,8 @@
             }
           }
         `,
+        // we want to access the data as `libraryData`
+        update: data => data,
       },
     },
     components: {
@@ -31,7 +33,7 @@
     },
     methods: {
       getTextGroupsTree() {
-        const nid = this.$apolloData.data.tree.tree[0];
+        const nid = this.$apolloData.data.libraryData.tree.tree[0];
         return nid.children.reduce((a, b) => {
           return a.concat(b.children);
         }, []);
@@ -39,7 +41,9 @@
     },
     computed: {
       libraryTree() {
-        return this.$apolloData.data.tree ? this.getTextGroupsTree() : [];
+        return this.$apolloData.data.libraryData
+          ? this.getTextGroupsTree()
+          : [];
       },
     },
   };
