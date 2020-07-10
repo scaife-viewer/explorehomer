@@ -13,7 +13,7 @@
   export default {
     name: 'LibraryWidget',
     apollo: {
-      libraryData: {
+      libraryTree: {
         query: gql`
           {
             tree(urn: "urn:cts:", upTo: "version") {
@@ -21,8 +21,13 @@
             }
           }
         `,
-        // we want to access the data as `libraryData`
-        update: data => data,
+        // transform response before setting as `data.libraryTree`
+        update(data) {
+          const nid = data.tree.tree[0];
+          return nid.children.reduce((a, b) => {
+            return a.concat(b.children);
+          }, []);
+        },
       },
     },
     components: {
@@ -30,19 +35,6 @@
     },
     scaifeConfig: {
       displayName: 'Library',
-    },
-    methods: {
-      getTextGroupsTree() {
-        const nid = this.libraryData.tree.tree[0];
-        return nid.children.reduce((a, b) => {
-          return a.concat(b.children);
-        }, []);
-      },
-    },
-    computed: {
-      libraryTree() {
-        return this.libraryData ? this.getTextGroupsTree() : [];
-      },
     },
   };
 </script>
