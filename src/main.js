@@ -1,4 +1,6 @@
 import Vue from 'vue';
+import VueApollo from 'vue-apollo';
+
 import {
   faChevronLeft,
   faChevronDown,
@@ -16,7 +18,7 @@ import {
 
 import SkeletonPlugin from 'scaife-skeleton';
 import { EndpointsPlugin } from '@scaife-viewer/scaife-widgets';
-import GraphQLPlugin from '@/gql';
+import GraphQLPlugin, { gqlclient } from '@/gql';
 
 import App from '@/App.vue';
 import router from '@/router';
@@ -42,6 +44,12 @@ const iconMap = [
   };
 }, {});
 
+Vue.use(VueApollo);
+
+const apolloProvider = new VueApollo({
+  defaultClient: gqlclient,
+});
+
 Vue.use(SkeletonPlugin, { iconMap });
 Vue.use(GraphQLPlugin);
 
@@ -60,4 +68,5 @@ new Vue({
   router,
   store,
   render: h => h(App),
+  apolloProvider,
 }).$mount('#app');
