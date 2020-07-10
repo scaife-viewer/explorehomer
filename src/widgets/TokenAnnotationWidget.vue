@@ -84,15 +84,18 @@
           const tokens = this.lines
             .map(line => {
               const { edges } = line.tokens;
-              return edges.filter(selectedFilter).map(edge => {
-                const token = edge.node;
-                return {
-                  veRef: token.veRef,
-                  value: token.wordValue,
-                  lemma: token.lemma,
-                  tag: token.tag,
-                };
-              });
+              return edges
+                .filter(selectedFilter)
+                .map(edge => {
+                  const token = edge.node;
+                  return {
+                    veRef: token.veRef,
+                    value: token.wordValue,
+                    lemma: token.lemma,
+                    tag: token.tag,
+                  };
+                })
+                .filter(token => token.tag !== null);
             })
             .flat();
           return [...new Set(tokens)];

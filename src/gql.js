@@ -14,6 +14,8 @@ const GraphQLPlugin = {
       data: () => ({
         gqlLoading: false,
         gqlData: null,
+        gqlError: false,
+        gqlErrorObject: null,
       }),
       computed: {
         gqlQuery: () => null,
@@ -24,10 +26,19 @@ const GraphQLPlugin = {
           handler() {
             if (this.gqlQuery) {
               this.gqlLoading = true;
-              this.$gql(this.gqlQuery).then(data => {
-                this.gqlData = data;
-                this.gqlLoading = false;
-              });
+              this.$gql(this.gqlQuery)
+                .then(data => {
+                  this.gqlData = data;
+                  this.gqlLoading = false;
+                  this.gqlErrorObject = null;
+                  this.gqlError = false;
+                })
+                .catch(e => {
+                  this.gqlErrorObject = e;
+                  this.gqlError = true;
+                  this.gqlLoading = false;
+                  this.gqlData = null;
+                });
             }
           },
         },
