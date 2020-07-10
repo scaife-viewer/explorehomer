@@ -34,13 +34,14 @@
           <EmptyMessage class="reader-empty-annotations" v-else />
         </div>
         <template v-else-if="alignmentMode">
+          <LoaderBall v-if="$apollo.queries.textAlignmentChunks.loading" />
           <EmptyMessage
             class="reader-empty-annotations"
-            v-if="alignments.length === 0"
+            v-else-if="textAlignmentChunks.length === 0"
           />
           <Alignments
             v-else
-            :alignments="alignments"
+            :alignments="textAlignmentChunks"
             :textSize="textSize"
             :textWidth="textWidth"
           />
@@ -129,6 +130,30 @@
         this.setVersionMetadata();
       }
     },
+    apollo: {
+      textAlignmentChunks: {
+        query: gql`
+          query TextParts($urn: String!) {
+            textAlignmentChunks(reference: $urn) {
+              edges {
+                node {
+                  items
+                }
+              }
+            }
+          }
+        `,
+        variables() {
+          return { urn: this.urn.absolute };
+        },
+        update(data) {
+          return data.textAlignmentChunks.edges.map(e => e.node.items);
+        },
+        skip() {
+          return this.alignmentMode === false;
+        },
+      },
+    },
     computed: {
       alignmentMode() {
         return this.$store.state.displayMode === 'sentence-alignments';
@@ -197,13 +222,6 @@
                 endCursor
               }
             }
-            textAlignmentChunks(reference: "${this.urn}") {
-              edges {
-                node {
-                  items
-                }
-              }
-            }
             imageAnnotations(reference: "${this.urn}") {
               edges {
                 node {
@@ -235,12 +253,6 @@
       },
       textWidth() {
         return this.$store.getters[`${WIDGETS_NS}/readerTextWidth`];
-      },
-      alignments() {
-        if (!this.gqlData) {
-          return [];
-        }
-        return this.gqlData.textAlignmentChunks.edges.map(e => e.node.items);
       },
       lines() {
         if (!this.gqlData) {
