@@ -12,6 +12,17 @@
 
   export default {
     name: 'LibraryWidget',
+    apollo: {
+      tree: {
+        query: gql`
+          {
+            tree(urn: "urn:cts:", upTo: "version") {
+              tree
+            }
+          }
+        `,
+      },
+    },
     components: {
       Node,
     },
@@ -20,24 +31,15 @@
     },
     methods: {
       getTextGroupsTree() {
-        const nid = this.gqlData.tree.tree[0];
+        const nid = this.$apolloData.data.tree.tree[0];
         return nid.children.reduce((a, b) => {
           return a.concat(b.children);
         }, []);
       },
     },
     computed: {
-      gqlQuery() {
-        return gql`
-          {
-            tree(urn: "urn:cts:", upTo: "version") {
-              tree
-            }
-          }
-        `;
-      },
       libraryTree() {
-        return this.gqlData ? this.getTextGroupsTree() : [];
+        return this.$apolloData.data.tree ? this.getTextGroupsTree() : [];
       },
     },
   };
