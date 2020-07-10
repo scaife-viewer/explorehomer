@@ -34,14 +34,14 @@
           <EmptyMessage class="reader-empty-annotations" v-else />
         </div>
         <template v-else-if="alignmentMode">
-          <LoaderBall v-if="$apollo.queries.textAlignmentChunks.loading" />
+          <LoaderBall v-if="$apollo.queries.alignmentModeData.loading" />
           <EmptyMessage
             class="reader-empty-annotations"
-            v-else-if="textAlignmentChunks.length === 0"
+            v-else-if="alignmentModeData.length === 0"
           />
           <Alignments
             v-else
-            :alignments="textAlignmentChunks"
+            :alignments="alignmentModeData"
             :textSize="textSize"
             :textWidth="textWidth"
           />
@@ -131,7 +131,7 @@
       }
     },
     apollo: {
-      textAlignmentChunks: {
+      alignmentModeData: {
         query: gql`
           query TextParts($urn: String!) {
             textAlignmentChunks(reference: $urn) {
