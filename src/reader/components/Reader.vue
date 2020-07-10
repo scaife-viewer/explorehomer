@@ -32,19 +32,24 @@
     components: { Attribution, EmptyMessage, ReaderLine },
     props: ['lines', 'textSize', 'textWidth'],
     computed: {
+      metricalMode() {
+        return this.$store.state.displayMode === 'metrical';
+      },
       showMetricalCredit() {
-        const metricalMode = this.$store.state.displayMode === 'metrical';
+        if (!this.metricalModel) {
+          return false;
+        }
         const hasContent =
           this.lines.filter(line => {
             const { metricalAnnotations } = line;
             return metricalAnnotations[0] && metricalAnnotations[0].htmlContent;
           }).length > 0;
-        return metricalMode && hasContent;
-      },
-      metricalMode() {
-        return this.$store.state.displayMode === 'metrical';
+        return hasContent;
       },
       metricalLines() {
+        if (!this.metricalMode) {
+          return [];
+        }
         return this.lines.filter(line => {
           const { metricalAnnotations } = line;
           const annotation = metricalAnnotations[0];

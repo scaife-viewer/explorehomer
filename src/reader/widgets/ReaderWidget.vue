@@ -8,30 +8,33 @@
         <Paginator :urn="previous" direction="left" />
         <LoaderBall v-if="gqlLoading" />
         <div class="image-mode" :class="showImage" v-else-if="imageMode">
-          <ImageViewerToolbar :show="showImage" @show="onShowImage" />
-          <div class="image-mode-container" v-if="showImage === 'both'">
+          <LoaderBall v-if="$apollo.queries.imageModeData.loading" />
+          <template v-else>
+            <ImageViewerToolbar :show="showImage" @show="onShowImage" />
+            <div class="image-mode-container" v-if="showImage === 'both'">
+              <Reader
+                :lines="imageModeData.lines"
+                :textSize="textSize"
+                :textWidth="textWidth"
+              />
+              <ImageViewer
+                v-if="imageModeData.imageIdentifier"
+                :imageIdentifier="imageModeData.imageIdentifier"
+              />
+              <EmptyMessage class="reader-empty-annotations" v-else />
+            </div>
             <Reader
-              :lines="lines"
+              v-else-if="showImage === 'text'"
+              :lines="imageModeData.lines"
               :textSize="textSize"
               :textWidth="textWidth"
             />
             <ImageViewer
-              v-if="imageIdentifier"
-              :imageIdentifier="imageIdentifier"
+              v-else-if="showImage === 'image' && imageModeData.imageIdentifier"
+              :imageIdentifier="imageModeData.imageIdentifier"
             />
             <EmptyMessage class="reader-empty-annotations" v-else />
-          </div>
-          <Reader
-            v-else-if="showImage === 'text'"
-            :lines="lines"
-            :textSize="textSize"
-            :textWidth="textWidth"
-          />
-          <ImageViewer
-            v-else-if="showImage === 'image' && imageIdentifier"
-            :imageIdentifier="imageIdentifier"
-          />
-          <EmptyMessage class="reader-empty-annotations" v-else />
+          </template>
         </div>
         <template v-else-if="alignmentMode">
           <LoaderBall v-if="$apollo.queries.alignmentModeData.loading" />
@@ -153,6 +156,72 @@
           return this.alignmentMode === false;
         },
       },
+      imageModeData: {
+        query: gql`
+          query Folios($urn: String!) {
+            passageTextParts(reference: $urn) {
+              metadata
+              edges {
+                node {
+                  id
+                  kind
+                  urn
+                  ref
+                  tokens {
+                    edges {
+                      node {
+                        veRef
+                        value
+                      }
+                    }
+                  }
+                }
+              }
+              pageInfo {
+                hasNextPage
+                endCursor
+              }
+            }
+            imageAnnotations(reference: $urn) {
+              edges {
+                node {
+                  idx
+                  imageIdentifier
+                  textParts {
+                    edges {
+                      node {
+                        ref
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `,
+        variables() {
+          return { urn: this.urn.absolute };
+        },
+        update(data) {
+          const lines = data.passageTextParts.edges.map(line => {
+            const { id, kind, ref } = line.node;
+            const tokens = line.node.tokens.edges.map(edge => {
+              const { value, veRef } = edge.node;
+              return { value, veRef };
+            });
+            return { id, kind, ref, tokens };
+          });
+          return {
+            lines,
+            imageIdentifier: data.imageAnnotations.edges.length
+              ? data.imageAnnotations.edges[0].node.imageIdentifier
+              : null,
+          };
+        },
+        skip() {
+          return this.imageMode === false;
+        }
+      }
     },
     computed: {
       alignmentMode() {
@@ -160,11 +229,6 @@
       },
       imageMode() {
         return this.$store.state.displayMode === 'folio';
-      },
-      imageIdentifier() {
-        return this.gqlData && this.gqlData.imageAnnotations.edges.length
-          ? this.gqlData.imageAnnotations.edges[0].node.imageIdentifier
-          : null;
       },
       urn() {
         return this.$route.query.urn
@@ -220,21 +284,6 @@
               pageInfo {
                 hasNextPage
                 endCursor
-              }
-            }
-            imageAnnotations(reference: "${this.urn}") {
-              edges {
-                node {
-                  idx
-                  imageIdentifier
-                  textParts {
-                    edges {
-                      node {
-                        ref
-                      }
-                    }
-                  }
-                }
               }
             }
           }
