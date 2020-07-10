@@ -33,7 +33,7 @@
     },
     methods: {
       getTextGroupsTree() {
-        const nid = this.$apolloData.data.libraryData.tree.tree[0];
+        const nid = this.libraryData.tree.tree[0];
         return nid.children.reduce((a, b) => {
           return a.concat(b.children);
         }, []);
@@ -41,9 +41,7 @@
     },
     computed: {
       libraryTree() {
-        return this.$apolloData.data.libraryData
-          ? this.getTextGroupsTree()
-          : [];
+        return this.libraryData ? this.getTextGroupsTree() : [];
       },
     },
   };
