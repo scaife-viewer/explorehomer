@@ -14,19 +14,13 @@
           :loading="$apollo.queries.imageModeData.loading"
           :data="imageModeData"
         />
-        <template v-else-if="alignmentMode">
-          <LoaderBall v-if="$apollo.queries.alignmentModeData.loading" />
-          <EmptyMessage
-            class="reader-empty-annotations"
-            v-else-if="alignmentModeData.length === 0"
-          />
-          <Alignments
-            v-else
-            :alignments="alignmentModeData"
-            :textSize="textSize"
-            :textWidth="textWidth"
-          />
-        </template>
+        <AlignmentsModeReader
+          v-else-if="alignmentMode"
+          :text-size="textSize"
+          :text-width="textWidth"
+          :loading="$apollo.queries.alignmentModeData.loading"
+          :data="alignmentModeData"
+        />
         <Reader
           v-else
           :lines="lines"
@@ -44,8 +38,8 @@
 
   import WIDGETS_NS, { URN } from '@scaife-viewer/scaife-widgets';
   import Reader from '@/reader/components/Reader.vue';
-  import Alignments from '@/reader/components/Alignments.vue';
-  import EmptyMessage from '@/components/EmptyMessage.vue';
+  // eslint-disable-next-line max-len
+  import AlignmentsModeReader from '@/reader/components/AlignmentsModeReader.vue';
   import ImageModeReader from '@/reader/components/ImageModeReader.vue';
   import Paginator from '@/components/Paginator.vue';
   import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
@@ -53,10 +47,9 @@
 
   export default {
     components: {
-      Alignments,
-      EmptyMessage,
       Paginator,
       Reader,
+      AlignmentsModeReader,
       ImageModeReader,
     },
     scaifeConfig: {},
@@ -348,9 +341,5 @@
       margin-left: auto;
       padding-top: 40px;
     }
-  }
-  ::v-deep .reader-empty-annotations {
-    text-align: center;
-    margin-top: 1rem;
   }
 </style>
