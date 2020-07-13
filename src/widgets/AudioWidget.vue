@@ -155,7 +155,7 @@
           return { urn: this.urn.absolute };
         },
         update(data) {
-          return data.passageTextPart.edges
+          return data.passageTextParts.edges
             .map(e => e.node.audioAnnotations.edges.map(a => a.node))
             .flat();
         },
