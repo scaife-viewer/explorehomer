@@ -220,8 +220,8 @@
         },
         skip() {
           return this.imageMode === false;
-        }
-      }
+        },
+      },
     },
     computed: {
       alignmentMode() {

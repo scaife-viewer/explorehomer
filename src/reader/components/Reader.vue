@@ -62,8 +62,8 @@
           return false;
         }
         return this.metricalLines.length === 0;
-      }
-    }
+      },
+    },
   };
 </script>
 
