@@ -20,7 +20,7 @@
       textSize: String,
       textWidth: String,
       loading: Boolean,
-      data: Object,
+      data: Array,
     },
     components: {
       Alignments,

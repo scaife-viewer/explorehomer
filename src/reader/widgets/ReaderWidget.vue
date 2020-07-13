@@ -6,7 +6,7 @@
       </h2>
       <div class="reader-container u-flex">
         <Paginator :urn="previous" direction="left" />
-        <LoaderBall v-if="gqlLoading" />
+        <LoaderBall v-if="$apollo.loading" />
         <ImageModeReader
           v-else-if="imageMode"
           :text-size="textSize"
@@ -19,7 +19,7 @@
           :text-size="textSize"
           :text-width="textWidth"
           :loading="$apollo.queries.alignmentModeData.loading"
-          :data="alignmentModeData"
+          :data="alignmentModeData.alignments"
         />
         <Reader
           v-else
@@ -63,10 +63,20 @@
       },
     },
     watch: {
-      urn() {
-        this.$nextTick(() => {
-          this.$parent.$el.scrollTop = 0;
-        });
+      urn: {
+        immediate: true,
+        handler() {
+          this.$nextTick(() => {
+            this.$parent.$el.scrollTop = 0;
+          });
+          if (this.urn) {
+            this.$store.dispatch(
+              SET_PASSAGE,
+              { urn: this.urn.toString() },
+              { root: true },
+            );
+          }
+        },
       },
       versionMetadata: {
         immediate: true,
@@ -94,6 +104,9 @@
       alignmentModeData: {
         query: gql`
           query TextParts($urn: String!) {
+            passageTextParts(reference: $urn) {
+              metadata
+            }
             textAlignmentChunks(reference: $urn) {
               edges {
                 node {
@@ -107,7 +120,11 @@
           return { urn: this.urn.absolute };
         },
         update(data) {
-          return data.textAlignmentChunks.edges.map(e => e.node.items);
+          const { metadata } = data.passageTextParts;
+          return {
+            metadata,
+            alignments: data.textAlignmentChunks.edges.map(e => e.node.items),
+          };
         },
         skip() {
           return this.alignmentMode === false;
@@ -134,10 +151,6 @@
                   }
                 }
               }
-              pageInfo {
-                hasNextPage
-                endCursor
-              }
             }
             imageAnnotations(reference: $urn) {
               edges {
@@ -160,6 +173,7 @@
           return { urn: this.urn.absolute };
         },
         update(data) {
+          const { metadata } = data.passageTextParts;
           const lines = data.passageTextParts.edges.map(line => {
             const { id, kind, ref } = line.node;
             const tokens = line.node.tokens.edges.map(edge => {
@@ -169,6 +183,7 @@
             return { id, kind, ref, tokens };
           });
           return {
+            metadata,
             lines,
             imageIdentifier: data.imageAnnotations.edges.length
               ? data.imageAnnotations.edges[0].node.imageIdentifier
@@ -179,50 +194,20 @@
           return this.imageMode === false;
         },
       },
-    },
-    computed: {
-      alignmentMode() {
-        return this.$store.state.displayMode === 'sentence-alignments';
-      },
-      imageMode() {
-        return this.$store.state.displayMode === 'folio';
-      },
-      urn() {
-        return this.$route.query.urn
-          ? new URN(this.$route.query.urn)
-          : this.$store.getters[`${MODULE_NS}/firstPassageUrn`];
-      },
-      gqlQuery() {
-        if (this.urn) {
-          this.$store.dispatch(
-            SET_PASSAGE,
-            { urn: this.urn.toString() },
-            { root: true },
-          );
-          return gql`
-            {
-              passageTextParts(reference: "${this.urn}") {
+      interlinearModeData: {
+        query: gql`
+          query Interlinear($urn: String!) {
+            passageTextParts(reference: $urn) {
               metadata
               edges {
                 node {
                   id
-                  kind
-                  urn
                   ref
-                  metricalAnnotations {
-                    edges {
-                      node {
-                        metricalPattern
-                        htmlContent
-                      }
-                    }
-                  }
                   tokens {
                     edges {
                       node {
                         veRef
                         value
-                        position
                         lemma
                         partOfSpeech
                         tag
@@ -238,15 +223,197 @@
                   }
                 }
               }
-              pageInfo {
-                hasNextPage
-                endCursor
+            }
+          }
+        `,
+        update(data) {
+          const { metadata } = data.passageTextParts;
+          const lines = data.passageTextParts.edges.map(line => {
+            const { id, ref } = line.node;
+            const tokens = line.node.tokens.edges.map(edge => {
+              const {
+                value,
+                veRef,
+                lemma,
+                partOfSpeech,
+                tag,
+                namedEntities,
+              } = edge.node;
+              const entities = namedEntities.edges.map(e => e.node.id);
+              return {
+                value,
+                veRef,
+                lemma,
+                partOfSpeech,
+                tag,
+                entities,
+              };
+            });
+            return {
+              id,
+              ref,
+              tokens,
+            };
+          });
+          return { metadata, lines };
+        },
+        variables() {
+          return { urn: this.urn.absolute };
+        },
+        skip() {
+          return !this.interlinearMode;
+        },
+      },
+      metricalModeData: {
+        query: gql`
+          query Metrical($urn: String!) {
+            passageTextParts(reference: $urn) {
+              metadata
+              edges {
+                node {
+                  id
+                  ref
+                  metricalAnnotations {
+                    edges {
+                      node {
+                        metricalPattern
+                        htmlContent
+                      }
+                    }
+                  }
+                  tokens {
+                    edges {
+                      node {
+                        veRef
+                        value
+                        namedEntities {
+                          edges {
+                            node {
+                              id
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
           }
-          `;
-        }
-        return null;
+        `,
+        variables() {
+          return { urn: this.urn.absolute };
+        },
+        skip() {
+          return !this.metricalMode;
+        },
+        update(data) {
+          const { metadata } = data.passageTextParts;
+          const lines = data.passageTextParts.edges.map(line => {
+            const { id, ref, metricalAnnotations } = line.node;
+            const tokens = line.node.tokens.edges.map(edge => {
+              const { value, veRef, namedEntities } = edge.node;
+              const entities = namedEntities.edges.map(e => e.node.id);
+              return {
+                value,
+                veRef,
+                entities,
+              };
+            });
+            return {
+              id,
+              ref,
+              tokens,
+              metricalAnnotations: metricalAnnotations.edges.map(e => e.node),
+            };
+          });
+          return { metadata, lines };
+        },
+      },
+      namedEntitiesModeData: {
+        query: gql`
+          query NamedEntities($urn: String!) {
+            passageTextParts(reference: $urn) {
+              metadata
+              edges {
+                node {
+                  id
+                  ref
+                  tokens {
+                    edges {
+                      node {
+                        veRef
+                        value
+                        namedEntities {
+                          edges {
+                            node {
+                              id
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `,
+        variables() {
+          return { urn: this.urn.absolute };
+        },
+        skip() {
+          return !this.namedEntitiesMode && !this.defaultMode;
+        },
+        update(data) {
+          const { metadata } = data.passageTextParts;
+          const lines = data.passageTextParts.edges.map(line => {
+            const { id, ref } = line.node;
+            const tokens = line.node.tokens.edges.map(edge => {
+              const { value, veRef, namedEntities } = edge.node;
+              const entities = namedEntities.edges.map(e => e.node.id);
+              return {
+                value,
+                veRef,
+                entities,
+              };
+            });
+            return {
+              id,
+              ref,
+              tokens,
+            };
+          });
+          return { metadata, lines };
+        },
+      },
+    },
+    computed: {
+      displayMode() {
+        return this.$store.state.displayMode;
+      },
+      alignmentMode() {
+        return this.displayMode === 'sentence-alignments';
+      },
+      imageMode() {
+        return this.displayMode === 'folio';
+      },
+      interlinearMode() {
+        return this.displayMode === 'interlinear';
+      },
+      metricalMode() {
+        return this.displayMode === 'metrical';
+      },
+      namedEntitiesMode() {
+        return this.displayMode === 'named-entities';
+      },
+      defaultMode() {
+        return this.displayMode === 'default';
+      },
+      urn() {
+        return this.$route.query.urn
+          ? new URN(this.$route.query.urn)
+          : this.$store.getters[`${MODULE_NS}/firstPassageUrn`];
       },
       version() {
         return this.$store.getters[`${MODULE_NS}/firstPassageUrn`].version;
@@ -261,40 +428,16 @@
         return this.$store.getters[`${WIDGETS_NS}/readerTextWidth`];
       },
       lines() {
-        if (!this.gqlData) {
-          return [];
+        if (this.interlinearMode) {
+          return this.interlinearModeData.lines;
         }
-        return this.gqlData.passageTextParts.edges.map(line => {
-          const { id, kind, ref, metricalAnnotations } = line.node;
-          const tokens = line.node.tokens.edges.map(edge => {
-            const {
-              value,
-              veRef,
-              position,
-              lemma,
-              partOfSpeech,
-              tag,
-              namedEntities,
-            } = edge.node;
-            const entities = namedEntities.edges.map(e => e.node.id);
-            return {
-              value,
-              veRef,
-              position,
-              lemma,
-              partOfSpeech,
-              tag,
-              entities,
-            };
-          });
-          return {
-            id,
-            kind,
-            ref,
-            tokens,
-            metricalAnnotations: metricalAnnotations.edges.map(e => e.node),
-          };
-        });
+        if (this.metricalMode) {
+          return this.metricalModeData.lines;
+        }
+        if (this.defaultMode || this.namedEntitiesMode) {
+          return this.namedEntitiesModeData.lines;
+        }
+        return [];
       },
       versionMetadata() {
         return this.$store.state.metadata;
@@ -303,9 +446,23 @@
         return this.versionMetadata ? this.versionMetadata.label : null;
       },
       passageMetadata() {
-        return this.gqlData && this.gqlData.passageTextParts.metadata
-          ? this.gqlData.passageTextParts.metadata
-          : null;
+        let data;
+        if (this.imageMode) {
+          data = this.imageModeData;
+        }
+        if (this.alignmentMode) {
+          data = this.alignmentModeData;
+        }
+        if (this.interlinearMode) {
+          data = this.interlinearModeData;
+        }
+        if (this.metricalMode) {
+          data = this.metricalModeData;
+        }
+        if (this.defaultMode || this.namedEntitiesMode) {
+          data = this.namedEntitiesModeData;
+        }
+        return data ? data.metadata : null;
       },
       previous() {
         return this.passageMetadata && this.passageMetadata.previous

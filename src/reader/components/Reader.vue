@@ -4,11 +4,7 @@
       class="reader-container text"
       :class="[`text-${textSize}`, `text-width-${textWidth}`]"
     >
-      <ReaderLine
-        v-for="(line, index) in lines"
-        :key="`${index}-${line.label}`"
-        :line="line"
-      />
+      <ReaderLine v-for="line in lines" :key="line.id" :line="line" />
 
       <Attribution v-if="showMetricalCredit" class="metrical-attribution">
         Metrical annotation &copy; 2016
