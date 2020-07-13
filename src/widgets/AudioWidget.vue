@@ -119,13 +119,7 @@
           : this.$store.getters[`${MODULE_NS}/firstPassageUrn`];
       },
       audios() {
-        if (!this.gqlData) {
-          return [];
-        }
-        const { edges } = this.gqlData.passageTextParts;
-        return edges
-          .map(e => e.node.audioAnnotations.edges.map(a => a.node))
-          .flat();
+        return this.audioData ? this.audioData : [];
       },
       audioMap() {
         return this.audios.reduce((map, obj) => {
@@ -135,10 +129,12 @@
           };
         }, {});
       },
-      gqlQuery() {
-        if (this.urn) {
-          return gql`{
-            passageTextParts(reference: "${this.urn}") {
+    },
+    apollo: {
+      audioData: {
+        query: gql`
+          query Audio($urn: String!) {
+            passageTextParts(reference: $urn) {
               edges {
                 node {
                   id
@@ -153,9 +149,16 @@
                 }
               }
             }
-          }`;
-        }
-        return null;
+          }
+        `,
+        variables() {
+          return { urn: this.urn.absolute };
+        },
+        update(data) {
+          return data.passageTextPart.edges
+            .map(e => e.node.audioAnnotations.edges.map(a => a.node))
+            .flat();
+        },
       },
     },
   };
