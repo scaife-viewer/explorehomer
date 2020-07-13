@@ -28,7 +28,7 @@
     props: ['lines', 'textSize', 'textWidth'],
     computed: {
       metricalMode() {
-        return this.$store.state.displayMode === 'metrical';
+        return this.$store.getters.metricalMode;
       },
       showMetricalCredit() {
         if (!this.metricalModel) {

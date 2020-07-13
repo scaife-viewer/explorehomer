@@ -3,19 +3,19 @@
     <div :class="{ active: defaultMode }" @click="setDefault">
       Default
     </div>
-    <div :class="{ active: interlinear }" @click="setInterlinear">
+    <div :class="{ active: interlinearMode }" @click="setInterlinear">
       Interlinear
     </div>
-    <div :class="{ active: folio }" @click="setFolio">
+    <div :class="{ active: folioMode }" @click="setFolio">
       Folio Images
     </div>
-    <div :class="{ active: metrical }" @click="setMetrical">
+    <div :class="{ active: metricalMode }" @click="setMetrical">
       Metrical Annotation
     </div>
-    <div :class="{ active: namedEntities }" @click="setNamedEntities">
+    <div :class="{ active: namedEntitiesMode }" @click="setNamedEntities">
       Named Entities
     </div>
-    <div :class="{ active: sentence }" @click="setSentence">
+    <div :class="{ active: alignmentsMode }" @click="setSentence">
       Sentence Alignments
     </div>
   </div>
@@ -24,12 +24,13 @@
 <script>
   import WIDGETS_NS from '@scaife-viewer/scaife-widgets';
   import {
-    SET_DISPLAY_MODE_INTERLINEAR,
-    SET_DISPLAY_MODE_NAMED_ENTITIES,
-    SET_DISPLAY_MODE_FOLIO,
-    SET_DISPLAY_MODE_DEFAULT,
-    SET_DISPLAY_MODE_METRICAL,
-    SET_DISPLAY_MODE_SENTENCE_ALIGNMENTS,
+    SET_DISPLAY_MODE,
+    DISPLAY_MODE_NAMED_ENTITIES,
+    DISPLAY_MODE_FOLIO,
+    DISPLAY_MODE_DEFAULT,
+    DISPLAY_MODE_INTERLINEAR,
+    DISPLAY_MODE_METRICAL,
+    DISPLAY_MODE_SENTENCE_ALIGNMENTS,
   } from '@/constants';
 
   export default {
@@ -39,35 +40,34 @@
       singleton: true,
     },
     computed: {
-      displayMode() {
-        return this.$store.state.displayMode;
+      interlinearMode() {
+        return this.$store.getters.interlinearMode;
       },
-      interlinear() {
-        return this.displayMode === 'interlinear';
+      namedEntitiesMode() {
+        return this.$store.getters.namedEntitiesMode;
       },
-      namedEntities() {
-        return this.displayMode === 'named-entities';
-      },
-      folio() {
-        return this.displayMode === 'folio';
+      folioMode() {
+        return this.$store.getters.folioMode;
       },
       defaultMode() {
-        return this.displayMode === 'default';
+        return this.$store.getters.defaultMode;
       },
-      metrical() {
-        return this.displayMode === 'metrical';
+      metricalMode() {
+        return this.$store.getters.metricalMode;
       },
-      sentence() {
-        return this.displayMode === 'sentence-alignments';
+      alignmentsMode() {
+        return this.$store.getters.alignmentsMode;
       },
     },
     methods: {
       setWideLayout() {
-        document.getElementsByClassName('main-layout')[0]
+        document
+          .getElementsByClassName('main-layout')[0]
           .classList.add('main-layout-wide');
       },
       setNormalLayout() {
-        document.getElementsByClassName('main-layout')[0]
+        document
+          .getElementsByClassName('main-layout')[0]
           .classList.remove('main-layout-wide');
       },
       setWideText() {
@@ -80,35 +80,38 @@
           width: 'normal',
         });
       },
+      setMode(mode) {
+        this.$store.dispatch(SET_DISPLAY_MODE, { mode });
+      },
       setDefault() {
-        this.$store.dispatch(SET_DISPLAY_MODE_DEFAULT);
+        this.setMode(DISPLAY_MODE_DEFAULT);
         this.setNormalLayout();
-        this.setNormalText()
+        this.setNormalText();
       },
       setInterlinear() {
-        this.$store.dispatch(SET_DISPLAY_MODE_INTERLINEAR);
+        this.setMode(DISPLAY_MODE_INTERLINEAR);
         this.setNormalLayout();
-        this.setNormalText()
+        this.setNormalText();
       },
       setFolio() {
-        this.$store.dispatch(SET_DISPLAY_MODE_FOLIO);
+        this.setMode(DISPLAY_MODE_FOLIO);
         this.setWideLayout();
-        this.setNormalText()
+        this.setNormalText();
       },
       setNamedEntities() {
-        this.$store.dispatch(SET_DISPLAY_MODE_NAMED_ENTITIES);
+        this.setMode(DISPLAY_MODE_NAMED_ENTITIES);
         this.setNormalLayout();
-        this.setNormalText()
+        this.setNormalText();
       },
       setMetrical() {
-        this.$store.dispatch(SET_DISPLAY_MODE_METRICAL);
+        this.setMode(DISPLAY_MODE_METRICAL);
         this.setNormalLayout();
         this.setWideText();
       },
       setSentence() {
-        this.$store.dispatch(SET_DISPLAY_MODE_SENTENCE_ALIGNMENTS);
+        this.setMode(DISPLAY_MODE_SENTENCE_ALIGNMENTS);
         this.setWideLayout();
-        this.setNormalText()
+        this.setNormalText();
       },
     },
   };

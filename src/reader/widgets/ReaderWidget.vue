@@ -8,14 +8,14 @@
         <Paginator :urn="previous" direction="left" />
         <LoaderBall v-if="$apollo.loading" />
         <ImageModeReader
-          v-else-if="imageMode"
+          v-else-if="folioMode"
           :text-size="textSize"
           :text-width="textWidth"
           :loading="$apollo.queries.imageModeData.loading"
           :data="imageModeData"
         />
         <AlignmentsModeReader
-          v-else-if="alignmentMode"
+          v-else-if="alignmentsMode"
           :text-size="textSize"
           :text-width="textWidth"
           :loading="$apollo.queries.alignmentModeData.loading"
@@ -127,7 +127,7 @@
           };
         },
         skip() {
-          return this.alignmentMode === false;
+          return this.alignmentsMode === false;
         },
       },
       imageModeData: {
@@ -191,7 +191,7 @@
           };
         },
         skip() {
-          return this.imageMode === false;
+          return this.folioMode === false;
         },
       },
       interlinearModeData: {
@@ -389,26 +389,23 @@
       },
     },
     computed: {
-      displayMode() {
-        return this.$store.state.displayMode;
+      alignmentsMode() {
+        return this.$store.getters.alignmentsMode;
       },
-      alignmentMode() {
-        return this.displayMode === 'sentence-alignments';
-      },
-      imageMode() {
-        return this.displayMode === 'folio';
+      folioMode() {
+        return this.$store.getters.folioMode;
       },
       interlinearMode() {
-        return this.displayMode === 'interlinear';
+        return this.$store.getters.interlinearMode;
       },
       metricalMode() {
-        return this.displayMode === 'metrical';
+        return this.$store.getters.metricalMode;
       },
       namedEntitiesMode() {
-        return this.displayMode === 'named-entities';
+        return this.$store.getters.namedEntitiesMode;
       },
       defaultMode() {
-        return this.displayMode === 'default';
+        return this.$store.getters.defaultMode;
       },
       urn() {
         return this.$route.query.urn
@@ -447,10 +444,10 @@
       },
       passageMetadata() {
         let data;
-        if (this.imageMode) {
+        if (this.folioMode) {
           data = this.imageModeData;
         }
-        if (this.alignmentMode) {
+        if (this.alignmentsMode) {
           data = this.alignmentModeData;
         }
         if (this.interlinearMode) {
