@@ -25,7 +25,6 @@
   import gql from 'graphql-tag';
 
   import { URN } from '@scaife-viewer/scaife-widgets';
-  import EmptyMessage from '@/components/EmptyMessage.vue';
   import { MODULE_NS } from '@/reader/constants';
 
   import { PLAY_AUDIO, STOP_AUDIO } from '@/constants';
@@ -35,7 +34,7 @@
     scaifeConfig: {
       displayName: 'Audio',
     },
-    components: { Attribution, EmptyMessage },
+    components: { Attribution },
     data() {
       return {
         nowPlayingIndex: 0,

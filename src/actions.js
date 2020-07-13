@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-import { gqlclient } from '@/gql';
+import client from '@/gql';
 import {
   FETCH_METADATA,
   UPDATE_METADATA,
@@ -54,7 +54,7 @@ export default {
     commit(SET_DISPLAY_MODE_INTERLINEAR);
   },
   [FETCH_METADATA]: ({ commit }) => {
-    gqlclient
+    client
       .query({
         query: gql`
           {
@@ -77,7 +77,7 @@ export default {
       );
   },
   [UPDATE_METADATA]: ({ commit }, { urn }) => {
-    gqlclient
+    client
       .query({
         query: gql`
           {
@@ -101,7 +101,7 @@ export default {
   },
   // @@@ should this really be something within scaife-widgets?
   [FETCH_LIBRARY]: ({ commit }) => {
-    gqlclient
+    client
       .query({
         query: gql`
           {

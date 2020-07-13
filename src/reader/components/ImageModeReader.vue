@@ -31,7 +31,6 @@
 </template>
 
 <script>
-  import EmptyMessage from '@/components/EmptyMessage.vue';
   import ImageViewer from '@/components/ImageViewer.vue';
   import ImageViewerToolbar from '@/components/ImageViewerToolbar.vue';
   import Reader from './Reader.vue';
@@ -48,7 +47,6 @@
       ImageViewer,
       ImageViewerToolbar,
       Reader,
-      EmptyMessage,
     },
     data() {
       return {

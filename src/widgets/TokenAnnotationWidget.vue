@@ -17,14 +17,12 @@
 <script>
   import gql from 'graphql-tag';
   import { URN } from '@scaife-viewer/scaife-widgets';
-  import EmptyMessage from '@/components/EmptyMessage.vue';
   import { MODULE_NS, CLEAR_TOKEN } from '@/reader/constants';
 
   export default {
     scaifeConfig: {
       displayName: 'Token Annotations',
     },
-    components: { EmptyMessage },
     methods: {
       onClear() {
         this.$store.dispatch(`${MODULE_NS}/${CLEAR_TOKEN}`);

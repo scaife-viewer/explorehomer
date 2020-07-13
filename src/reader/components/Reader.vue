@@ -21,11 +21,10 @@
 
 <script>
   import Attribution from '@/components/Attribution.vue';
-  import EmptyMessage from '@/components/EmptyMessage.vue';
   import ReaderLine from './ReaderLine.vue';
 
   export default {
-    components: { Attribution, EmptyMessage, ReaderLine },
+    components: { Attribution, ReaderLine },
     props: ['lines', 'textSize', 'textWidth'],
     computed: {
       metricalMode() {

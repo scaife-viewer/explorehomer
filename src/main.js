@@ -18,7 +18,10 @@ import {
 
 import SkeletonPlugin from 'scaife-skeleton';
 import { EndpointsPlugin } from '@scaife-viewer/scaife-widgets';
-import GraphQLPlugin, { gqlclient } from '@/gql';
+import client from '@/gql';
+
+import LoaderBall from '@/components/LoaderBall.vue';
+import EmptyMessage from '@/components/EmptyMessage.vue';
 
 import App from '@/App.vue';
 import router from '@/router';
@@ -47,11 +50,10 @@ const iconMap = [
 Vue.use(VueApollo);
 
 const apolloProvider = new VueApollo({
-  defaultClient: gqlclient,
+  defaultClient: client,
 });
 
 Vue.use(SkeletonPlugin, { iconMap });
-Vue.use(GraphQLPlugin);
 
 const widgetEndpoints = {};
 if (process.env.VUE_APP_TOC_ENDPOINT) {
@@ -63,6 +65,9 @@ Vue.config.productionTip = false;
 
 Vue.prototype.$isEmpty = obj =>
   Object.keys(obj).length === 0 && obj.constructor === Object;
+
+Vue.component('LoaderBall', LoaderBall);
+Vue.component('EmptyMessage', EmptyMessage);
 
 new Vue({
   router,

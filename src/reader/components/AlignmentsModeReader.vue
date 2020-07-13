@@ -12,7 +12,6 @@
 </template>
 
 <script>
-  import EmptyMessage from '@/components/EmptyMessage.vue';
   import Alignments from './Alignments.vue';
 
   export default {
@@ -24,7 +23,6 @@
     },
     components: {
       Alignments,
-      EmptyMessage,
     },
   };
 </script>

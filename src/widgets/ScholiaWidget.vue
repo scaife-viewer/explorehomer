@@ -17,7 +17,6 @@
   import gql from 'graphql-tag';
   import { URN } from '@scaife-viewer/scaife-widgets';
   import Attribution from '@/components/Attribution.vue';
-  import EmptyMessage from '@/components/EmptyMessage.vue';
   import { MODULE_NS } from '@/reader/constants';
 
   export default {
@@ -26,7 +25,7 @@
       location: 'sidebar',
       singleton: true,
     },
-    components: { Attribution, EmptyMessage },
+    components: { Attribution },
     computed: {
       urn() {
         return this.$route.query.urn
