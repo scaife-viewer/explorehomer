@@ -1,6 +1,7 @@
 <template>
   <div class="named-entities">
-    <EmptyMessage v-if="entities.length === 0" />
+    <LoaderBall v-if="$apollo.queries.entities.loading" />
+    <EmptyMessage v-else-if="entities.length === 0" />
     <template v-else>
       <Lookahead
         placeholder="Filter named entities"
@@ -76,12 +77,18 @@
           ? new URN(this.$route.query.urn)
           : this.$store.getters[`${MODULE_NS}/firstPassageUrn`];
       },
-      // TODO: Dedupe from Reader.vue
-      gqlQuery() {
-        if (this.urn) {
-          return gql`
-          {
-            namedEntities(reference:"${this.urn.absolute}") {
+      selectedEntities() {
+        return this.$store.state.selectedNamedEntities;
+      },
+      selectedToken() {
+        return this.$store.state[MODULE_NS].selectedToken;
+      },
+    },
+    apollo: {
+      entities: {
+        query: gql`
+          query NamedEntities($urn: String!) {
+            namedEntities(reference: $urn) {
               edges {
                 node {
                   id
@@ -94,20 +101,13 @@
               }
             }
           }
-          `;
-        }
-        return null;
-      },
-      entities() {
-        return this.gqlData
-          ? this.gqlData.namedEntities.edges.map(e => e.node)
-          : [];
-      },
-      selectedEntities() {
-        return this.$store.state.selectedNamedEntities;
-      },
-      selectedToken() {
-        return this.$store.state[MODULE_NS].selectedToken;
+        `,
+        variables() {
+          return { urn: this.urn.absolute };
+        },
+        update(data) {
+          return data.namedEntities.edges.map(e => e.node);
+        },
       },
     },
   };
