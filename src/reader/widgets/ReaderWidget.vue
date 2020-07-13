@@ -7,35 +7,13 @@
       <div class="reader-container u-flex">
         <Paginator :urn="previous" direction="left" />
         <LoaderBall v-if="gqlLoading" />
-        <div class="image-mode" :class="showImage" v-else-if="imageMode">
-          <LoaderBall v-if="$apollo.queries.imageModeData.loading" />
-          <template v-else>
-            <ImageViewerToolbar :show="showImage" @show="onShowImage" />
-            <div class="image-mode-container" v-if="showImage === 'both'">
-              <Reader
-                :lines="imageModeData.lines"
-                :textSize="textSize"
-                :textWidth="textWidth"
-              />
-              <ImageViewer
-                v-if="imageModeData.imageIdentifier"
-                :imageIdentifier="imageModeData.imageIdentifier"
-              />
-              <EmptyMessage class="reader-empty-annotations" v-else />
-            </div>
-            <Reader
-              v-else-if="showImage === 'text'"
-              :lines="imageModeData.lines"
-              :textSize="textSize"
-              :textWidth="textWidth"
-            />
-            <ImageViewer
-              v-else-if="showImage === 'image' && imageModeData.imageIdentifier"
-              :imageIdentifier="imageModeData.imageIdentifier"
-            />
-            <EmptyMessage class="reader-empty-annotations" v-else />
-          </template>
-        </div>
+        <ImageModeReader
+          v-else-if="imageMode"
+          :text-size="textSize"
+          :text-width="textWidth"
+          :loading="$apollo.queries.imageModeData.loading"
+          :data="imageModeData"
+        />
         <template v-else-if="alignmentMode">
           <LoaderBall v-if="$apollo.queries.alignmentModeData.loading" />
           <EmptyMessage
@@ -68,14 +46,9 @@
   import Reader from '@/reader/components/Reader.vue';
   import Alignments from '@/reader/components/Alignments.vue';
   import EmptyMessage from '@/components/EmptyMessage.vue';
-  import ImageViewer from '@/components/ImageViewer.vue';
-  import ImageViewerToolbar from '@/components/ImageViewerToolbar.vue';
+  import ImageModeReader from '@/reader/components/ImageModeReader.vue';
   import Paginator from '@/components/Paginator.vue';
-  import {
-    SET_PASSAGE,
-    UPDATE_METADATA,
-    IMAGE_VIEWER_STATE_BOTH,
-  } from '@/constants';
+  import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
   import { MODULE_NS } from '@/reader/constants';
 
   export default {
@@ -84,19 +57,10 @@
       EmptyMessage,
       Paginator,
       Reader,
-      ImageViewer,
-      ImageViewerToolbar,
+      ImageModeReader,
     },
     scaifeConfig: {},
-    data() {
-      return {
-        showImage: IMAGE_VIEWER_STATE_BOTH,
-      };
-    },
     methods: {
-      onShowImage(kind) {
-        this.showImage = kind;
-      },
       setVersionMetadata() {
         this.$store.dispatch(
           UPDATE_METADATA,
@@ -114,7 +78,7 @@
       versionMetadata: {
         immediate: true,
         handler() {
-          if (!this.versionMetadata) {
+          if (!this.versionMetadata && this.urn) {
             this.setVersionMetadata();
           }
         },
@@ -388,24 +352,5 @@
   ::v-deep .reader-empty-annotations {
     text-align: center;
     margin-top: 1rem;
-  }
-  .image-mode {
-    flex: 1;
-    &.both {
-      .image-mode-container {
-        grid-template-columns: 1fr 1fr;
-        column-gap: 0.75rem;
-      }
-    }
-    &.text,
-    &.image {
-      .image-mode-container {
-        grid-template-columns: 1fr;
-      }
-    }
-    .image-mode-container {
-      display: grid;
-      height: calc(100vh - 75px);
-    }
   }
 </style>
