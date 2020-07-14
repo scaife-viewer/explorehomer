@@ -10,15 +10,17 @@
 <script>
   import {
     MetadataWidget,
-    PassageAncestorsWidget,
-    PassageSiblingsWidget,
-    PassageChildrenWidget,
     PassageReferenceWidget,
     TextSizeWidget,
     TextWidthWidget,
     // TOCWidget,
   } from '@scaife-viewer/scaife-widgets';
+
   import ReaderWidget from '@/reader/widgets/ReaderWidget.vue';
+
+  import PassageAncestorsWidget from '@/widgets/PassageAncestorsWidget.vue';
+  import PassageSiblingsWidget from '@/widgets/PassageSiblingsWidget.vue';
+  import PassageChildrenWidget from '@/widgets/PassageChildrenWidget.vue';
   import LibraryWidget from '@/widgets/LibraryWidget/LibraryWidget.vue';
   import TokenAnnotationWidget from '@/widgets/TokenAnnotationWidget.vue';
   import NamedEntitiesWidget from '@/widgets/NamedEntitiesWidget';
@@ -27,6 +29,7 @@
   import AudioWidget from '@/widgets/AudioWidget.vue';
   import WordListWidget from '@/widgets/WordListWidget.vue';
   import NewAlexandriaWidget from '@/widgets/NewAlexandriaWidget.vue';
+
   import { FETCH_METADATA, FETCH_LIBRARY } from '@/constants';
 
   export default {
