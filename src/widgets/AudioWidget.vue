@@ -140,6 +140,7 @@
                   audioAnnotations {
                     edges {
                       node {
+                        id
                         data
                         assetUrl
                       }
