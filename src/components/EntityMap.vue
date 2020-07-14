@@ -8,7 +8,7 @@
   >
     <MglMarker
       v-for="(coordinates, index) in coordinatesList"
-      :key="`${coordinates[2]}-${coordinates[3]}-${index}`"
+      :key="`${coordinates[2]}-${coordinates[3]}-${index}-${selectedPlace}`"
       :coordinates="[coordinates[0], coordinates[1]]"
       @click="onMarkerClick(coordinates)"
     >
