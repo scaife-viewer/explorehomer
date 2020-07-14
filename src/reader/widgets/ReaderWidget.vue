@@ -7,6 +7,9 @@
       <div class="reader-container u-flex">
         <Paginator :urn="previous" direction="left" />
         <LoaderBall v-if="$apollo.loading" />
+        <ErrorMessage v-else-if="$apollo.error">
+          There was an error loading the requested data.
+        </ErrorMessage>
         <ImageModeReader
           v-else-if="folioMode"
           :text-size="textSize"
@@ -41,12 +44,16 @@
   // eslint-disable-next-line max-len
   import AlignmentsModeReader from '@/reader/components/AlignmentsModeReader.vue';
   import ImageModeReader from '@/reader/components/ImageModeReader.vue';
+  import EmptyMessage from '@/components/EmptyMessage.vue';
+  import ErrorMessage from '@/components/ErrorMessage.vue';
   import Paginator from '@/components/Paginator.vue';
   import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
   import { MODULE_NS } from '@/reader/constants';
 
   export default {
     components: {
+      EmptyMessage,
+      ErrorMessage,
       Paginator,
       Reader,
       AlignmentsModeReader,
