@@ -6,48 +6,24 @@
       </h2>
       <div class="reader-container u-flex">
         <Paginator :urn="previous" direction="left" />
-        <LoaderBall v-if="gqlLoading" />
-        <ErrorMessage v-else-if="gqlError">
+        <LoaderBall v-if="$apollo.loading" />
+        <ErrorMessage v-else-if="$apollo.error">
           There was an error loading the requested data.
         </ErrorMessage>
-        <div class="image-mode" :class="showImage" v-else-if="imageMode">
-          <ImageViewerToolbar :show="showImage" @show="onShowImage" />
-          <div class="image-mode-container" v-if="showImage === 'both'">
-            <Reader
-              :lines="lines"
-              :textSize="textSize"
-              :textWidth="textWidth"
-            />
-            <ImageViewer
-              v-if="imageIdentifier"
-              :imageIdentifier="imageIdentifier"
-            />
-            <EmptyMessage class="reader-empty-annotations" v-else />
-          </div>
-          <Reader
-            v-else-if="showImage === 'text'"
-            :lines="lines"
-            :textSize="textSize"
-            :textWidth="textWidth"
-          />
-          <ImageViewer
-            v-else-if="showImage === 'image' && imageIdentifier"
-            :imageIdentifier="imageIdentifier"
-          />
-          <EmptyMessage class="reader-empty-annotations" v-else />
-        </div>
-        <template v-else-if="alignmentMode">
-          <EmptyMessage
-            class="reader-empty-annotations"
-            v-if="alignments.length === 0"
-          />
-          <Alignments
-            v-else
-            :alignments="alignments"
-            :textSize="textSize"
-            :textWidth="textWidth"
-          />
-        </template>
+        <ImageModeReader
+          v-else-if="folioMode"
+          :text-size="textSize"
+          :text-width="textWidth"
+          :loading="$apollo.queries.imageModeData.loading"
+          :data="imageModeData"
+        />
+        <AlignmentsModeReader
+          v-else-if="alignmentsMode"
+          :text-size="textSize"
+          :text-width="textWidth"
+          :loading="$apollo.queries.alignmentModeData.loading"
+          :data="alignmentModeData.alignments"
+        />
         <Reader
           v-else
           :lines="lines"
@@ -65,39 +41,26 @@
 
   import WIDGETS_NS, { URN } from '@scaife-viewer/scaife-widgets';
   import Reader from '@/reader/components/Reader.vue';
-  import Alignments from '@/reader/components/Alignments.vue';
+  // eslint-disable-next-line max-len
+  import AlignmentsModeReader from '@/reader/components/AlignmentsModeReader.vue';
+  import ImageModeReader from '@/reader/components/ImageModeReader.vue';
   import EmptyMessage from '@/components/EmptyMessage.vue';
   import ErrorMessage from '@/components/ErrorMessage.vue';
-  import ImageViewer from '@/components/ImageViewer.vue';
-  import ImageViewerToolbar from '@/components/ImageViewerToolbar.vue';
   import Paginator from '@/components/Paginator.vue';
-  import {
-    SET_PASSAGE,
-    UPDATE_METADATA,
-    IMAGE_VIEWER_STATE_BOTH,
-  } from '@/constants';
+  import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
   import { MODULE_NS } from '@/reader/constants';
 
   export default {
     components: {
-      Alignments,
       EmptyMessage,
       ErrorMessage,
       Paginator,
       Reader,
-      ImageViewer,
-      ImageViewerToolbar,
+      AlignmentsModeReader,
+      ImageModeReader,
     },
     scaifeConfig: {},
-    data() {
-      return {
-        showImage: IMAGE_VIEWER_STATE_BOTH,
-      };
-    },
     methods: {
-      onShowImage(kind) {
-        this.showImage = kind;
-      },
       setVersionMetadata() {
         this.$store.dispatch(
           UPDATE_METADATA,
@@ -107,15 +70,25 @@
       },
     },
     watch: {
-      urn() {
-        this.$nextTick(() => {
-          this.$parent.$el.scrollTop = 0;
-        });
+      urn: {
+        immediate: true,
+        handler() {
+          this.$nextTick(() => {
+            this.$parent.$el.scrollTop = 0;
+          });
+          if (this.urn) {
+            this.$store.dispatch(
+              SET_PASSAGE,
+              { urn: this.urn.toString() },
+              { root: true },
+            );
+          }
+        },
       },
       versionMetadata: {
         immediate: true,
         handler() {
-          if (!this.versionMetadata) {
+          if (!this.versionMetadata && this.urn) {
             this.setVersionMetadata();
           }
         },
@@ -134,33 +107,40 @@
         this.setVersionMetadata();
       }
     },
-    computed: {
-      alignmentMode() {
-        return this.$store.state.displayMode === 'sentence-alignments';
+    apollo: {
+      alignmentModeData: {
+        query: gql`
+          query TextParts($urn: String!) {
+            passageTextParts(reference: $urn) {
+              metadata
+            }
+            textAlignmentChunks(reference: $urn) {
+              edges {
+                node {
+                  items
+                }
+              }
+            }
+          }
+        `,
+        variables() {
+          return { urn: this.urn.absolute };
+        },
+        update(data) {
+          const { metadata } = data.passageTextParts;
+          return {
+            metadata,
+            alignments: data.textAlignmentChunks.edges.map(e => e.node.items),
+          };
+        },
+        skip() {
+          return this.alignmentsMode === false;
+        },
       },
-      imageMode() {
-        return this.$store.state.displayMode === 'folio';
-      },
-      imageIdentifier() {
-        return this.gqlData && this.gqlData.imageAnnotations.edges.length
-          ? this.gqlData.imageAnnotations.edges[0].node.imageIdentifier
-          : null;
-      },
-      urn() {
-        return this.$route.query.urn
-          ? new URN(this.$route.query.urn)
-          : this.$store.getters[`${MODULE_NS}/firstPassageUrn`];
-      },
-      gqlQuery() {
-        if (this.urn) {
-          this.$store.dispatch(
-            SET_PASSAGE,
-            { urn: this.urn.toString() },
-            { root: true },
-          );
-          return gql`
-            {
-              passageTextParts(reference: "${this.urn}") {
+      imageModeData: {
+        query: gql`
+          query Folios($urn: String!) {
+            passageTextParts(reference: $urn) {
               metadata
               edges {
                 node {
@@ -168,48 +148,18 @@
                   kind
                   urn
                   ref
-                  metricalAnnotations {
-                    edges {
-                      node {
-                        metricalPattern
-                        htmlContent
-                      }
-                    }
-                  }
                   tokens {
                     edges {
                       node {
                         veRef
                         value
-                        position
-                        lemma
-                        partOfSpeech
-                        tag
-                        namedEntities {
-                          edges {
-                            node {
-                              id
-                            }
-                          }
-                        }
                       }
                     }
                   }
                 }
               }
-              pageInfo {
-                hasNextPage
-                endCursor
-              }
             }
-            textAlignmentChunks(reference: "${this.urn}") {
-              edges {
-                node {
-                  items
-                }
-              }
-            }
-            imageAnnotations(reference: "${this.urn}") {
+            imageAnnotations(reference: $urn) {
               edges {
                 node {
                   idx
@@ -225,9 +175,249 @@
               }
             }
           }
-          `;
-        }
-        return null;
+        `,
+        variables() {
+          return { urn: this.urn.absolute };
+        },
+        update(data) {
+          const { metadata } = data.passageTextParts;
+          const lines = data.passageTextParts.edges.map(line => {
+            const { id, kind, ref } = line.node;
+            const tokens = line.node.tokens.edges.map(edge => {
+              const { value, veRef } = edge.node;
+              return { value, veRef };
+            });
+            return { id, kind, ref, tokens };
+          });
+          return {
+            metadata,
+            lines,
+            imageIdentifier: data.imageAnnotations.edges.length
+              ? data.imageAnnotations.edges[0].node.imageIdentifier
+              : null,
+          };
+        },
+        skip() {
+          return this.folioMode === false;
+        },
+      },
+      interlinearModeData: {
+        query: gql`
+          query Interlinear($urn: String!) {
+            passageTextParts(reference: $urn) {
+              metadata
+              edges {
+                node {
+                  id
+                  ref
+                  tokens {
+                    edges {
+                      node {
+                        veRef
+                        value
+                        lemma
+                        partOfSpeech
+                        tag
+                        namedEntities {
+                          edges {
+                            node {
+                              id
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `,
+        update(data) {
+          const { metadata } = data.passageTextParts;
+          const lines = data.passageTextParts.edges.map(line => {
+            const { id, ref } = line.node;
+            const tokens = line.node.tokens.edges.map(edge => {
+              const {
+                value,
+                veRef,
+                lemma,
+                partOfSpeech,
+                tag,
+                namedEntities,
+              } = edge.node;
+              const entities = namedEntities.edges.map(e => e.node.id);
+              return {
+                value,
+                veRef,
+                lemma,
+                partOfSpeech,
+                tag,
+                entities,
+              };
+            });
+            return {
+              id,
+              ref,
+              tokens,
+            };
+          });
+          return { metadata, lines };
+        },
+        variables() {
+          return { urn: this.urn.absolute };
+        },
+        skip() {
+          return !this.interlinearMode;
+        },
+      },
+      metricalModeData: {
+        query: gql`
+          query Metrical($urn: String!) {
+            passageTextParts(reference: $urn) {
+              metadata
+              edges {
+                node {
+                  id
+                  ref
+                  metricalAnnotations {
+                    edges {
+                      node {
+                        metricalPattern
+                        htmlContent
+                      }
+                    }
+                  }
+                  tokens {
+                    edges {
+                      node {
+                        veRef
+                        value
+                        namedEntities {
+                          edges {
+                            node {
+                              id
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `,
+        variables() {
+          return { urn: this.urn.absolute };
+        },
+        skip() {
+          return !this.metricalMode;
+        },
+        update(data) {
+          const { metadata } = data.passageTextParts;
+          const lines = data.passageTextParts.edges.map(line => {
+            const { id, ref, metricalAnnotations } = line.node;
+            const tokens = line.node.tokens.edges.map(edge => {
+              const { value, veRef, namedEntities } = edge.node;
+              const entities = namedEntities.edges.map(e => e.node.id);
+              return {
+                value,
+                veRef,
+                entities,
+              };
+            });
+            return {
+              id,
+              ref,
+              tokens,
+              metricalAnnotations: metricalAnnotations.edges.map(e => e.node),
+            };
+          });
+          return { metadata, lines };
+        },
+      },
+      namedEntitiesModeData: {
+        query: gql`
+          query NamedEntities($urn: String!) {
+            passageTextParts(reference: $urn) {
+              metadata
+              edges {
+                node {
+                  id
+                  ref
+                  tokens {
+                    edges {
+                      node {
+                        veRef
+                        value
+                        namedEntities {
+                          edges {
+                            node {
+                              id
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `,
+        variables() {
+          return { urn: this.urn.absolute };
+        },
+        skip() {
+          return !this.namedEntitiesMode && !this.defaultMode;
+        },
+        update(data) {
+          const { metadata } = data.passageTextParts;
+          const lines = data.passageTextParts.edges.map(line => {
+            const { id, ref } = line.node;
+            const tokens = line.node.tokens.edges.map(edge => {
+              const { value, veRef, namedEntities } = edge.node;
+              const entities = namedEntities.edges.map(e => e.node.id);
+              return {
+                value,
+                veRef,
+                entities,
+              };
+            });
+            return {
+              id,
+              ref,
+              tokens,
+            };
+          });
+          return { metadata, lines };
+        },
+      },
+    },
+    computed: {
+      alignmentsMode() {
+        return this.$store.getters.alignmentsMode;
+      },
+      folioMode() {
+        return this.$store.getters.folioMode;
+      },
+      interlinearMode() {
+        return this.$store.getters.interlinearMode;
+      },
+      metricalMode() {
+        return this.$store.getters.metricalMode;
+      },
+      namedEntitiesMode() {
+        return this.$store.getters.namedEntitiesMode;
+      },
+      defaultMode() {
+        return this.$store.getters.defaultMode;
+      },
+      urn() {
+        return this.$route.query.urn
+          ? new URN(this.$route.query.urn)
+          : this.$store.getters[`${MODULE_NS}/firstPassageUrn`];
       },
       version() {
         return this.$store.getters[`${MODULE_NS}/firstPassageUrn`].version;
@@ -241,47 +431,17 @@
       textWidth() {
         return this.$store.getters[`${WIDGETS_NS}/readerTextWidth`];
       },
-      alignments() {
-        if (!this.gqlData) {
-          return [];
-        }
-        return this.gqlData.textAlignmentChunks.edges.map(e => e.node.items);
-      },
       lines() {
-        if (!this.gqlData) {
-          return [];
+        if (this.interlinearMode) {
+          return this.interlinearModeData.lines;
         }
-        return this.gqlData.passageTextParts.edges.map(line => {
-          const { id, kind, ref, metricalAnnotations } = line.node;
-          const tokens = line.node.tokens.edges.map(edge => {
-            const {
-              value,
-              veRef,
-              position,
-              lemma,
-              partOfSpeech,
-              tag,
-              namedEntities,
-            } = edge.node;
-            const entities = namedEntities.edges.map(e => e.node.id);
-            return {
-              value,
-              veRef,
-              position,
-              lemma,
-              partOfSpeech,
-              tag,
-              entities,
-            };
-          });
-          return {
-            id,
-            kind,
-            ref,
-            tokens,
-            metricalAnnotations: metricalAnnotations.edges.map(e => e.node),
-          };
-        });
+        if (this.metricalMode) {
+          return this.metricalModeData.lines;
+        }
+        if (this.defaultMode || this.namedEntitiesMode) {
+          return this.namedEntitiesModeData.lines;
+        }
+        return [];
       },
       versionMetadata() {
         return this.$store.state.metadata;
@@ -290,9 +450,23 @@
         return this.versionMetadata ? this.versionMetadata.label : null;
       },
       passageMetadata() {
-        return this.gqlData && this.gqlData.passageTextParts.metadata
-          ? this.gqlData.passageTextParts.metadata
-          : null;
+        let data;
+        if (this.folioMode) {
+          data = this.imageModeData;
+        }
+        if (this.alignmentsMode) {
+          data = this.alignmentModeData;
+        }
+        if (this.interlinearMode) {
+          data = this.interlinearModeData;
+        }
+        if (this.metricalMode) {
+          data = this.metricalModeData;
+        }
+        if (this.defaultMode || this.namedEntitiesMode) {
+          data = this.namedEntitiesModeData;
+        }
+        return data ? data.metadata : null;
       },
       previous() {
         return this.passageMetadata && this.passageMetadata.previous
@@ -327,29 +501,6 @@
     ::v-deep .ball-pulse {
       margin-left: auto;
       padding-top: 40px;
-    }
-  }
-  ::v-deep .reader-empty-annotations {
-    text-align: center;
-    margin-top: 1rem;
-  }
-  .image-mode {
-    flex: 1;
-    &.both {
-      .image-mode-container {
-        grid-template-columns: 1fr 1fr;
-        column-gap: 0.75rem;
-      }
-    }
-    &.text,
-    &.image {
-      .image-mode-container {
-        grid-template-columns: 1fr;
-      }
-    }
-    .image-mode-container {
-      display: grid;
-      height: calc(100vh - 75px);
     }
   }
 </style>

@@ -1,17 +1,12 @@
 import gql from 'graphql-tag';
 
-import { gqlclient } from '@/gql';
+import client from '@/gql';
 import {
   FETCH_METADATA,
   UPDATE_METADATA,
   FETCH_LIBRARY,
   SET_PASSAGE,
-  SET_DISPLAY_MODE_METRICAL,
-  SET_DISPLAY_MODE_INTERLINEAR,
-  SET_DISPLAY_MODE_NAMED_ENTITIES,
-  SET_DISPLAY_MODE_FOLIO,
-  SET_DISPLAY_MODE_SENTENCE_ALIGNMENTS,
-  SET_DISPLAY_MODE_DEFAULT,
+  SET_DISPLAY_MODE,
   SELECT_NAMED_ENTITIES,
   CLEAR_NAMED_ENTITIES,
   PLAY_AUDIO,
@@ -35,26 +30,11 @@ export default {
   [CLEAR_NAMED_ENTITIES]: ({ commit }) => {
     commit(CLEAR_NAMED_ENTITIES);
   },
-  [SET_DISPLAY_MODE_NAMED_ENTITIES]: ({ commit }) => {
-    commit(SET_DISPLAY_MODE_NAMED_ENTITIES);
-  },
-  [SET_DISPLAY_MODE_METRICAL]: ({ commit }) => {
-    commit(SET_DISPLAY_MODE_METRICAL);
-  },
-  [SET_DISPLAY_MODE_SENTENCE_ALIGNMENTS]: ({ commit }) => {
-    commit(SET_DISPLAY_MODE_SENTENCE_ALIGNMENTS);
-  },
-  [SET_DISPLAY_MODE_FOLIO]: ({ commit }) => {
-    commit(SET_DISPLAY_MODE_FOLIO);
-  },
-  [SET_DISPLAY_MODE_DEFAULT]: ({ commit }) => {
-    commit(SET_DISPLAY_MODE_DEFAULT);
-  },
-  [SET_DISPLAY_MODE_INTERLINEAR]: ({ commit }) => {
-    commit(SET_DISPLAY_MODE_INTERLINEAR);
+  [SET_DISPLAY_MODE]: ({ commit }, { mode }) => {
+    commit(SET_DISPLAY_MODE, mode);
   },
   [FETCH_METADATA]: ({ commit }) => {
-    gqlclient
+    client
       .query({
         query: gql`
           {
@@ -77,7 +57,7 @@ export default {
       );
   },
   [UPDATE_METADATA]: ({ commit }, { urn }) => {
-    gqlclient
+    client
       .query({
         query: gql`
           {
@@ -101,7 +81,7 @@ export default {
   },
   // @@@ should this really be something within scaife-widgets?
   [FETCH_LIBRARY]: ({ commit }) => {
-    gqlclient
+    client
       .query({
         query: gql`
           {

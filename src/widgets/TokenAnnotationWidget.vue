@@ -1,6 +1,8 @@
 <template>
   <table class="selected-tokens">
-    <tr v-if="tokens.length === 0"><EmptyMessage /></tr>
+    <tr v-if="tokens.length === 0">
+      <EmptyMessage />
+    </tr>
     <tr colspan="3" v-else-if="selectedToken">
       <a href @click.prevent="onClear">Clear Filter</a>
     </tr>
@@ -15,14 +17,12 @@
 <script>
   import gql from 'graphql-tag';
   import { URN } from '@scaife-viewer/scaife-widgets';
-  import EmptyMessage from '@/components/EmptyMessage.vue';
   import { MODULE_NS, CLEAR_TOKEN } from '@/reader/constants';
 
   export default {
     scaifeConfig: {
       displayName: 'Token Annotations',
     },
-    components: { EmptyMessage },
     methods: {
       onClear() {
         this.$store.dispatch(`${MODULE_NS}/${CLEAR_TOKEN}`);
@@ -38,40 +38,6 @@
           ? new URN(this.$route.query.urn)
           : this.$store.getters[`${MODULE_NS}/firstPassageUrn`];
       },
-      // TODO: Dedupe from Reader.vue
-      gqlQuery() {
-        if (this.urn) {
-          return gql`
-          {
-            passageTextParts(reference: "${this.urn.absolute}") {
-              edges {
-                node {
-                  id
-                  ref
-                  tokens {
-                    edges {
-                      node {
-                        veRef
-                        wordValue
-                        lemma
-                        tag
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-          `;
-        }
-        return null;
-      },
-      // TODO: Dedupe from Reader.vue
-      lines() {
-        return this.gqlData
-          ? this.gqlData.passageTextParts.edges.map(line => line.node)
-          : [];
-      },
       tokens() {
         const selectedFilter = edge => {
           return (
@@ -80,7 +46,7 @@
           );
         };
 
-        if (this.lines.length > 0) {
+        if (this.lines && this.lines.length > 0) {
           const tokens = this.lines
             .map(line => {
               const { edges } = line.tokens;
@@ -101,6 +67,38 @@
           return [...new Set(tokens)];
         }
         return [];
+      },
+    },
+    apollo: {
+      lines: {
+        query: gql`
+          query Annotations($urn: String!) {
+            passageTextParts(reference: $urn) {
+              edges {
+                node {
+                  id
+                  ref
+                  tokens {
+                    edges {
+                      node {
+                        veRef
+                        wordValue
+                        lemma
+                        tag
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `,
+        variables() {
+          return { urn: this.urn.absolute };
+        },
+        update(data) {
+          return data.passageTextParts.edges.map(line => line.node);
+        },
       },
     },
   };
