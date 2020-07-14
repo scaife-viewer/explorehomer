@@ -1,6 +1,6 @@
 <template>
   <div class="reader-line" :class="{ 'playing-audio': playingAudio }">
-    <section class="tokens" v-if="interlinear">
+    <section class="tokens" v-if="interlinearMode">
       <ReaderToken v-for="token in tokens" :key="token.veRef" :token="token" />
     </section>
     <div class="line u-flex" v-else>
@@ -54,8 +54,8 @@
       tokens() {
         return this.line.tokens;
       },
-      interlinear() {
-        return this.$store.state.displayMode === 'interlinear';
+      interlinearMode() {
+        return this.$store.getters.interlinearMode;
       },
       metricalHtml() {
         return (
@@ -64,7 +64,7 @@
         );
       },
       metricalMode() {
-        return this.$store.state.displayMode === 'metrical';
+        return this.$store.getters.metricalMode;
       },
       metrical() {
         return this.metricalMode && this.metricalHtml;

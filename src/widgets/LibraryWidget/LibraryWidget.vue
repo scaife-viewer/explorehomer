@@ -12,33 +12,29 @@
 
   export default {
     name: 'LibraryWidget',
-    components: {
-      Node,
-    },
-    scaifeConfig: {
-      displayName: 'Library',
-    },
-    methods: {
-      getTextGroupsTree() {
-        const nid = this.gqlData.tree.tree[0];
-        return nid.children.reduce((a, b) => {
-          return a.concat(b.children);
-        }, []);
-      },
-    },
-    computed: {
-      gqlQuery() {
-        return gql`
+    apollo: {
+      libraryTree: {
+        query: gql`
           {
             tree(urn: "urn:cts:", upTo: "version") {
               tree
             }
           }
-        `;
+        `,
+        // transform response before setting as `data.libraryTree`
+        update(data) {
+          const nid = data.tree.tree[0];
+          return nid.children.reduce((a, b) => {
+            return a.concat(b.children);
+          }, []);
+        },
       },
-      libraryTree() {
-        return this.gqlData ? this.getTextGroupsTree() : [];
-      },
+    },
+    components: {
+      Node,
+    },
+    scaifeConfig: {
+      displayName: 'Library',
     },
   };
 </script>

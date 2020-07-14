@@ -3,13 +3,13 @@
     class="token"
     :class="{
       selected,
-      interlinear,
-      entity: namedEntities && isEntity,
-      'selected-entity': namedEntities && hasSelectedEntity,
+      interlinear: interlinearMode,
+      entity: namedEntitiesMode && isEntity,
+      'selected-entity': namedEntitiesMode && hasSelectedEntity,
     }"
     @click="onSelect"
   >
-    <template v-if="interlinear">
+    <template v-if="interlinearMode">
       <span class="ref">{{ token.veRef }}</span>
       <span class="text">{{ token.value }}</span>
       <span class="lemma">{{ token.lemma || '-' }}</span>
@@ -24,8 +24,8 @@
 </template>
 
 <script>
-  import { SELECT_TOKEN, MODULE_NS } from '../constants';
-  import { SELECT_NAMED_ENTITIES } from '../../constants';
+  import { SELECT_TOKEN, MODULE_NS } from '@/reader/constants';
+  import { SELECT_NAMED_ENTITIES } from '@/constants';
 
   export default {
     props: ['token'],
@@ -43,11 +43,11 @@
       selectedEntities() {
         return this.$store.state.selectedNamedEntities;
       },
-      interlinear() {
-        return this.$store.state.displayMode === 'interlinear';
+      interlinearMode() {
+        return this.$store.getters.interlinearMode;
       },
-      namedEntities() {
-        return this.$store.state.displayMode === 'named-entities';
+      namedEntitiesMode() {
+        return this.$store.getters.namedEntitiesMode;
       },
       isEntity() {
         return this.token.entities.length > 0;
@@ -63,7 +63,7 @@
         if (!this.selectedToken) {
           return false;
         }
-        if (this.namedEntities) {
+        if (this.namedEntitiesMode) {
           const { entities, veRef } = this.selectedToken;
           const entity = entities[0];
           return (

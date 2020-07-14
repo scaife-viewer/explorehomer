@@ -7,7 +7,6 @@
 
 <script>
   import WIDGETS_NS, { WordList } from '@scaife-viewer/scaife-widgets';
-  import EmptyMessage from '@/components/EmptyMessage.vue';
   import { MODULE_NS } from '@/reader/constants';
 
   export default {
@@ -16,7 +15,6 @@
       displayName: 'Word List',
     },
     components: {
-      EmptyMessage,
       WordList,
     },
     created() {
