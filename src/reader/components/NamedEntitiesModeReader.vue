@@ -99,7 +99,7 @@
     }
     .entity-mode-container {
       display: grid;
-      height: calc(100vh - 75px);
+      height: calc(100vh - 75px - 3rem);
       .entity-reader {
         overflow-y: scroll;
       }

@@ -1,5 +1,5 @@
 <template>
-  <article class="u-flex">
+  <article class="u-flex" :class="{ 'full-height': fullHeight }">
     <section class="reader-left">
       <h2 v-if="passageTitle" class="reader-heading main-widget-heading">
         {{ passageTitle }}
@@ -539,6 +539,9 @@
           ? new URN(this.passageMetadata.next)
           : null;
       },
+      fullHeight() {
+        return this.namedEntitiesMode;
+      },
     },
   };
 </script>
@@ -549,6 +552,10 @@
   }
   section {
     width: 100%;
+  }
+  .full-height {
+    height: 100vh;
+    overflow: hidden;
   }
   .reader-heading {
     flex: 1;
