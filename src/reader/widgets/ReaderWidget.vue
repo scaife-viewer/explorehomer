@@ -15,40 +15,22 @@
           :text-size="textSize"
           :text-width="textWidth"
           :loading="$apollo.queries.imageModeData.loading"
-          :data="imageModeData"
+          :reader-data="imageModeData"
         />
         <AlignmentsModeReader
           v-else-if="alignmentsMode"
           :text-size="textSize"
           :text-width="textWidth"
           :loading="$apollo.queries.alignmentModeData.loading"
-          :data="alignmentModeData.alignments"
+          :reader-data="alignmentModeData.alignments"
         />
-        <div
+        <NamedEntitiesModeReader
           v-else-if="namedEntitiesMode"
-          class="entity-mode"
-          :class="`map-direction-${showMap ? showMap : 'none'}`"
-        >
-          <EntityMapToolbar
-            v-if="$apollo.queries.namedEntitiesModeData.coordinatesList.length > 0"
-            :showMap="showMap"
-            @show="onShowMap"
-          />
-          <div class="entity-mode-container">
-            <Reader
-              class="entity-reader"
-              :lines="$apollo.queries.namedEntitiesModeData.lines"
-              :textSize="textSize"
-              :textWidth="textWidth"
-            />
-            <div class="map" v-if="showMap">
-              <SelectableEntityMap
-                :key="`${showMap}-${sidebars}`"
-                :coordinates-list="$apollo.queries.namedEntitiesModeData.coordinatesList"
-              />
-            </div>
-          </div>
-        </div>
+          :text-size="textSize"
+          :text-width="textWidth"
+          :loading="$apollo.queries.namedEntitiesModeData.loading"
+          :reader-data="namedEntitiesModeData"
+        />
         <Reader
           v-else
           :lines="lines"
@@ -69,24 +51,21 @@
   // eslint-disable-next-line max-len
   import AlignmentsModeReader from '@/reader/components/AlignmentsModeReader.vue';
   import ImageModeReader from '@/reader/components/ImageModeReader.vue';
-  import EmptyMessage from '@/components/EmptyMessage.vue';
+  // eslint-disable-next-line max-len
+  import NamedEntitiesModeReader from '@/reader/components/NamedEntitiesModeReader.vue';
   import ErrorMessage from '@/components/ErrorMessage.vue';
   import Paginator from '@/components/Paginator.vue';
-  import SelectableEntityMap from '@/components/SelectableEntityMap.vue';
-  import EntityMapToolbar from '@/components/EntityMapToolbar.vue';
   import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
   import { MODULE_NS } from '@/reader/constants';
 
   export default {
     components: {
-      EmptyMessage,
       ErrorMessage,
       Paginator,
       Reader,
       AlignmentsModeReader,
       ImageModeReader,
-      SelectableEntityMap,
-      EntityMapToolbar,
+      NamedEntitiesModeReader,
     },
     scaifeConfig: {},
     data() {
@@ -416,8 +395,8 @@
           return !this.namedEntitiesMode && !this.defaultMode;
         },
         update(data) {
-          const { metadata } = data.passageTextParts;
-          const lines = data.passageTextParts.edges.map(line => {
+          const { metadata, edges: parts } = data.passageTextParts;
+          const lines = parts.map(line => {
             const { id, ref } = line.node;
             const tokens = line.node.tokens.edges.map(edge => {
               const { value, veRef, namedEntities } = edge.node;
@@ -434,39 +413,31 @@
               tokens,
             };
           });
-          const coordinatesList = data.passageTextParts.edges.map(line => {
+          const coordinatesList = parts.map(line => {
             return line.node.tokens.edges.map(token => {
               return token.node.namedEntities.edges
                 .map(namedEntity => namedEntity.node)
-                .filter(namedEntity => namedEntity.kind === 'PLACE' && namedEntity.coordinates)
-                .map(namedEntity => {
+                .filter(node => node.kind === 'PLACE' && node.data.coordinates)
+                .map(node => {
                   return [
-                    ...namedEntity.data.coordinates.split(', ').map(coordinate => parseFloat(coordinate)),
-                    namedEntity.id,
-                    namedEntity.title,
+                    ...node.data.coordinates
+                      .split(', ')
+                      .map(coordinate => parseFloat(coordinate)),
+                    node.id,
+                    node.title,
                   ];
                 });
             });
           });
-          return { metadata, lines, coordinatesList };
+          return {
+            metadata,
+            lines,
+            coordinatesList: coordinatesList.flat().flat(),
+          };
         },
       },
     },
     computed: {
-      sidebars() {
-        // used for keys to force map redraw on sidebar changes
-        const { leftOpen, rightOpen } = this.$store.state.scaifeSkeleton;
-        if (leftOpen && rightOpen) {
-          return 'both';
-        }
-        if (leftOpen) {
-          return 'left';
-        }
-        if (rightOpen) {
-          return 'right';
-        }
-        return 'neither';
-      },
       alignmentsMode() {
         return this.$store.getters.alignmentsMode;
       },

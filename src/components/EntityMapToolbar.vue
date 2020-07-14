@@ -1,37 +1,46 @@
 <template>
   <div class="entity-map-toolbar">
-    <a href :class="{ active: noMap }" @click.prevent="$emit('show', null)">
+    <a href :class="{ active: noMap }" @click.prevent="onNone">
       <icon name="align-left" />
     </a>
-    <a
-      href
-      :class="{ active: showVertical }"
-      @click.prevent="$emit('show', 'vertical')"
-    >
+    <a href :class="{ active: showVertical }" @click.prevent="onVertical">
       <icon name="grip-lines" />
     </a>
-    <a
-      href
-      :class="{ active: showHorizontal }"
-      @click.prevent="$emit('show', 'horizontal')"
-    >
+    <a href :class="{ active: showHorizontal }" @click.prevent="onHorizontal">
       <icon name="grip-lines-vertical" />
     </a>
   </div>
 </template>
 
 <script>
+  import {
+    MAP_STATE_HORIZONTAL,
+    MAP_STATE_VERTICAL,
+    MAP_STATE_NONE,
+  } from '@/constants';
+
   export default {
     props: ['showMap'],
+    methods: {
+      onNone() {
+        this.$emit('show', MAP_STATE_NONE);
+      },
+      onVertical() {
+        this.$emit('show', MAP_STATE_VERTICAL);
+      },
+      onHorizontal() {
+        this.$emit('show', MAP_STATE_HORIZONTAL);
+      },
+    },
     computed: {
       noMap() {
-        return this.showMap === null;
+        return this.showMap === MAP_STATE_NONE;
       },
       showHorizontal() {
-        return this.showMap === 'horizontal';
+        return this.showMap === MAP_STATE_HORIZONTAL;
       },
       showVertical() {
-        return this.showMap === 'vertical';
+        return this.showMap === MAP_STATE_VERTICAL;
       },
     },
   };

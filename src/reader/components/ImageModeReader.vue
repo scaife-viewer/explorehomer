@@ -5,25 +5,25 @@
       <ImageViewerToolbar :show="showImage" @show="onShowImage" />
       <div class="image-mode-container" v-if="showImage === 'both'">
         <Reader
-          :lines="data.lines"
+          :lines="readerData.lines"
           :textSize="textSize"
           :textWidth="textWidth"
         />
         <ImageViewer
-          v-if="data.imageIdentifier"
-          :imageIdentifier="data.imageIdentifier"
+          v-if="readerData.imageIdentifier"
+          :imageIdentifier="readerData.imageIdentifier"
         />
         <EmptyMessage class="reader-empty-annotations" v-else />
       </div>
       <Reader
         v-else-if="showImage === 'text'"
-        :lines="data.lines"
+        :lines="readerData.lines"
         :textSize="textSize"
         :textWidth="textWidth"
       />
       <ImageViewer
-        v-else-if="showImage === 'image' && data.imageIdentifier"
-        :imageIdentifier="data.imageIdentifier"
+        v-else-if="showImage === 'image' && readerData.imageIdentifier"
+        :imageIdentifier="readerData.imageIdentifier"
       />
       <EmptyMessage class="reader-empty-annotations" v-else />
     </template>
@@ -41,7 +41,7 @@
       textSize: String,
       textWidth: String,
       loading: Boolean,
-      data: Object,
+      readerData: Object,
     },
     components: {
       ImageViewer,
