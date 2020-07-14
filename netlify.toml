@@ -2,3 +2,5 @@
   VUE_APP_ATLAS_GRAPHQL_ENDPOINT = "https://explorehomer-atlas.scaife-viewer.org/graphql/"
 [context."spike-apollo".environment]
   VUE_APP_ATLAS_GRAPHQL_ENDPOINT = "https://explorehomer-perf-dl-xxvzwupn7.herokuapp.com/graphql/"
+[context."perf-data-shaping)".environment]
+  VUE_APP_ATLAS_GRAPHQL_ENDPOINT = "https://explorehomer-perf-dl-xxvzwupn7.herokuapp.com/graphql/"

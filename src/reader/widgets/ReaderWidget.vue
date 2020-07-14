@@ -61,6 +61,18 @@
           { root: true },
         );
       },
+      getTokenLookup(entities) {
+        // @@@ likely this can be improved via map reduce
+        const tokenLookup = {};
+        entities.forEach(entity => {
+          const tokenVeRefs = entity.tokens.edges.map(t => t.node.veRef);
+          tokenVeRefs.forEach(veRef => {
+            tokenLookup[veRef] = tokenLookup[veRef] || [];
+            tokenLookup[veRef].push(entity.id);
+          });
+        });
+        return tokenLookup;
+      }
     },
     watch: {
       urn: {
@@ -334,7 +346,7 @@
       namedEntitiesModeData: {
         query: gql`
           query NamedEntities($urn: String!) {
-            passageTextParts(reference: $urn) {
+            tokens: passageTextParts(reference: $urn) {
               metadata
               edges {
                 node {
@@ -343,15 +355,24 @@
                   tokens {
                     edges {
                       node {
+                        id
                         veRef
                         value
-                        namedEntities {
-                          edges {
-                            node {
-                              id
-                            }
-                          }
-                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            entities: namedEntities(reference: $urn) {
+              edges {
+                node {
+                  id
+                  tokens {
+                    edges {
+                      node {
+                        id
+                        veRef
                       }
                     }
                   }
@@ -367,16 +388,17 @@
           return !this.namedEntitiesMode && !this.defaultMode;
         },
         update(data) {
-          const { metadata } = data.passageTextParts;
-          const lines = data.passageTextParts.edges.map(line => {
+          const entities = data.entities.edges.map(e => e.node);
+          const tokenLookup = this.getTokenLookup(entities);
+          const { metadata } = data.tokens;
+          const lines = data.tokens.edges.map(line => {
             const { id, ref } = line.node;
             const tokens = line.node.tokens.edges.map(edge => {
-              const { value, veRef, namedEntities } = edge.node;
-              const entities = namedEntities.edges.map(e => e.node.id);
+              const { value, veRef } = edge.node;
               return {
                 value,
                 veRef,
-                entities,
+                entities: tokenLookup[veRef],
               };
             });
             return {
