@@ -1,36 +1,49 @@
 <template>
-  <div class="image-mode" :class="showImage">
-    <LoaderBall v-if="loading" />
-    <template v-else>
-      <ImageViewerToolbar :show="showImage" @show="onShowImage" />
-      <div class="image-mode-container" v-if="showImage === 'both'">
+  <ApolloQuery
+    class="image-mode"
+    :class="showImage"
+    :query="query"
+    :variables="queryVariables"
+    :update="queryUpdate"
+  >
+    <template v-slot="{ result: { error, data }, isLoading }">
+      <LoaderBall v-if="isLoading" />
+      <ErrorMessage v-else-if="error">
+        There was an error loading the requested data.
+      </ErrorMessage>
+      <template v-else>
+        <ImageViewerToolbar :show="showImage" @show="onShowImage" />
+        <div class="image-mode-container" v-if="showImage === 'both'">
+          <Reader
+            :lines="data.lines"
+            :textSize="textSize"
+            :textWidth="textWidth"
+          />
+          <ImageViewer
+            v-if="data.imageIdentifier"
+            :imageIdentifier="data.imageIdentifier"
+          />
+          <EmptyMessage class="reader-empty-annotations" v-else />
+        </div>
         <Reader
-          :lines="readerData.lines"
+          v-else-if="showImage === 'text'"
+          :lines="data.lines"
           :textSize="textSize"
           :textWidth="textWidth"
         />
         <ImageViewer
-          v-if="readerData.imageIdentifier"
-          :imageIdentifier="readerData.imageIdentifier"
+          v-else-if="showImage === 'image' && data.imageIdentifier"
+          :imageIdentifier="data.imageIdentifier"
         />
         <EmptyMessage class="reader-empty-annotations" v-else />
-      </div>
-      <Reader
-        v-else-if="showImage === 'text'"
-        :lines="readerData.lines"
-        :textSize="textSize"
-        :textWidth="textWidth"
-      />
-      <ImageViewer
-        v-else-if="showImage === 'image' && readerData.imageIdentifier"
-        :imageIdentifier="readerData.imageIdentifier"
-      />
-      <EmptyMessage class="reader-empty-annotations" v-else />
+      </template>
     </template>
-  </div>
+  </ApolloQuery>
 </template>
 
 <script>
+  import gql from 'graphql-tag';
+
   import ImageViewer from '@/components/ImageViewer.vue';
   import ImageViewerToolbar from '@/components/ImageViewerToolbar.vue';
   import Reader from './Reader.vue';
@@ -38,10 +51,9 @@
 
   export default {
     props: {
+      queryVariables: Object,
       textSize: String,
       textWidth: String,
-      loading: Boolean,
-      readerData: Object,
     },
     components: {
       ImageViewer,
@@ -53,9 +65,66 @@
         showImage: IMAGE_VIEWER_STATE_BOTH,
       };
     },
+    computed: {
+      query() {
+        return gql`
+          query Folios($urn: String!) {
+            passageTextParts(reference: $urn) {
+              edges {
+                node {
+                  id
+                  kind
+                  urn
+                  ref
+                  tokens {
+                    edges {
+                      node {
+                        veRef
+                        value
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            imageAnnotations(reference: $urn) {
+              edges {
+                node {
+                  idx
+                  imageIdentifier
+                  textParts {
+                    edges {
+                      node {
+                        ref
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `;
+      },
+    },
     methods: {
       onShowImage(kind) {
         this.showImage = kind;
+      },
+      queryUpdate(data) {
+        const lines = data.passageTextParts.edges.map(line => {
+          const { id, kind, ref } = line.node;
+          const tokens = line.node.tokens.edges.map(edge => {
+            const { value, veRef } = edge.node;
+            return { value, veRef };
+          });
+          return { id, kind, ref, tokens };
+        });
+        return {
+          lines,
+          imageIdentifier: data.imageAnnotations.edges.length
+            ? data.imageAnnotations.edges[0].node.imageIdentifier
+            : null,
+        };
       },
     },
   };

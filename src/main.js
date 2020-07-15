@@ -25,6 +25,7 @@ import client from '@/gql';
 
 import LoaderBall from '@/components/LoaderBall.vue';
 import EmptyMessage from '@/components/EmptyMessage.vue';
+import ErrorMessage from '@/components/ErrorMessage.vue';
 
 import App from '@/App.vue';
 import router from '@/router';
@@ -87,6 +88,7 @@ Vue.prototype.$isEmpty = obj =>
 
 Vue.component('LoaderBall', LoaderBall);
 Vue.component('EmptyMessage', EmptyMessage);
+Vue.component('ErrorMessage', ErrorMessage);
 
 new Vue({
   router,

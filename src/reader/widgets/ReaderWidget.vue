@@ -10,37 +10,14 @@
         :variables="queryVariables"
         :update="queryUpdate"
       >
-        <template v-slot="{ result: { error, data }, isLoading }">
+        <template v-slot="{ result: { data } }">
           <Paginator :urn="data && data.previous" direction="left" />
 
-          <LoaderBall v-if="isLoading" />
-          <ErrorMessage v-else-if="error">
-            There was an error loading the requested data.
-          </ErrorMessage>
-
-          <ImageModeReader
-            v-else-if="folioMode"
+          <component
+            :is="readerComponent"
+            :query-variables="queryVariables"
             :text-size="textSize"
             :text-width="textWidth"
-            :reader-data="data"
-          />
-          <AlignmentsModeReader
-            v-else-if="alignmentsMode"
-            :text-size="textSize"
-            :text-width="textWidth"
-            :reader-data="data"
-          />
-          <NamedEntitiesModeReader
-            v-else-if="namedEntitiesMode"
-            :text-size="textSize"
-            :text-width="textWidth"
-            :reader-data="data"
-          />
-          <Reader
-            v-else
-            :lines="data.lines"
-            :textSize="textSize"
-            :textWidth="textWidth"
           />
 
           <Paginator :urn="data && data.next" direction="right" />
@@ -51,27 +28,16 @@
 </template>
 
 <script>
-  import WIDGETS_NS from '@scaife-viewer/scaife-widgets';
-  import Reader from '@/reader/components/Reader.vue';
-  // eslint-disable-next-line max-len
-  import AlignmentsModeReader from '@/reader/components/AlignmentsModeReader.vue';
-  import ImageModeReader from '@/reader/components/ImageModeReader.vue';
-  // eslint-disable-next-line max-len
-  import NamedEntitiesModeReader from '@/reader/components/NamedEntitiesModeReader.vue';
-  import ErrorMessage from '@/components/ErrorMessage.vue';
+  import gql from 'graphql-tag';
+
+  import WIDGETS_NS, { URN } from '@scaife-viewer/scaife-widgets';
   import Paginator from '@/components/Paginator.vue';
   import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
   import { MODULE_NS } from '@/reader/constants';
-  import READER_QUERIES from './queries';
 
   export default {
     components: {
-      ErrorMessage,
       Paginator,
-      Reader,
-      AlignmentsModeReader,
-      ImageModeReader,
-      NamedEntitiesModeReader,
     },
     scaifeConfig: {},
     methods: {
@@ -83,7 +49,13 @@
         );
       },
       queryUpdate(data) {
-        return READER_QUERIES[this.displayMode].update(data);
+        const {
+          metadata: { next, previous },
+        } = data.passageTextParts;
+        return {
+          next: next ? new URN(next) : null,
+          previous: previous ? new URN(previous) : null,
+        };
       },
     },
     watch: {
@@ -125,8 +97,24 @@
       }
     },
     computed: {
+      readerComponent() {
+        return this.$store.getters.readerComponent;
+      },
       query() {
-        return READER_QUERIES[this.displayMode].query;
+        return gql`
+          query TextParts($urn: String!) {
+            passageTextParts(reference: $urn) {
+              metadata
+            }
+            textAlignmentChunks(reference: $urn) {
+              edges {
+                node {
+                  items
+                }
+              }
+            }
+          }
+        `;
       },
       queryVariables() {
         return { urn: this.urn.absolute };
