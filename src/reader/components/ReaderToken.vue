@@ -32,7 +32,7 @@
     methods: {
       onSelect() {
         this.$store.dispatch(SELECT_NAMED_ENTITIES, {
-          entities: this.token.entities,
+          entities: this.entities,
         });
         this.$store.dispatch(`${MODULE_NS}/${SELECT_TOKEN}`, {
           token: this.token,
@@ -49,12 +49,15 @@
       namedEntitiesMode() {
         return this.$store.getters.namedEntitiesMode;
       },
+      entities() {
+        return (this.token && this.token.entities) || [];
+      },
       isEntity() {
-        return this.token.entities.length > 0;
+        return this.entities.length > 0;
       },
       hasSelectedEntity() {
         return (
-          this.token.entities.filter(
+          this.entities.filter(
             id => this.selectedEntities.filter(sid => sid === id).length > 0,
           ).length > 0
         );
@@ -68,7 +71,7 @@
           const entity = entities[0];
           return (
             veRef === this.token.veRef ||
-            (entity && entity === this.token.entities[0])
+            (entity && entity === this.entities[0])
           );
         }
         return this.selectedToken.veRef === this.token.veRef;

@@ -31,13 +31,19 @@
         return this.$store.getters.metricalMode;
       },
       showMetricalCredit() {
-        if (!this.metricalModel) {
+        if (!this.metricalMode) {
           return false;
         }
         const hasContent =
           this.lines.filter(line => {
             const { metricalAnnotations } = line;
-            return metricalAnnotations[0] && metricalAnnotations[0].htmlContent;
+            if (metricalAnnotations === undefined) {
+              return false;
+            }
+            if (metricalAnnotations.length < 1) {
+              return false;
+            }
+            return metricalAnnotations[0].htmlContent;
           }).length > 0;
         return hasContent;
       },
@@ -47,9 +53,13 @@
         }
         return this.lines.filter(line => {
           const { metricalAnnotations } = line;
-          const annotation = metricalAnnotations[0];
-          const htmlContent = annotation && annotation.htmlContent;
-          return htmlContent !== undefined;
+          if (metricalAnnotations === undefined) {
+            return false;
+          }
+          if (metricalAnnotations.length < 1) {
+            return false;
+          }
+          return metricalAnnotations[0].htmlContent;
         });
       },
       showMetricalEmpty() {

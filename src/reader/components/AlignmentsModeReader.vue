@@ -1,13 +1,9 @@
 <template>
   <div class="alignments-mode-reader">
-    <LoaderBall v-if="loading" />
-    <EmptyMessage
-      class="empty-annotations"
-      v-else-if="readerData.length === 0"
-    />
+    <EmptyMessage class="empty-annotations" v-if="alignments.length === 0" />
     <Alignments
       v-else
-      :alignments="readerData"
+      :alignments="alignments"
       :textSize="textSize"
       :textWidth="textWidth"
     />
@@ -22,10 +18,15 @@
       textSize: String,
       textWidth: String,
       loading: Boolean,
-      readerData: Array,
+      readerData: Object,
     },
     components: {
       Alignments,
+    },
+    computed: {
+      alignments() {
+        return this.readerData.alignments;
+      },
     },
   };
 </script>
