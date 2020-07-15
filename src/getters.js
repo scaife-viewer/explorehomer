@@ -34,4 +34,8 @@ export default {
   defaultMode: state => {
     return state.displayMode === DISPLAY_MODE_DEFAULT;
   },
+  urn: (state, getters) => {
+    const { urn } = state.route.query;
+    return urn ? new URN(urn) : getters.firstPassageUrn;
+  },
 };

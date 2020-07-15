@@ -51,7 +51,7 @@
 </template>
 
 <script>
-  import WIDGETS_NS, { URN } from '@scaife-viewer/scaife-widgets';
+  import WIDGETS_NS from '@scaife-viewer/scaife-widgets';
   import Reader from '@/reader/components/Reader.vue';
   // eslint-disable-next-line max-len
   import AlignmentsModeReader from '@/reader/components/AlignmentsModeReader.vue';
@@ -144,9 +144,7 @@
         return this.$store.getters.namedEntitiesMode;
       },
       urn() {
-        return this.$route.query.urn
-          ? new URN(this.$route.query.urn)
-          : this.$store.getters[`${MODULE_NS}/firstPassageUrn`];
+        return this.$store.getters.urn;
       },
       version() {
         return this.$store.getters[`${MODULE_NS}/firstPassageUrn`].version;

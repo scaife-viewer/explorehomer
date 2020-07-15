@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
+import { sync } from 'vuex-router-sync';
 
 import {
   faChevronLeft,
@@ -28,6 +29,8 @@ import EmptyMessage from '@/components/EmptyMessage.vue';
 import App from '@/App.vue';
 import router from '@/router';
 import store from '@/store';
+
+sync(store, router);
 
 const iconMap = [
   faChevronLeft,
