@@ -6,41 +6,34 @@
     :center="center"
     @load="onMapLoaded"
   >
-    <MglMarker
+    <EntityMapMarker
       v-for="(coordinates, index) in coordinatesList"
-      :key="`${coordinates[2]}-${coordinates[3]}-${index}-${selectedPlace}`"
-      :coordinates="[coordinates[0], coordinates[1]]"
-      @click="onMarkerClick(coordinates)"
-    >
-      <MglPopup
-        v-if="coordinates[3]"
-        :closeButton="false"
-        :closeOnClick="true"
-        :showed="selectedPlace === coordinates[2]"
-      >
-        <div class="label">{{ coordinates[3] }}</div>
-      </MglPopup>
-    </MglMarker>
+      :key="`${coordinates[2]}-${coordinates[3]}-${index}`"
+      :lat="coordinates[0]"
+      :lng="coordinates[1]"
+      :placeId="coordinates[2]"
+      :placeLabel="coordinates[3]"
+    />
     <MglNavigationControl position="top-right" />
   </MglMap>
 </template>
 
 <script>
+  /*
+  ${
+        selectedPlace === coordinates[2] ? 'selected' : 'not-selected'
+      }`"
+  */
   import Mapbox from 'mapbox-gl';
-  import {
-    MglMap,
-    MglMarker,
-    MglPopup,
-    MglNavigationControl,
-  } from 'vue-mapbox';
+  import { MglMap, MglNavigationControl } from 'vue-mapbox';
+  import EntityMapMarker from './EntityMapMarker.vue';
 
   export default {
     props: ['coordinatesList', 'selectedPlace'],
     components: {
       MglMap,
-      MglMarker,
-      MglPopup,
       MglNavigationControl,
+      EntityMapMarker,
     },
     created() {
       this.map = null;
@@ -55,9 +48,6 @@
           });
           this.map.fitBounds(bbox);
         }
-      },
-      onMarkerClick(coordinates) {
-        this.$emit('select', coordinates[2]);
       },
     },
     watch: {
