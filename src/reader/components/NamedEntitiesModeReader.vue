@@ -1,6 +1,6 @@
 <template>
   <ApolloQuery
-    :class="`entity-mode map-direction-${showMap}`"
+    :class="`entity-mode map-direction-${mapState}`"
     :query="query"
     :variables="queryVariables"
     :update="queryUpdate"
@@ -13,7 +13,7 @@
       <template v-else>
         <EntityMapToolbar
           v-if="data.coordinatesList.length > 0"
-          :showMap="showMap"
+          :mapState="mapState"
           @show="onShowMap"
         />
         <div class="entity-mode-container">
@@ -25,7 +25,7 @@
           />
           <div class="map" v-if="showMap && data.coordinatesList.length > 0">
             <SelectableEntityMap
-              :key="`${showMap}-${sidebars}`"
+              :key="`${mapState}-${sidebars}`"
               :coordinates-list="data.coordinatesList"
             />
           </div>
@@ -56,12 +56,12 @@
     },
     data() {
       return {
-        showMap: MAP_STATE_NONE,
+        mapState: MAP_STATE_NONE,
       };
     },
     methods: {
       onShowMap(kind) {
-        this.showMap = kind;
+        this.mapState = kind;
       },
       queryUpdate(data) {
         const { edges: parts } = data.passageTextParts;
@@ -105,6 +105,9 @@
       },
     },
     computed: {
+      showMap() {
+        return this.mapState !== MAP_STATE_NONE;
+      },
       sidebars() {
         // used for keys to force map redraw on sidebar changes
         const { leftOpen, rightOpen } = this.$store.state.scaifeSkeleton;

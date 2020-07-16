@@ -20,7 +20,7 @@
   } from '@/constants';
 
   export default {
-    props: ['showMap'],
+    props: ['mapState'],
     methods: {
       onNone() {
         this.$emit('show', MAP_STATE_NONE);
@@ -34,13 +34,13 @@
     },
     computed: {
       noMap() {
-        return this.showMap === MAP_STATE_NONE;
+        return this.mapState === MAP_STATE_NONE;
       },
       showHorizontal() {
-        return this.showMap === MAP_STATE_HORIZONTAL;
+        return this.mapState === MAP_STATE_HORIZONTAL;
       },
       showVertical() {
-        return this.showMap === MAP_STATE_VERTICAL;
+        return this.mapState === MAP_STATE_VERTICAL;
       },
     },
   };
