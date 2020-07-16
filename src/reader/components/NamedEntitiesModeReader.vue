@@ -12,7 +12,7 @@
       </ErrorMessage>
       <template v-else>
         <EntityMapToolbar
-          v-if="canShowMap"
+          v-if="data.coordinatesList.length > 0"
           :showMap="showMap"
           @show="onShowMap"
         />
@@ -23,7 +23,7 @@
             :textSize="textSize"
             :textWidth="textWidth"
           />
-          <div class="map" v-if="showMap && canShowMap">
+          <div class="map" v-if="showMap && data.coordinatesList.length > 0">
             <SelectableEntityMap
               :key="`${showMap}-${sidebars}`"
               :coordinates-list="data.coordinatesList"
@@ -41,7 +41,7 @@
   import SelectableEntityMap from '@/components/SelectableEntityMap.vue';
   import EntityMapToolbar from '@/components/EntityMapToolbar.vue';
   import Reader from './Reader.vue';
-  import { MAP_STATE_NONE, MAP_STATE_HORIZONTAL } from '@/constants';
+  import { MAP_STATE_NONE } from '@/constants';
 
   export default {
     props: {
@@ -58,16 +58,6 @@
       return {
         showMap: MAP_STATE_NONE,
       };
-    },
-    watch: {
-      coordinatesList: {
-        immediate: true,
-        handler() {
-          this.showMap = this.canShowMap
-            ? MAP_STATE_HORIZONTAL
-            : MAP_STATE_NONE;
-        },
-      },
     },
     methods: {
       onShowMap(kind) {
@@ -115,9 +105,6 @@
       },
     },
     computed: {
-      canShowMap() {
-        return this.coordinatesList && this.coordinatesList.length > 0;
-      },
       sidebars() {
         // used for keys to force map redraw on sidebar changes
         const { leftOpen, rightOpen } = this.$store.state.scaifeSkeleton;
