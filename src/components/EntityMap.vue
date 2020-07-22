@@ -19,11 +19,6 @@
 </template>
 
 <script>
-  /*
-  ${
-        selectedPlace === coordinates[2] ? 'selected' : 'not-selected'
-      }`"
-  */
   import Mapbox from 'mapbox-gl';
   import { MglMap, MglNavigationControl } from 'vue-mapbox';
   import EntityMapMarker from './EntityMapMarker.vue';
@@ -82,5 +77,3 @@
     },
   };
 </script>
-
-<style lang="scss" scoped></style>
