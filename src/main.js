@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
+import { sync } from 'vuex-router-sync';
 
 import {
   faChevronLeft,
@@ -8,7 +9,9 @@ import {
   faVolumeUp,
   faUser,
   faMapMarkerAlt,
-  faAlignJustify,
+  faGripLines,
+  faGripLinesVertical,
+  faAlignLeft,
   faBookOpen,
   faSearchMinus,
   faSearchPlus,
@@ -22,10 +25,13 @@ import client from '@/gql';
 
 import LoaderBall from '@/components/LoaderBall.vue';
 import EmptyMessage from '@/components/EmptyMessage.vue';
+import ErrorMessage from '@/components/ErrorMessage.vue';
 
 import App from '@/App.vue';
 import router from '@/router';
 import store from '@/store';
+
+sync(store, router);
 
 const iconMap = [
   faChevronLeft,
@@ -34,7 +40,9 @@ const iconMap = [
   faVolumeUp,
   faUser,
   faMapMarkerAlt,
-  faAlignJustify,
+  faGripLines,
+  faGripLinesVertical,
+  faAlignLeft,
   faBookOpen,
   faSearchMinus,
   faSearchPlus,
@@ -47,13 +55,25 @@ const iconMap = [
   };
 }, {});
 
+const config = {
+  entityMap: {
+    accessToken:
+      process.env.VUE_APP_ENTITY_MAP_ACCESS_TOKEN ||
+      // eslint-disable-next-line max-len
+      'pk.eyJ1IjoicGFsdG1hbiIsImEiOiJja2JpNDVpbmUwOGF1MnJwZm91c3VybDVrIn0.KRcXBGtiUWFXkp2uaE5LLw',
+    mapStyle:
+      process.env.VUE_APP_ENTITY_MAP_STYLE ||
+      'mapbox://styles/paltman/ckbi4thqt156y1ijz5wldui14',
+  },
+};
+
+Vue.use(SkeletonPlugin, { iconMap, config });
+
 Vue.use(VueApollo);
 
 const apolloProvider = new VueApollo({
   defaultClient: client,
 });
-
-Vue.use(SkeletonPlugin, { iconMap });
 
 const widgetEndpoints = {};
 if (process.env.VUE_APP_TOC_ENDPOINT) {
@@ -68,6 +88,7 @@ Vue.prototype.$isEmpty = obj =>
 
 Vue.component('LoaderBall', LoaderBall);
 Vue.component('EmptyMessage', EmptyMessage);
+Vue.component('ErrorMessage', ErrorMessage);
 
 new Vue({
   router,

@@ -13,6 +13,10 @@ export const IMAGE_VIEWER_STATE_BOTH = 'both';
 export const IMAGE_VIEWER_STATE_TEXT = 'text';
 export const IMAGE_VIEWER_STATE_IMAGE = 'image';
 
+export const MAP_STATE_NONE = 'none';
+export const MAP_STATE_VERTICAL = 'vertical';
+export const MAP_STATE_HORIZONTAL = 'horizontal';
+
 export const SET_DISPLAY_MODE = 'setDisplayMode';
 export const DISPLAY_MODE_SENTENCE_ALIGNMENTS = 'sentence-alignments';
 export const DISPLAY_MODE_FOLIO = 'folio';

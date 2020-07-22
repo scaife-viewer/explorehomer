@@ -25,12 +25,13 @@
     "openseadragon": "^2.4.2",
     "path": "^0.12.7",
     "sass-loader": "^8.0.2",
-    "scaife-skeleton": "^0.7.0",
+    "scaife-skeleton": "^0.10.0",
     "vue": "^2.6.11",
     "vue-apollo": "^3.0.3",
     "vue-mapbox": "^0.4.1",
     "vue-router": "^3.1.6",
     "vuex": "^3.3.0",
+    "vuex-router-sync": "^5.0.0",
     "webpack": "^4.43.0"
   },
   "devDependencies": {

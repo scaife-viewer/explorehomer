@@ -1,28 +1,64 @@
 <template>
-  <div class="alignments-mode-reader">
-    <LoaderBall v-if="loading" />
-    <EmptyMessage class="empty-annotations" v-else-if="data.length === 0" />
-    <Alignments
-      v-else
-      :alignments="data"
-      :textSize="textSize"
-      :textWidth="textWidth"
-    />
-  </div>
+  <ApolloQuery
+    class="alignments-mode-reader"
+    :query="query"
+    :variables="queryVariables"
+    :update="queryUpdate"
+  >
+    <template v-slot="{ result: { error, data }, isLoading }">
+      <LoaderBall v-if="isLoading" />
+      <ErrorMessage v-else-if="error">
+        There was an error loading the requested data.
+      </ErrorMessage>
+      <EmptyMessage
+        v-else-if="data.alignments.length === 0"
+        class="empty-annotations"
+      />
+      <Alignments
+        v-else
+        :alignments="data.alignments"
+        :textSize="textSize"
+        :textWidth="textWidth"
+      />
+    </template>
+  </ApolloQuery>
 </template>
 
 <script>
+  import gql from 'graphql-tag';
+
   import Alignments from './Alignments.vue';
 
   export default {
     props: {
+      queryVariables: Object,
       textSize: String,
       textWidth: String,
-      loading: Boolean,
-      data: Array,
     },
     components: {
       Alignments,
+    },
+    computed: {
+      query() {
+        return gql`
+          query TextParts($urn: String!) {
+            textAlignmentChunks(reference: $urn) {
+              edges {
+                node {
+                  items
+                }
+              }
+            }
+          }
+        `;
+      },
+    },
+    methods: {
+      queryUpdate(data) {
+        return {
+          alignments: data.textAlignmentChunks.edges.map(e => e.node.items),
+        };
+      },
     },
   };
 </script>
