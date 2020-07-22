@@ -44,7 +44,6 @@
   // eslint-disable-next-line max-len
   import AlignmentsModeReader from '@/reader/components/AlignmentsModeReader.vue';
   import ImageModeReader from '@/reader/components/ImageModeReader.vue';
-  import EmptyMessage from '@/components/EmptyMessage.vue';
   import ErrorMessage from '@/components/ErrorMessage.vue';
   import Paginator from '@/components/Paginator.vue';
   import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
@@ -52,7 +51,6 @@
 
   export default {
     components: {
-      EmptyMessage,
       ErrorMessage,
       Paginator,
       Reader,
