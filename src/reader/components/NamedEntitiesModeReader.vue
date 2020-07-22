@@ -12,7 +12,7 @@
       </ErrorMessage>
       <template v-else>
         <EntityMapToolbar
-          v-if="enabled && data.coordinatesList.length > 0"
+          v-if="data.coordinatesList.length > 0"
           :mapState="mapState"
           @show="onShowMap"
         />
@@ -56,8 +56,6 @@
     },
     data() {
       return {
-        // @@@ remove `enabled` when we're ready to expose map mode again
-        enabled: false,
         mapState: MAP_STATE_NONE,
       };
     },
