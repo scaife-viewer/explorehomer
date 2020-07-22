@@ -60,6 +60,6 @@
       selectedEntities() {
         return this.$store.state.selectedNamedEntities;
       },
-    }
+    },
   };
 </script>
