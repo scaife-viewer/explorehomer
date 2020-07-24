@@ -15,9 +15,7 @@
 
 <script>
   import gql from 'graphql-tag';
-  import { URN } from '@scaife-viewer/scaife-widgets';
   import Attribution from '@/components/Attribution.vue';
-  import { MODULE_NS } from '@/reader/constants';
 
   export default {
     scaifeConfig: {
@@ -28,9 +26,7 @@
     components: { Attribution },
     computed: {
       urn() {
-        return this.$route.query.urn
-          ? new URN(this.$route.query.urn)
-          : this.$store.getters[`${MODULE_NS}/firstPassageUrn`];
+        return this.$store.getters.urn;
       },
     },
     apollo: {
