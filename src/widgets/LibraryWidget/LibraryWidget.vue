@@ -13,28 +13,28 @@
 
   export default {
     name: 'LibraryWidget',
-    components: {
-      Node,
-    },
-    scaifeConfig: {
-      displayName: 'Library',
-    },
-    computed: {
-      gqlQuery() {
-        return gql`
+    apollo: {
+      libraryTree: {
+        query: gql`
           {
             tree(urn: "urn:cts:", upTo: "version") {
               tree
             }
           }
-        `;
+        `,
+        update(data) {
+          const nid = data.tree.tree[0];
+          return nid.children.reduce((a, b) => {
+            return a.concat(b.children);
+          }, []);
+        },
       },
-      libraryTree() {
-        const nid = this.gqlData.tree.tree[0] || { children: [] };
-        return nid.children.reduce((a, b) => {
-          return a.concat(b.children);
-        }, []);
-      },
+    },
+    components: {
+      Node,
+    },
+    scaifeConfig: {
+      displayName: 'Library',
     },
   };
 </script>
