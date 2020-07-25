@@ -153,6 +153,9 @@
             .map(e => e.node.audioAnnotations.edges.map(a => a.node))
             .flat();
         },
+        skip() {
+          return this.urn === null;
+        },
       },
     },
   };
