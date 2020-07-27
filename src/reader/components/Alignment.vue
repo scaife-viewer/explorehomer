@@ -20,7 +20,7 @@
 <script>
   export default {
     props: ['left', 'right', 'textSize', 'textWidth'],
-  }
+  };
 </script>
 
 <style lang="scss" scoped>

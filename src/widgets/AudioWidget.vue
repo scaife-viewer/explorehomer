@@ -24,9 +24,6 @@
 <script>
   import gql from 'graphql-tag';
 
-  import { URN } from '@scaife-viewer/scaife-widgets';
-  import { MODULE_NS } from '@/reader/constants';
-
   import { PLAY_AUDIO, STOP_AUDIO } from '@/constants';
   import Attribution from '@/components/Attribution.vue';
 
@@ -113,9 +110,7 @@
         return this.$refs.sound;
       },
       urn() {
-        return this.$route.query.urn
-          ? new URN(this.$route.query.urn)
-          : this.$store.getters[`${MODULE_NS}/firstPassageUrn`];
+        return this.$store.getters.urn;
       },
       audios() {
         return this.audioData ? this.audioData : [];

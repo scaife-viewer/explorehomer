@@ -16,7 +16,6 @@
 
 <script>
   import gql from 'graphql-tag';
-  import { URN } from '@scaife-viewer/scaife-widgets';
   import { MODULE_NS, CLEAR_TOKEN } from '@/reader/constants';
 
   export default {
@@ -32,11 +31,8 @@
       selectedToken() {
         return this.$store.state[MODULE_NS].selectedToken;
       },
-      // TODO: Dedupe from Reader.vue
       urn() {
-        return this.$route.query.urn
-          ? new URN(this.$route.query.urn)
-          : this.$store.getters[`${MODULE_NS}/firstPassageUrn`];
+        return this.$store.getters.urn;
       },
       tokens() {
         const selectedFilter = edge => {
