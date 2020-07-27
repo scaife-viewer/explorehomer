@@ -32,7 +32,9 @@
         query: gql`
           query Ancestors($urn: String!) {
             passageTextParts(reference: $urn) {
-              metadata
+              metadata {
+                ancestors
+              }
             }
           }
         `,

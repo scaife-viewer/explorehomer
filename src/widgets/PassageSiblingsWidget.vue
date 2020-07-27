@@ -37,7 +37,11 @@
         query: gql`
           query Siblings($urn: String!) {
             passageTextParts(reference: $urn) {
-              metadata
+              metadata {
+                siblings {
+                  all
+                }
+              }
             }
           }
         `,
@@ -45,7 +49,7 @@
           return { urn: this.passage.absolute };
         },
         update(data) {
-          return data.passageTextParts.metadata.siblings;
+          return data.passageTextParts.metadata.siblings.all;
         },
         skip() {
           return !this.passage;

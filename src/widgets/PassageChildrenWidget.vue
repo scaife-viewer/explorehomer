@@ -27,7 +27,9 @@
         query: gql`
           query Children($urn: String!) {
             passageTextParts(reference: $urn) {
-              metadata
+              metadata {
+                children
+              }
             }
           }
         `,
