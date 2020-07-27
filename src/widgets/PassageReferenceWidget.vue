@@ -68,8 +68,8 @@
             `,
             variables: { urn },
             skip: this.reference === '',
-          }).then(data => {
-            console.log('Passage Data', data.data.passageTextParts.metadata);
+          })
+          .then(data => {
             const {
               healedPassage,
               humanReference,
@@ -78,14 +78,12 @@
             this.requested = this.reference;
             if (healedPassage) {
               // eslint-disable-next-line prefer-destructuring
-              this.healed = (new URN(healedPassage)).reference;
+              this.healed = new URN(healedPassage).reference;
             } else {
               this.healed = '';
             }
             const ref = healedPassage || urn;
             this.$router.push({ to: 'reader', query: { urn: ref } });
-          }).catch(error => {
-            console.log('Passage Error', error);
           });
       },
       handleClick(e) {
