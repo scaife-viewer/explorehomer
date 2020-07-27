@@ -10,7 +10,7 @@
 <script>
   import {
     MetadataWidget,
-    PassageReferenceWidget,
+    // PassageReferenceWidget,
     TextSizeWidget,
     TextWidthWidget,
     // TOCWidget,
@@ -28,6 +28,7 @@
   import ScholiaWidget from '@/widgets/ScholiaWidget.vue';
   import AudioWidget from '@/widgets/AudioWidget.vue';
   import WordListWidget from '@/widgets/WordListWidget.vue';
+  import PassageReferenceWidget from '@/widgets/PassageReferenceWidget.vue';
   import NewAlexandriaWidget from '@/widgets/NewAlexandriaWidget.vue';
 
   import { FETCH_METADATA, FETCH_LIBRARY } from '@/constants';
