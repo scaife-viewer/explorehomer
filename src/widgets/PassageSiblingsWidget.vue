@@ -5,7 +5,7 @@
       v-for="sibling in siblings"
       :key="sibling.urn"
     >
-      <a v-if="sibling.lcp === passage.lcp" class="active-sibling">
+      <a v-if="sibling.selected" class="active-sibling">
         {{ sibling.lcp }}
       </a>
       <router-link
@@ -31,15 +31,28 @@
       passage() {
         return this.$store.getters[`${WIDGETS_NS}/passage`];
       },
+      siblings() {
+        if (this.siblingsData === undefined) {
+          return [];
+        }
+        const { selected } = this.siblingsData;
+        return this.siblingsData.all.map(s => {
+          return {
+            ...s,
+            selected: selected.filter(s2 => s2.urn === s.urn).length > 0,
+          };
+        });
+      },
     },
     apollo: {
-      siblings: {
+      siblingsData: {
         query: gql`
           query Siblings($urn: String!) {
             passageTextParts(reference: $urn) {
               metadata {
                 siblings {
                   all
+                  selected
                 }
               }
             }
@@ -49,7 +62,8 @@
           return { urn: this.passage.absolute };
         },
         update(data) {
-          return data.passageTextParts.metadata.siblings.all;
+          const { all, selected } = data.passageTextParts.metadata.siblings;
+          return { all, selected };
         },
         skip() {
           return !this.passage;
@@ -77,6 +91,9 @@
   }
   .passage-siblings-widget a {
     border: none;
+  }
+  a:not(.active-sibling):hover {
+    background: var(--scaife-sibling-hover-background, $gray-100);
   }
   .active-sibling {
     font-weight: bold;
