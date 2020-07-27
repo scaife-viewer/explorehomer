@@ -2,7 +2,7 @@
   <div class="passage-reference-widget u-widget">
     <input
       v-model="reference"
-      v-on:keyup="handleKeyUp"
+      v-on:keyup.enter="handleKeyUp"
       v-on:click="handleClick"
       type="text"
       class="form-control form-control-sm"
@@ -43,19 +43,15 @@
           this.reference = this.passage.reference;
         }
       },
-      handleKeyUp(e) {
-        if (e.keyCode === 13) {
-          this.$router.push({
-            to: 'reader',
-            query: {
-              urn: this.reference
-                ? `${this.passage.version}${this.reference}`
-                : this.firstPassageUrn.toString(),
-            },
-          });
-        } else {
-          e.stopPropagation();
-        }
+      handleKeyUp() {
+        this.$router.push({
+          to: 'reader',
+          query: {
+            urn: this.reference
+              ? `${this.passage.version}${this.reference}`
+              : this.firstPassageUrn.toString(),
+          },
+        });
       },
       handleClick(e) {
         const el = e.currentTarget;
