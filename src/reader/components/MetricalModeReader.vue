@@ -67,7 +67,6 @@
         return gql`
           query Metrical($urn: String!) {
             passageTextParts(reference: $urn) {
-              metadata
               edges {
                 node {
                   id
