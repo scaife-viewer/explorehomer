@@ -83,17 +83,16 @@
     grid-template-columns: repeat(auto-fill, minmax(1.6em, 1fr));
   }
   .passage-siblings-widget * {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: block;
+    text-align: center;
     font-size: 0.7rem;
-    padding: 0.1rem 0.3rem;
+    padding: 0.15rem 0;
   }
   .passage-siblings-widget a {
     border: none;
   }
   a:not(.active-sibling):hover {
-    background: var(--scaife-sibling-hover-background, $gray-100);
+    background: var(--scaife-sibling-hover-background, $gray-200);
   }
   .active-sibling {
     font-weight: bold;
