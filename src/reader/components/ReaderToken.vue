@@ -4,6 +4,7 @@
     :class="{
       selected,
       interlinear: interlinearMode,
+      'entity-mode': namedEntitiesMode,
       entity: namedEntitiesMode && isEntity,
       'selected-entity': namedEntitiesMode && hasSelectedEntity,
     }"
@@ -25,18 +26,28 @@
 
 <script>
   import { SELECT_TOKEN, MODULE_NS } from '@/reader/constants';
-  import { SELECT_NAMED_ENTITIES } from '@/constants';
+  import { CLEAR_NAMED_ENTITIES, SELECT_NAMED_ENTITIES } from '@/constants';
 
   export default {
     props: ['token'],
     methods: {
       onSelect() {
-        this.$store.dispatch(SELECT_NAMED_ENTITIES, {
-          entities: this.entities,
-        });
-        this.$store.dispatch(`${MODULE_NS}/${SELECT_TOKEN}`, {
-          token: this.token,
-        });
+        if (this.token === this.selectedToken) {
+          this.$store.dispatch(CLEAR_NAMED_ENTITIES);
+          this.$store.dispatch(`${MODULE_NS}/${SELECT_TOKEN}`, {
+            token: null,
+          });
+        } else if (
+          (this.namedEntitiesMode && this.isEntity) ||
+          !this.namedEntitiesMode
+        ) {
+          this.$store.dispatch(SELECT_NAMED_ENTITIES, {
+            entities: this.entities,
+          });
+          this.$store.dispatch(`${MODULE_NS}/${SELECT_TOKEN}`, {
+            token: this.token,
+          });
+        }
       },
     },
     computed: {
@@ -90,6 +101,9 @@
   }
   .token.selected .text {
     @include highlight($selected-token);
+  }
+  .token.entity-mode:not(.entity) .text {
+    cursor: inherit;
   }
   .token.entity .text {
     @include highlight($entity);
