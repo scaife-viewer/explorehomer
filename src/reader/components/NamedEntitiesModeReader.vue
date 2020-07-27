@@ -66,7 +66,6 @@
         this.mapState = kind;
       },
       getTokenLookup(entities) {
-        // @@@ likely this can be improved via map reduce
         const tokenLookup = {};
         entities.forEach(entity => {
           const tokenVeRefs = entity.tokens.edges.map(t => t.node.veRef);
