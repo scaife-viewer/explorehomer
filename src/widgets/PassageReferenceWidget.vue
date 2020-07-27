@@ -66,5 +66,9 @@
     margin: 0 2em;
     flex: 1;
     overflow-y: unset;
+
+    input {
+      outline: none;
+    }
   }
 </style>
