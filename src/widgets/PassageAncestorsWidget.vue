@@ -1,5 +1,5 @@
 <template v-if="ancestors">
-  <div class="passage-ancestors-widget u-widget">
+  <div class="passage-ancestors-widget u-widget" :key="passage.absolute">
     <ol class="ancestors">
       <li class="ancestor" v-for="ancestor in ancestors" :key="ancestor.urn">
         <router-link
