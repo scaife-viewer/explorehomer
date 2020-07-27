@@ -1,5 +1,10 @@
 <template>
   <div class="passage-reference-widget u-widget">
+    <div class="healed" v-if="healed">
+      Passage reference <strong>{{ requested }}</strong> could not be resolved.
+      Instead, we are showing you <strong>{{ healed }}</strong>.
+    </div>
+    <div class="human" v-if="human">{{ human }}</div>
     <input
       v-model="reference"
       v-on:keyup.enter="handleKeyUp"
@@ -12,7 +17,7 @@
 
 <script>
   import gql from 'graphql-tag';
-  import WIDGETS_NS from '@scaife-viewer/scaife-widgets';
+  import WIDGETS_NS, { URN } from '@scaife-viewer/scaife-widgets';
 
   export default {
     name: 'PassageReferenceWidget',
@@ -36,6 +41,9 @@
     data() {
       return {
         reference: '',
+        requested: '',
+        healed: '',
+        human: '',
       };
     },
     methods: {
@@ -62,7 +70,18 @@
             skip: this.reference === '',
           }).then(data => {
             console.log('Passage Data', data.data.passageTextParts.metadata);
-            const { healedPassage } = data.data.passageTextParts.metadata;
+            const {
+              healedPassage,
+              humanReference,
+            } = data.data.passageTextParts.metadata;
+            this.human = humanReference;
+            this.requested = this.reference;
+            if (healedPassage) {
+              // eslint-disable-next-line prefer-destructuring
+              this.healed = (new URN(healedPassage)).reference;
+            } else {
+              this.healed = '';
+            }
             const ref = healedPassage || urn;
             this.$router.push({ to: 'reader', query: { urn: ref } });
           }).catch(error => {
@@ -85,6 +104,16 @@
 
     input {
       outline: none;
+    }
+
+    .healed {
+      color: $explorehomer-brand;
+      border: 1px solid rgba($explorehomer-brand, 0.5);
+      padding: 0.5rem 0.75rem;
+      font-size: 80%;
+    }
+    .human {
+      margin: 0.5rem 0;
     }
   }
 </style>
