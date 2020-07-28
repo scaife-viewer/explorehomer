@@ -32,7 +32,7 @@
     props: ['token'],
     methods: {
       onSelect() {
-        if (this.token === this.selectedToken) {
+        if (this.selected) {
           this.$store.dispatch(CLEAR_NAMED_ENTITIES);
           this.$store.dispatch(`${MODULE_NS}/${SELECT_TOKEN}`, {
             token: null,
