@@ -1,5 +1,5 @@
 <template>
-  <div class="audio-widget">
+  <div class="audio-widget" :key="urn.absolute">
     <audio
       ref="sound"
       controls

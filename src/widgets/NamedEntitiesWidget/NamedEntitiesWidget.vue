@@ -1,5 +1,5 @@
 <template>
-  <div class="named-entities">
+  <div class="named-entities" :key="urn.absolute">
     <LoaderBall v-if="$apollo.queries.entities.loading" />
     <EmptyMessage v-else-if="entities.length === 0" />
     <template v-else>

@@ -1,5 +1,5 @@
 <template>
-  <div class="word-list-widget u-widget u-flex">
+  <div class="word-list-widget u-widget u-flex" :key="passage.absolute">
     <WordList v-if="filteredWordList.length > 0" :wordList="filteredWordList" />
     <EmptyMessage v-else />
   </div>

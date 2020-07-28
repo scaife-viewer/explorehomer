@@ -1,5 +1,5 @@
 <template v-if="children">
-  <div class="passage-children-widget u-widget u-grid" :key="passage.absolute">
+  <div class="passage-children-widget u-widget u-grid">
     <div class="grid-cell-square" v-for="child in children" :key="child.urn">
       <router-link :to="{ path: 'reader', query: { urn: `${child.urn}` } }">
         {{ child.lcp }}

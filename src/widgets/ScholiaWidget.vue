@@ -1,5 +1,5 @@
 <template>
-  <div class="scholia">
+  <div class="scholia" :key="urn.absolute">
     <EmptyMessage v-if="!lines || lines.length === 0" />
     <div v-for="line in lines" :key="line.idx" class="line">
       <span class="lemma">{{ line.lemma }} </span>

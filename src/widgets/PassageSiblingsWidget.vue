@@ -1,5 +1,5 @@
 <template v-if="siblings">
-  <div class="passage-siblings-widget u-widget u-grid" :key="passage.absolute">
+  <div class="passage-siblings-widget u-widget u-grid">
     <div
       class="grid-cell-square"
       v-for="sibling in siblings"

@@ -1,5 +1,5 @@
 <template>
-  <table class="selected-tokens">
+  <table class="selected-tokens" :key="urn.absolute">
     <tr v-if="tokens.length === 0">
       <EmptyMessage />
     </tr>
