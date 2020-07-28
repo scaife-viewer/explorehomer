@@ -4,7 +4,6 @@
       Passage reference <strong>{{ requested }}</strong> could not be resolved.
       Instead, we are showing you <strong>{{ healed }}</strong>.
     </div>
-    <div class="human" v-if="human">{{ human }}</div>
     <input
       v-model="reference"
       v-on:keyup.enter="handleKeyUp"
@@ -43,7 +42,6 @@
         reference: '',
         requested: '',
         healed: '',
-        human: '',
       };
     },
     methods: {
@@ -61,7 +59,6 @@
                 passageTextParts(reference: $urn) {
                   metadata {
                     healedPassage
-                    humanReference
                   }
                 }
               }
@@ -70,11 +67,7 @@
             skip: this.reference === '',
           })
           .then(data => {
-            const {
-              healedPassage,
-              humanReference,
-            } = data.data.passageTextParts.metadata;
-            this.human = humanReference;
+            const { healedPassage } = data.data.passageTextParts.metadata;
             this.requested = this.reference;
             if (healedPassage) {
               // eslint-disable-next-line prefer-destructuring
@@ -109,9 +102,6 @@
       border: 1px solid rgba($explorehomer-brand, 0.5);
       padding: 0.5rem 0.75rem;
       font-size: 80%;
-    }
-    .human {
-      margin: 0.5rem 0;
     }
   }
 </style>
