@@ -1,32 +1,33 @@
+<template>
+  <div class="new-alexandria-widget u-widget u-flex">
+    <NewAlexandria :comments="comments" />
+  </div>
+</template>
+
 <script>
-  /*
-  This widget contains customizations for Explore Homer that handle
-  special-case queries tothe New Alexandria Commentary API.
-
-  In the future, we may want to take this type of customization
-  into consideration when implementing hooks / extensibility points
-  within `scaife-widgets`.
-
-  We may also find that the Vue Composition API
-  (https://composition-api.vuejs.org/) lends itself to these types of
-  customizations.
-  */
+  import qs from 'querystring';
   import gql from 'graphql-tag';
 
-  import WIDGETS_NS, {
-    NewAlexandriaWidget,
-  } from '@scaife-viewer/scaife-widgets';
+  import WIDGETS_NS, { NewAlexandria } from '@scaife-viewer/scaife-widgets';
 
   export default {
-    extends: NewAlexandriaWidget,
-    name: 'NewAlexandriaWidget',
+    name: 'ExploreHomerNewAlexandriaWidget',
+    components: { NewAlexandria },
     scaifeConfig: {
       displayName: 'New Alexandria Commentary',
     },
-    data: () => ({
-      passageTextParts: [],
-      healedPassage: '',
-    }),
+    data() {
+      return {
+        passageTextParts: [],
+        healedPassage: '',
+        comments: null,
+      };
+    },
+    created() {
+      if (this.enabled) {
+        this.fetchData();
+      }
+    },
     computed: {
       needsHealing() {
         // special-case handling for the Folios version of
@@ -46,8 +47,35 @@
         // via the `passage` watcher
         return this.healedPassage;
       },
+      enabled() {
+        return !!this.passage;
+      },
+      endpoint() {
+        return 'https://commentary-api.chs.harvard.edu/graphql';
+      },
+      params() {
+        const gqlQuery = `{
+          commentsOn(urn: "${this.passage}") {
+            _id
+            updated
+            latestRevision {
+              title
+              text
+            }
+            commenters {
+              _id
+              name
+            }
+          }
+        }`;
+        return this.passage ? qs.stringify({ query: gqlQuery }) : null;
+      },
+      url() {
+        return `${this.endpoint}?${this.params}`;
+      },
     },
     watch: {
+      passage: 'fetchData',
       originalPassage: {
         immediate: true,
         handler() {
@@ -97,6 +125,17 @@
           this.healedPassage = `${this.originalPassage.version}${refPart}`;
         }
       },
+      fetchData() {
+        fetch(this.url)
+          .then(response => response.json())
+          .then(data => {
+            this.comments = data.data.commentsOn;
+          })
+          .catch(error => {
+            // eslint-disable-next-line no-console
+            console.log(error.message);
+          });
+      },
       fetchPassageTextParts() {
         // retrieves the lowest text parts for a folio level reference,
         // e.g. 12r --> 12r.1.1-12.r.1.25
@@ -136,3 +175,12 @@
     },
   };
 </script>
+
+<style lang="scss">
+  .new-alexandria-widget {
+    width: 100%;
+    img {
+      max-width: 100%;
+    }
+  }
+</style>

@@ -28,7 +28,8 @@
   import ScholiaWidget from '@/widgets/ScholiaWidget.vue';
   import AudioWidget from '@/widgets/AudioWidget.vue';
   import WordListWidget from '@/widgets/WordListWidget.vue';
-  import NewAlexandriaWidget from '@/widgets/NewAlexandriaWidget.vue';
+  // eslint-disable-next-line max-len
+  import ExploreHomerNewAlexandriaWidget from '@/widgets/ExploreHomerNewAlexandriaWidget.vue';
 
   import { FETCH_METADATA, FETCH_LIBRARY } from '@/constants';
 
@@ -65,7 +66,7 @@
           NamedEntitiesWidget,
           TokenAnnotationWidget,
           WordListWidget,
-          NewAlexandriaWidget,
+          ExploreHomerNewAlexandriaWidget,
           ScholiaWidget,
         ];
       },
