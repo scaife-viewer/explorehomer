@@ -1,6 +1,6 @@
 <template>
   <div class="new-alexandria-widget u-widget u-flex">
-    <NewAlexandria :comments="comments" />
+    <NewAlexandria :comments="comments" :key="passage" />
   </div>
 </template>
 
