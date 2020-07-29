@@ -50,9 +50,10 @@
       setInputRef() {
         if (this.passage) {
           this.reference = this.passage.reference;
+          this.fetchData();
         }
       },
-      handleKeyUp() {
+      fetchData() {
         const urn = `${this.passage.version}${this.reference}`;
         this.$apollo
           .query({
@@ -83,8 +84,13 @@
               this.healed = '';
             }
             const ref = healedPassage || urn;
-            this.$router.push({ to: 'reader', query: { urn: ref } });
+            if (ref !== this.$route.query.urn) {
+              this.$router.push({ to: 'reader', query: { urn: ref } });
+            }
           });
+      },
+      handleKeyUp() {
+        this.fetchData();
       },
       handleClick(e) {
         const el = e.currentTarget;
