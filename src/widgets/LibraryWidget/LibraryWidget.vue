@@ -1,7 +1,8 @@
 <template>
   <div class="library-widget u-widget u-flex">
-    <ul class="node-tree root" v-if="libraryTree">
-      <Node v-for="(node, index) in libraryTree" :key="index" :node="node" />
+    <LoaderBall v-if="$apolloData.queries.libraryTree.loading" />
+    <ul class="node-tree root" v-else-if="libraryTree">
+      <Node v-for="node in libraryTree" :key="node.data.urn" :node="node" />
     </ul>
   </div>
 </template>
@@ -21,7 +22,6 @@
             }
           }
         `,
-        // transform response before setting as `data.libraryTree`
         update(data) {
           const nid = data.tree.tree[0];
           return nid.children.reduce((a, b) => {

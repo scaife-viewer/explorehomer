@@ -57,6 +57,9 @@
             };
           });
         },
+        skip() {
+          return this.urn === null;
+        },
       },
     },
   };

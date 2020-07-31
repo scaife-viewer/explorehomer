@@ -9,6 +9,7 @@
         :query="query"
         :variables="queryVariables"
         :update="queryUpdate"
+        :skip="urn === null"
       >
         <template v-slot="{ result: { data } }">
           <Paginator :urn="data && data.previous" direction="left" />
@@ -42,6 +43,9 @@
     scaifeConfig: {},
     methods: {
       setVersionMetadata() {
+        if (this.urn === null) {
+          return;
+        }
         this.$store.dispatch(
           UPDATE_METADATA,
           { urn: this.urn.version },
@@ -92,7 +96,7 @@
           },
         });
       }
-      if (this.version !== this.urn.version) {
+      if (this.urn && this.version !== this.urn.version) {
         this.setVersionMetadata();
       }
     },
@@ -117,7 +121,7 @@
         `;
       },
       queryVariables() {
-        return { urn: this.urn.absolute };
+        return { urn: this.urn === null ? '' : this.urn.absolute };
       },
       displayMode() {
         return this.$store.state.displayMode;

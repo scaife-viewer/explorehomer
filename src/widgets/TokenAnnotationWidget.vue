@@ -95,6 +95,9 @@
         update(data) {
           return data.passageTextParts.edges.map(line => line.node);
         },
+        skip() {
+          return this.urn === null;
+        },
       },
     },
   };

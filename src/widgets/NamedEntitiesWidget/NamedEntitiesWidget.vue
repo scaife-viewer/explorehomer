@@ -33,6 +33,7 @@
     },
     data() {
       return {
+        entities: [],
         filteredEntities: [],
       };
     },
@@ -101,6 +102,9 @@
         },
         update(data) {
           return data.namedEntities.edges.map(e => e.node);
+        },
+        skip() {
+          return this.urn === null;
         },
       },
     },
