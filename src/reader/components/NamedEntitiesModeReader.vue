@@ -63,18 +63,31 @@
       onShowMap(kind) {
         this.mapState = kind;
       },
+      getTokenLookup(entities) {
+        const tokenLookup = {};
+        entities.forEach(entity => {
+          const tokenVeRefs = entity.tokens.edges.map(t => t.node.veRef);
+          tokenVeRefs.forEach(veRef => {
+            tokenLookup[veRef] = tokenLookup[veRef] || [];
+            tokenLookup[veRef].push(entity.id);
+          });
+        });
+        return tokenLookup;
+      },
       queryUpdate(data) {
-        const { edges: parts } = data.passageTextParts;
+        const entities = data.entities.edges.map(e => e.node);
+        const parts = data.textParts.edges;
+
+        const tokenLookup = this.getTokenLookup(entities);
         const lines = parts.map(line => {
           const { id, ref } = line.node;
           const tokens = line.node.tokens.edges.map(edge => {
-            const { value, veRef, lemma, namedEntities } = edge.node;
-            const entities = namedEntities.edges.map(e => e.node.id);
+            const { value, veRef, lemma } = edge.node;
             return {
               value,
               veRef,
               lemma,
-              entities,
+              entities: tokenLookup[veRef],
             };
           });
           return {
@@ -83,25 +96,20 @@
             tokens,
           };
         });
-        const coordinatesList = parts.map(line => {
-          return line.node.tokens.edges.map(token => {
-            return token.node.namedEntities.edges
-              .map(namedEntity => namedEntity.node)
-              .filter(node => node.kind === 'PLACE' && node.data.coordinates)
-              .map(node => {
-                return [
-                  ...node.data.coordinates
-                    .split(', ')
-                    .map(coordinate => parseFloat(coordinate)),
-                  node.id,
-                  node.title,
-                ];
-              });
+        const coordinatesList = entities
+          .filter(entity => entity.kind === 'PLACE' && entity.data.coordinates)
+          .map(entity => {
+            return [
+              ...entity.data.coordinates
+                .split(', ')
+                .map(coordinate => parseFloat(coordinate)),
+              entity.id,
+              entity.title,
+            ];
           });
-        });
         return {
           lines,
-          coordinatesList: coordinatesList.flat().flat(),
+          coordinatesList,
         };
       },
     },
@@ -126,7 +134,7 @@
       query() {
         return gql`
           query NamedEntities($urn: String!) {
-            passageTextParts(reference: $urn) {
+            textParts: passageTextParts(reference: $urn) {
               edges {
                 node {
                   id
@@ -134,19 +142,28 @@
                   tokens {
                     edges {
                       node {
+                        id
                         veRef
                         value
                         lemma
-                        namedEntities {
-                          edges {
-                            node {
-                              id
-                              title
-                              kind
-                              data
-                            }
-                          }
-                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            entities: namedEntities(reference: $urn) {
+              edges {
+                node {
+                  id
+                  title
+                  kind
+                  data
+                  tokens {
+                    edges {
+                      node {
+                        id
+                        veRef
                       }
                     }
                   }
