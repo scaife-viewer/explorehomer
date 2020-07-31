@@ -81,6 +81,7 @@
                       node {
                         veRef
                         value
+                        lemma
                       }
                     }
                   }
@@ -114,8 +115,8 @@
         const lines = data.passageTextParts.edges.map(line => {
           const { id, kind, ref } = line.node;
           const tokens = line.node.tokens.edges.map(edge => {
-            const { value, veRef } = edge.node;
-            return { value, veRef };
+            const { value, veRef, lemma } = edge.node;
+            return { value, veRef, lemma };
           });
           return { id, kind, ref, tokens };
         });

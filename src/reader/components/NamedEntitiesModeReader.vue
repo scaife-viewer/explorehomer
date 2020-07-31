@@ -68,11 +68,12 @@
         const lines = parts.map(line => {
           const { id, ref } = line.node;
           const tokens = line.node.tokens.edges.map(edge => {
-            const { value, veRef, namedEntities } = edge.node;
+            const { value, veRef, lemma, namedEntities } = edge.node;
             const entities = namedEntities.edges.map(e => e.node.id);
             return {
               value,
               veRef,
+              lemma,
               entities,
             };
           });
@@ -135,6 +136,7 @@
                       node {
                         veRef
                         value
+                        lemma
                         namedEntities {
                           edges {
                             node {
