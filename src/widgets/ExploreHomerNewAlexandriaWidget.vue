@@ -53,7 +53,10 @@
           });
         },
         skip() {
-          return this.hasLinesInRef;
+          if (this.needsHealing) {
+            return this.hasLinesInRef;
+          }
+          return true;
         },
       },
     },
