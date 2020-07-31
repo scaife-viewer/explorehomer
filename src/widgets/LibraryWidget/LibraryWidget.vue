@@ -1,7 +1,8 @@
 <template>
   <div class="library-widget u-widget u-flex">
-    <ul class="node-tree root" v-if="libraryTree">
-      <Node v-for="(node, index) in libraryTree" :key="index" :node="node" />
+    <LoaderBall v-if="$apolloData.queries.libraryTree.loading" />
+    <ul class="node-tree root" v-else-if="libraryTree">
+      <Node v-for="node in libraryTree" :key="node.data.urn" :node="node" />
     </ul>
   </div>
 </template>
@@ -12,33 +13,28 @@
 
   export default {
     name: 'LibraryWidget',
-    components: {
-      Node,
-    },
-    scaifeConfig: {
-      displayName: 'Library',
-    },
-    methods: {
-      getTextGroupsTree() {
-        const nid = this.gqlData.tree.tree[0];
-        return nid.children.reduce((a, b) => {
-          return a.concat(b.children);
-        }, []);
-      },
-    },
-    computed: {
-      gqlQuery() {
-        return gql`
+    apollo: {
+      libraryTree: {
+        query: gql`
           {
             tree(urn: "urn:cts:", upTo: "version") {
               tree
             }
           }
-        `;
+        `,
+        update(data) {
+          const nid = data.tree.tree[0];
+          return nid.children.reduce((a, b) => {
+            return a.concat(b.children);
+          }, []);
+        },
       },
-      libraryTree() {
-        return this.gqlData ? this.getTextGroupsTree() : [];
-      },
+    },
+    components: {
+      Node,
+    },
+    scaifeConfig: {
+      displayName: 'Library',
     },
   };
 </script>

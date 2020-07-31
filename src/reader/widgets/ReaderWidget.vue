@@ -1,61 +1,29 @@
 <template>
-  <article class="u-flex">
+  <article class="u-flex" :class="{ 'full-height': fullHeight }">
     <section class="reader-left">
       <h2 v-if="passageTitle" class="reader-heading main-widget-heading">
         {{ passageTitle }}
       </h2>
-      <div class="reader-container u-flex">
-        <Paginator :urn="previous" direction="left" />
-        <LoaderBall v-if="gqlLoading" />
-        <ErrorMessage v-else-if="gqlError">
-          There was an error loading the requested data.
-        </ErrorMessage>
-        <div class="image-mode" :class="showImage" v-else-if="imageMode">
-          <ImageViewerToolbar :show="showImage" @show="onShowImage" />
-          <div class="image-mode-container" v-if="showImage === 'both'">
-            <Reader
-              :lines="lines"
-              :textSize="textSize"
-              :textWidth="textWidth"
-            />
-            <ImageViewer
-              v-if="imageIdentifier"
-              :imageIdentifier="imageIdentifier"
-            />
-            <EmptyMessage class="reader-empty-annotations" v-else />
-          </div>
-          <Reader
-            v-else-if="showImage === 'text'"
-            :lines="lines"
-            :textSize="textSize"
-            :textWidth="textWidth"
+      <ApolloQuery
+        class="reader-container u-flex"
+        :query="query"
+        :variables="queryVariables"
+        :update="queryUpdate"
+        :skip="urn === null"
+      >
+        <template v-slot="{ result: { data } }">
+          <Paginator :urn="data && data.previous" direction="left" />
+
+          <component
+            :is="readerComponent"
+            :query-variables="queryVariables"
+            :text-size="textSize"
+            :text-width="textWidth"
           />
-          <ImageViewer
-            v-else-if="showImage === 'image' && imageIdentifier"
-            :imageIdentifier="imageIdentifier"
-          />
-          <EmptyMessage class="reader-empty-annotations" v-else />
-        </div>
-        <template v-else-if="alignmentMode">
-          <EmptyMessage
-            class="reader-empty-annotations"
-            v-if="alignments.length === 0"
-          />
-          <Alignments
-            v-else
-            :alignments="alignments"
-            :textSize="textSize"
-            :textWidth="textWidth"
-          />
+
+          <Paginator :urn="data && data.next" direction="right" />
         </template>
-        <Reader
-          v-else
-          :lines="lines"
-          :textSize="textSize"
-          :textWidth="textWidth"
-        />
-        <Paginator :urn="next" direction="right" />
-      </div>
+      </ApolloQuery>
     </section>
   </article>
 </template>
@@ -64,58 +32,56 @@
   import gql from 'graphql-tag';
 
   import WIDGETS_NS, { URN } from '@scaife-viewer/scaife-widgets';
-  import Reader from '@/reader/components/Reader.vue';
-  import Alignments from '@/reader/components/Alignments.vue';
-  import EmptyMessage from '@/components/EmptyMessage.vue';
-  import ErrorMessage from '@/components/ErrorMessage.vue';
-  import ImageViewer from '@/components/ImageViewer.vue';
-  import ImageViewerToolbar from '@/components/ImageViewerToolbar.vue';
   import Paginator from '@/components/Paginator.vue';
-  import {
-    SET_PASSAGE,
-    UPDATE_METADATA,
-    IMAGE_VIEWER_STATE_BOTH,
-  } from '@/constants';
+  import { SET_PASSAGE, UPDATE_METADATA } from '@/constants';
   import { MODULE_NS } from '@/reader/constants';
 
   export default {
     components: {
-      Alignments,
-      EmptyMessage,
-      ErrorMessage,
       Paginator,
-      Reader,
-      ImageViewer,
-      ImageViewerToolbar,
     },
     scaifeConfig: {},
-    data() {
-      return {
-        showImage: IMAGE_VIEWER_STATE_BOTH,
-      };
-    },
     methods: {
-      onShowImage(kind) {
-        this.showImage = kind;
-      },
       setVersionMetadata() {
+        if (this.urn === null) {
+          return;
+        }
         this.$store.dispatch(
           UPDATE_METADATA,
           { urn: this.urn.version },
           { root: true },
         );
       },
+      queryUpdate(data) {
+        const {
+          metadata: { next, previous },
+        } = data.passageTextParts;
+        return {
+          next: next ? new URN(next) : null,
+          previous: previous ? new URN(previous) : null,
+        };
+      },
     },
     watch: {
-      urn() {
-        this.$nextTick(() => {
-          this.$parent.$el.scrollTop = 0;
-        });
+      urn: {
+        immediate: true,
+        handler() {
+          this.$nextTick(() => {
+            this.$parent.$el.scrollTop = 0;
+          });
+          if (this.urn) {
+            this.$store.dispatch(
+              SET_PASSAGE,
+              { urn: this.urn.toString() },
+              { root: true },
+            );
+          }
+        },
       },
       versionMetadata: {
         immediate: true,
         handler() {
-          if (!this.versionMetadata) {
+          if (!this.versionMetadata && this.urn) {
             this.setVersionMetadata();
           }
         },
@@ -130,104 +96,47 @@
           },
         });
       }
-      if (this.version !== this.urn.version) {
+      if (this.urn && this.version !== this.urn.version) {
         this.setVersionMetadata();
       }
     },
     computed: {
-      alignmentMode() {
-        return this.$store.state.displayMode === 'sentence-alignments';
+      readerComponent() {
+        return this.$store.getters.readerComponent;
       },
-      imageMode() {
-        return this.$store.state.displayMode === 'folio';
-      },
-      imageIdentifier() {
-        return this.gqlData && this.gqlData.imageAnnotations.edges.length
-          ? this.gqlData.imageAnnotations.edges[0].node.imageIdentifier
-          : null;
-      },
-      urn() {
-        return this.$route.query.urn
-          ? new URN(this.$route.query.urn)
-          : this.$store.getters[`${MODULE_NS}/firstPassageUrn`];
-      },
-      gqlQuery() {
-        if (this.urn) {
-          this.$store.dispatch(
-            SET_PASSAGE,
-            { urn: this.urn.toString() },
-            { root: true },
-          );
-          return gql`
-            {
-              passageTextParts(reference: "${this.urn}") {
+      query() {
+        return gql`
+          query TextParts($urn: String!) {
+            passageTextParts(reference: $urn) {
               metadata
-              edges {
-                node {
-                  id
-                  kind
-                  urn
-                  ref
-                  metricalAnnotations {
-                    edges {
-                      node {
-                        metricalPattern
-                        htmlContent
-                      }
-                    }
-                  }
-                  tokens {
-                    edges {
-                      node {
-                        veRef
-                        value
-                        position
-                        lemma
-                        partOfSpeech
-                        tag
-                        namedEntities {
-                          edges {
-                            node {
-                              id
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-              pageInfo {
-                hasNextPage
-                endCursor
-              }
             }
-            textAlignmentChunks(reference: "${this.urn}") {
+            textAlignmentChunks(reference: $urn) {
               edges {
                 node {
                   items
                 }
               }
             }
-            imageAnnotations(reference: "${this.urn}") {
-              edges {
-                node {
-                  idx
-                  imageIdentifier
-                  textParts {
-                    edges {
-                      node {
-                        ref
-                      }
-                    }
-                  }
-                }
-              }
-            }
           }
-          `;
-        }
-        return null;
+        `;
+      },
+      queryVariables() {
+        return { urn: this.urn === null ? '' : this.urn.absolute };
+      },
+      displayMode() {
+        return this.$store.state.displayMode;
+      },
+      folioMode() {
+        return this.$store.getters.folioMode;
+      },
+      alignmentsMode() {
+        return this.$store.getters.alignmentsMode;
+      },
+      namedEntitiesMode() {
+        return this.$store.getters.namedEntitiesMode;
+      },
+      urn() {
+        return this.$store.getters.urn;
       },
       version() {
         return this.$store.getters[`${MODULE_NS}/firstPassageUrn`].version;
@@ -241,68 +150,14 @@
       textWidth() {
         return this.$store.getters[`${WIDGETS_NS}/readerTextWidth`];
       },
-      alignments() {
-        if (!this.gqlData) {
-          return [];
-        }
-        return this.gqlData.textAlignmentChunks.edges.map(e => e.node.items);
-      },
-      lines() {
-        if (!this.gqlData) {
-          return [];
-        }
-        return this.gqlData.passageTextParts.edges.map(line => {
-          const { id, kind, ref, metricalAnnotations } = line.node;
-          const tokens = line.node.tokens.edges.map(edge => {
-            const {
-              value,
-              veRef,
-              position,
-              lemma,
-              partOfSpeech,
-              tag,
-              namedEntities,
-            } = edge.node;
-            const entities = namedEntities.edges.map(e => e.node.id);
-            return {
-              value,
-              veRef,
-              position,
-              lemma,
-              partOfSpeech,
-              tag,
-              entities,
-            };
-          });
-          return {
-            id,
-            kind,
-            ref,
-            tokens,
-            metricalAnnotations: metricalAnnotations.edges.map(e => e.node),
-          };
-        });
-      },
       versionMetadata() {
         return this.$store.state.metadata;
       },
       passageTitle() {
         return this.versionMetadata ? this.versionMetadata.label : null;
       },
-      passageMetadata() {
-        return this.gqlData && this.gqlData.passageTextParts.metadata
-          ? this.gqlData.passageTextParts.metadata
-          : null;
-      },
-      previous() {
-        return this.passageMetadata && this.passageMetadata.previous
-          ? new URN(this.passageMetadata.previous)
-          : null;
-      },
-      next() {
-        return this.passageMetadata && this.passageMetadata.next
-          ? new URN(this.passageMetadata.next)
-          : null;
+      fullHeight() {
+        return this.namedEntitiesMode;
       },
     },
   };
@@ -314,6 +169,10 @@
   }
   section {
     width: 100%;
+  }
+  .full-height {
+    height: 100vh;
+    overflow: hidden;
   }
   .reader-heading {
     flex: 1;
@@ -327,29 +186,6 @@
     ::v-deep .ball-pulse {
       margin-left: auto;
       padding-top: 40px;
-    }
-  }
-  ::v-deep .reader-empty-annotations {
-    text-align: center;
-    margin-top: 1rem;
-  }
-  .image-mode {
-    flex: 1;
-    &.both {
-      .image-mode-container {
-        grid-template-columns: 1fr 1fr;
-        column-gap: 0.75rem;
-      }
-    }
-    &.text,
-    &.image {
-      .image-mode-container {
-        grid-template-columns: 1fr;
-      }
-    }
-    .image-mode-container {
-      display: grid;
-      height: calc(100vh - 75px);
     }
   }
 </style>

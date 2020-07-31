@@ -4,11 +4,7 @@
       class="reader-container text"
       :class="[`text-${textSize}`, `text-width-${textWidth}`]"
     >
-      <ReaderLine
-        v-for="(line, index) in lines"
-        :key="`${index}-${line.label}`"
-        :line="line"
-      />
+      <ReaderLine v-for="line in lines" :key="line.id" :line="line" />
 
       <Attribution v-if="showMetricalCredit" class="metrical-attribution">
         Metrical annotation &copy; 2016
@@ -25,26 +21,30 @@
 
 <script>
   import Attribution from '@/components/Attribution.vue';
-  import EmptyMessage from '@/components/EmptyMessage.vue';
   import ReaderLine from './ReaderLine.vue';
 
   export default {
-    components: { Attribution, EmptyMessage, ReaderLine },
+    components: { Attribution, ReaderLine },
     props: ['lines', 'textSize', 'textWidth'],
     computed: {
+      metricalMode() {
+        return this.$store.getters.metricalMode;
+      },
       showMetricalCredit() {
-        const metricalMode = this.$store.state.displayMode === 'metrical';
+        if (!this.metricalModel) {
+          return false;
+        }
         const hasContent =
           this.lines.filter(line => {
             const { metricalAnnotations } = line;
             return metricalAnnotations[0] && metricalAnnotations[0].htmlContent;
           }).length > 0;
-        return metricalMode && hasContent;
-      },
-      metricalMode() {
-        return this.$store.state.displayMode === 'metrical';
+        return hasContent;
       },
       metricalLines() {
+        if (!this.metricalMode) {
+          return [];
+        }
         return this.lines.filter(line => {
           const { metricalAnnotations } = line;
           const annotation = metricalAnnotations[0];
@@ -57,8 +57,8 @@
           return false;
         }
         return this.metricalLines.length === 0;
-      }
-    }
+      },
+    },
   };
 </script>
 

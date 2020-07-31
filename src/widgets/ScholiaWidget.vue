@@ -1,6 +1,6 @@
 <template>
   <div class="scholia">
-    <EmptyMessage v-if="lines === null || lines.length === 0" />
+    <EmptyMessage v-if="!lines || lines.length === 0" />
     <div v-for="line in lines" :key="line.idx" class="line">
       <span class="lemma">{{ line.lemma }} </span>
       <span class="comment">{{ line.comment }}</span>
@@ -15,10 +15,7 @@
 
 <script>
   import gql from 'graphql-tag';
-  import { URN } from '@scaife-viewer/scaife-widgets';
   import Attribution from '@/components/Attribution.vue';
-  import EmptyMessage from '@/components/EmptyMessage.vue';
-  import { MODULE_NS } from '@/reader/constants';
 
   export default {
     scaifeConfig: {
@@ -26,32 +23,17 @@
       location: 'sidebar',
       singleton: true,
     },
-    components: { Attribution, EmptyMessage },
+    components: { Attribution },
     computed: {
       urn() {
-        return this.$route.query.urn
-          ? new URN(this.$route.query.urn)
-          : this.$store.getters[`${MODULE_NS}/firstPassageUrn`];
+        return this.$store.getters.urn;
       },
-      lines() {
-        return (
-          this.gqlData &&
-          this.gqlData.textAnnotations.edges.map(e => {
-            return {
-              idx: e.node.idx,
-              dse: e.node.data.dse,
-              comment: e.node.data.comment,
-              lemma: e.node.data.lemma,
-              references: e.node.data.references,
-            }
-          })
-        );
-      },
-      gqlQuery() {
-        if (this.urn) {
-          return gql`
-          {
-            textAnnotations(reference: "${this.urn}") {
+    },
+    apollo: {
+      lines: {
+        query: gql`
+          query Scholia($urn: String!) {
+            textAnnotations(reference: $urn) {
               edges {
                 node {
                   idx
@@ -60,9 +42,24 @@
               }
             }
           }
-          `;
-        }
-        return null;
+        `,
+        variables() {
+          return { urn: this.urn.absolute };
+        },
+        update(data) {
+          return data.textAnnotations.edges.map(e => {
+            return {
+              idx: e.node.idx,
+              dse: e.node.data.dse,
+              comment: e.node.data.comment,
+              lemma: e.node.data.lemma,
+              references: e.node.data.references,
+            };
+          });
+        },
+        skip() {
+          return this.urn === null;
+        },
       },
     },
   };

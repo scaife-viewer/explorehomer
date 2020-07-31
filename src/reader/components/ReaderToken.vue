@@ -3,13 +3,14 @@
     class="token"
     :class="{
       selected,
-      interlinear,
-      entity: namedEntities && isEntity,
-      'selected-entity': namedEntities && hasSelectedEntity,
+      interlinear: interlinearMode,
+      'entity-mode': namedEntitiesMode,
+      entity: namedEntitiesMode && isEntity,
+      'selected-entity': namedEntitiesMode && hasSelectedEntity,
     }"
     @click="onSelect"
   >
-    <template v-if="interlinear">
+    <template v-if="interlinearMode">
       <span class="ref">{{ token.veRef }}</span>
       <span class="text">{{ token.value }}</span>
       <span class="lemma">{{ token.lemma || '-' }}</span>
@@ -17,43 +18,57 @@
       <span class="analysis">{{ token.tag || '-' }}</span>
     </template>
     <template v-else>
-      <span class="text">{{ token.value }}</span>{{ ' ' }}
+      <span class="text">{{ token.value }}</span
+      >{{ ' ' }}
     </template>
   </span>
 </template>
 
 <script>
-  import { SELECT_TOKEN, MODULE_NS } from '../constants';
-  import { SELECT_NAMED_ENTITIES } from '../../constants';
+  import { SELECT_TOKEN, MODULE_NS } from '@/reader/constants';
+  import { CLEAR_NAMED_ENTITIES, SELECT_NAMED_ENTITIES } from '@/constants';
 
   export default {
     props: ['token'],
     methods: {
       onSelect() {
-        this.$store.dispatch(SELECT_NAMED_ENTITIES, {
-          entities: this.token.entities,
-        });
-        this.$store.dispatch(`${MODULE_NS}/${SELECT_TOKEN}`, {
-          token: this.token,
-        });
+        if (this.selected) {
+          this.$store.dispatch(CLEAR_NAMED_ENTITIES);
+          this.$store.dispatch(`${MODULE_NS}/${SELECT_TOKEN}`, {
+            token: null,
+          });
+        } else if (
+          (this.namedEntitiesMode && this.isEntity) ||
+          !this.namedEntitiesMode
+        ) {
+          this.$store.dispatch(SELECT_NAMED_ENTITIES, {
+            entities: this.entities,
+          });
+          this.$store.dispatch(`${MODULE_NS}/${SELECT_TOKEN}`, {
+            token: this.token,
+          });
+        }
       },
     },
     computed: {
       selectedEntities() {
         return this.$store.state.selectedNamedEntities;
       },
-      interlinear() {
-        return this.$store.state.displayMode === 'interlinear';
+      interlinearMode() {
+        return this.$store.getters.interlinearMode;
       },
-      namedEntities() {
-        return this.$store.state.displayMode === 'named-entities';
+      namedEntitiesMode() {
+        return this.$store.getters.namedEntitiesMode;
+      },
+      entities() {
+        return (this.token && this.token.entities) || [];
       },
       isEntity() {
-        return this.token.entities.length > 0;
+        return this.entities.length > 0;
       },
       hasSelectedEntity() {
         return (
-          this.token.entities.filter(
+          this.entities.filter(
             id => this.selectedEntities.filter(sid => sid === id).length > 0,
           ).length > 0
         );
@@ -62,12 +77,12 @@
         if (!this.selectedToken) {
           return false;
         }
-        if (this.namedEntities) {
+        if (this.namedEntitiesMode) {
           const { entities, veRef } = this.selectedToken;
           const entity = entities[0];
           return (
             veRef === this.token.veRef ||
-            (entity && entity === this.token.entities[0])
+            (entity && entity === this.entities[0])
           );
         }
         return this.selectedToken.veRef === this.token.veRef;
@@ -86,6 +101,9 @@
   }
   .token.selected .text {
     @include highlight($selected-token);
+  }
+  .token.entity-mode:not(.entity) .text {
+    cursor: inherit;
   }
   .token.entity .text {
     @include highlight($entity);

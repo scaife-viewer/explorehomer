@@ -32,8 +32,8 @@
         // special-case handling for the Folios version of
         // the Iliad
         return (
-          this.originalPassage.version ===
-          'urn:cts:greekLit:tlg0012.tlg001.msA-folios:'
+          this.originalPassage && this.originalPassage.version ===
+            'urn:cts:greekLit:tlg0012.tlg001.msA-folios:'
         );
       },
       originalPassage() {
@@ -53,7 +53,7 @@
         handler() {
           if (this.needsHealing) {
             this.healFolioURN();
-          } else {
+          } else if (this.originalPassage) {
             this.healedPassage = this.originalPassage.toString();
           }
         },
@@ -100,6 +100,9 @@
       fetchPassageTextParts() {
         // retrieves the lowest text parts for a folio level reference,
         // e.g. 12r --> 12r.1.1-12.r.1.25
+        if (this.originalPassage === null) {
+          return;
+        }
         const query = gql`
           {
             passageTextParts(
@@ -120,7 +123,6 @@
             return node;
           });
         });
-        return query;
       },
       extractPassageTextPartRefs() {
         // extracts the ref(s) from the text parts

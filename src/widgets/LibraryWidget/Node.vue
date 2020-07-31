@@ -26,9 +26,6 @@
 </template>
 
 <script>
-  import { URN } from '@scaife-viewer/scaife-widgets';
-  import { MODULE_NS } from '@/reader/constants';
-
   export default {
     name: 'Node',
     props: ['node'],
@@ -49,17 +46,15 @@
     },
     computed: {
       highlight() {
-        return this.readerUrn.version === this.urn;
+        return this.readerUrn && this.readerUrn.version === this.urn;
       },
       nodeUrnIndex() {
-        return this.readerUrn.absolute.indexOf(
-          this.urn.slice(0, this.urn.length - 1) // trim trailing colon
+        return this.readerUrn && this.readerUrn.absolute.indexOf(
+          this.urn.slice(0, this.urn.length - 1), // trim trailing colon
         );
       },
       readerUrn() {
-        return this.$route.query.urn
-          ? new URN(this.$route.query.urn)
-          : this.$store.getters[`${MODULE_NS}/firstPassageUrn`];
+        return this.$store.getters.urn;
       },
       urn() {
         // TODO: Cast to URN post-refactor.

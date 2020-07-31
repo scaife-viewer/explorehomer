@@ -24,10 +24,6 @@
 <script>
   import gql from 'graphql-tag';
 
-  import { URN } from '@scaife-viewer/scaife-widgets';
-  import EmptyMessage from '@/components/EmptyMessage.vue';
-  import { MODULE_NS } from '@/reader/constants';
-
   import { PLAY_AUDIO, STOP_AUDIO } from '@/constants';
   import Attribution from '@/components/Attribution.vue';
 
@@ -35,7 +31,7 @@
     scaifeConfig: {
       displayName: 'Audio',
     },
-    components: { Attribution, EmptyMessage },
+    components: { Attribution },
     data() {
       return {
         nowPlayingIndex: 0,
@@ -114,18 +110,10 @@
         return this.$refs.sound;
       },
       urn() {
-        return this.$route.query.urn
-          ? new URN(this.$route.query.urn)
-          : this.$store.getters[`${MODULE_NS}/firstPassageUrn`];
+        return this.$store.getters.urn;
       },
       audios() {
-        if (!this.gqlData) {
-          return [];
-        }
-        const { edges } = this.gqlData.passageTextParts;
-        return edges
-          .map(e => e.node.audioAnnotations.edges.map(a => a.node))
-          .flat();
+        return this.audioData ? this.audioData : [];
       },
       audioMap() {
         return this.audios.reduce((map, obj) => {
@@ -135,10 +123,12 @@
           };
         }, {});
       },
-      gqlQuery() {
-        if (this.urn) {
-          return gql`{
-            passageTextParts(reference: "${this.urn}") {
+    },
+    apollo: {
+      audioData: {
+        query: gql`
+          query Audio($urn: String!) {
+            passageTextParts(reference: $urn) {
               edges {
                 node {
                   id
@@ -153,9 +143,19 @@
                 }
               }
             }
-          }`;
-        }
-        return null;
+          }
+        `,
+        variables() {
+          return { urn: this.urn.absolute };
+        },
+        update(data) {
+          return data.passageTextParts.edges
+            .map(e => e.node.audioAnnotations.edges.map(a => a.node))
+            .flat();
+        },
+        skip() {
+          return this.urn === null;
+        },
       },
     },
   };
