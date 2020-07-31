@@ -1,31 +1,20 @@
-<template>
-  <div class="new-alexandria-widget u-widget u-flex">
-    <NewAlexandria :comments="comments" :key="passage" />
-  </div>
-</template>
-
 <script>
-  import qs from 'querystring';
   import gql from 'graphql-tag';
 
-  import WIDGETS_NS, { NewAlexandria } from '@scaife-viewer/scaife-widgets';
+  import WIDGETS_NS from '@scaife-viewer/scaife-widgets';
+  // eslint-disable-next-line max-len
+  import NewAlexandriaWidget from './NewAlexandriaWidget/NewAlexandriaWidget.vue';
 
   export default {
+    extends: NewAlexandriaWidget,
     name: 'ExploreHomerNewAlexandriaWidget',
-    components: { NewAlexandria },
     scaifeConfig: {
       displayName: 'New Alexandria Commentary',
     },
     data() {
       return {
         healedPassage: '',
-        comments: null,
       };
-    },
-    created() {
-      if (this.enabled) {
-        this.fetchData();
-      }
     },
     apollo: {
       passageTextParts: {
@@ -78,32 +67,6 @@
         // so that only the healedPassage is passed to NAC
         // via the `passage` watcher
         return this.healedPassage;
-      },
-      enabled() {
-        return !!this.passage;
-      },
-      endpoint() {
-        return 'https://commentary-api.chs.harvard.edu/graphql';
-      },
-      params() {
-        const gqlQuery = `{
-          commentsOn(urn: "${this.passage}") {
-            _id
-            updated
-            latestRevision {
-              title
-              text
-            }
-            commenters {
-              _id
-              name
-            }
-          }
-        }`;
-        return this.passage ? qs.stringify({ query: gqlQuery }) : null;
-      },
-      url() {
-        return `${this.endpoint}?${this.params}`;
       },
       originalRefs() {
         return this.originalPassage.reference.split('-');
@@ -158,17 +121,6 @@
           this.healedPassage = `${this.originalPassage.version}${refPart}`;
         }
       },
-      fetchData() {
-        fetch(this.url)
-          .then(response => response.json())
-          .then(data => {
-            this.comments = data.data.commentsOn;
-          })
-          .catch(error => {
-            // eslint-disable-next-line no-console
-            console.log(error.message);
-          });
-      },
       extractPassageTextPartRefs() {
         // extracts the ref(s) from the text parts
         const refs = [];
@@ -183,12 +135,3 @@
     },
   };
 </script>
-
-<style lang="scss">
-  .new-alexandria-widget {
-    width: 100%;
-    img {
-      max-width: 100%;
-    }
-  }
-</style>
