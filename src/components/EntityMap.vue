@@ -7,8 +7,8 @@
     @load="onMapLoaded"
   >
     <EntityMapMarker
-      v-for="(coordinates, index) in coordinatesList"
-      :key="`${coordinates[2]}-${coordinates[3]}-${index}`"
+      v-for="(coordinates, idx) in coordinatesList"
+      :key="getMarkerKey(coordinates[2], idx)"
       :lat="coordinates[0]"
       :lng="coordinates[1]"
       :placeId="coordinates[2]"
@@ -44,6 +44,13 @@
           this.map.fitBounds(bbox);
         }
       },
+      getMarkerKey(entityId, idx) {
+        // constructs a key that will be recomputed
+        // when the value of `selectedNamedEntities` changes in the store
+        const isSelected =
+          this.selectedEntities.filter(id => entityId === id).length > 0;
+        return `${entityId}::${idx}::${isSelected}`;
+      },
     },
     watch: {
       coordinatesList: {
@@ -73,6 +80,9 @@
       },
       mapStyle() {
         return this.config.mapStyle;
+      },
+      selectedEntities() {
+        return this.$store.state.selectedNamedEntities;
       },
     },
   };

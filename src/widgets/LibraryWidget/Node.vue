@@ -46,10 +46,10 @@
     },
     computed: {
       highlight() {
-        return this.readerUrn.version === this.urn;
+        return this.readerUrn && this.readerUrn.version === this.urn;
       },
       nodeUrnIndex() {
-        return this.readerUrn.absolute.indexOf(
+        return this.readerUrn && this.readerUrn.absolute.indexOf(
           this.urn.slice(0, this.urn.length - 1), // trim trailing colon
         );
       },
