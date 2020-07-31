@@ -10,7 +10,9 @@
       class="comment"
     >
       <h4>{{ comment.latestRevision.title }}</h4>
-      <h5 class="commenter-name">{{ comment.commenters[0].name }}</h5>
+      <h5 v-if="comment.commenters.length > 0" class="commenter-name">
+        {{ comment.commenters[0].name }}
+      </h5>
       <div class="comment-text" v-html="comment.latestRevision.text"></div>
     </div>
   </aside>
