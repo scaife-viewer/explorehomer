@@ -30,8 +30,6 @@
   export default {
     readerConfig: {
       label: 'Default',
-      layout: 'normal',
-      textWidth: 'normal',
     },
     components: { Reader },
     props: {

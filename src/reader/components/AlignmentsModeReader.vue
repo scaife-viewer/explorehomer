@@ -33,7 +33,6 @@
     readerConfig: {
       label: 'Sentence Alignments',
       layout: 'wide',
-      textWidth: 'normal',
     },
     props: {
       queryVariables: Object,

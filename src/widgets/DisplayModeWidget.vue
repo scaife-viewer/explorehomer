@@ -46,7 +46,7 @@
       setMode(mode) {
         this.$store.dispatch(SET_DISPLAY_MODE, { mode: mode.mode });
         this.$store.dispatch(`${WIDGETS_NS}/setTextWidth`, {
-          width: mode.textWidth,
+          width: mode.textWidth || 'normal',
         });
         if (mode.layout === 'wide') {
           this.setWideLayout();

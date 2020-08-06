@@ -53,7 +53,6 @@
     readerConfig: {
       label: 'Folio Images',
       layout: 'wide',
-      textWidth: 'normal',
     },
     props: {
       queryVariables: Object,

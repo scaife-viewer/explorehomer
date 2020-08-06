@@ -30,8 +30,6 @@
   export default {
     readerConfig: {
       label: 'Interlinear',
-      layout: 'normal',
-      textWidth: 'normal',
     },
     components: { Reader },
     props: {
