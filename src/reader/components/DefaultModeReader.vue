@@ -28,6 +28,11 @@
   import Reader from './Reader.vue';
 
   export default {
+    readerConfig: {
+      label: 'Default',
+      layout: 'normal',
+      textWidth: 'normal',
+    },
     components: { Reader },
     props: {
       queryVariables: Object,

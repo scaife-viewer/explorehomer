@@ -50,6 +50,11 @@
   import { IMAGE_VIEWER_STATE_BOTH } from '@/constants';
 
   export default {
+    readerConfig: {
+      label: 'Folio Images',
+      layout: 'wide',
+      textWidth: 'normal',
+    },
     props: {
       queryVariables: Object,
       textSize: String,

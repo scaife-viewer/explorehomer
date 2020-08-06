@@ -37,12 +37,13 @@ export default {
   readerComponent: state => {
     return READER_COMPONENTS[state.displayMode];
   },
-  alignmentsMode: state => {
-    return state.displayMode === DISPLAY_MODE_SENTENCE_ALIGNMENTS;
-  },
-  folioMode: state => {
-    return state.displayMode === DISPLAY_MODE_FOLIO;
-  },
+  displayModes: state =>
+    Object.keys(READER_COMPONENTS).map(key => ({
+      ...READER_COMPONENTS[key].readerConfig,
+      component: READER_COMPONENTS[key],
+      mode: key,
+      active: state.displayMode === key,
+    })),
   interlinearMode: state => {
     return state.displayMode === DISPLAY_MODE_INTERLINEAR;
   },
@@ -51,9 +52,6 @@ export default {
   },
   namedEntitiesMode: state => {
     return state.displayMode === DISPLAY_MODE_NAMED_ENTITIES;
-  },
-  defaultMode: state => {
-    return state.displayMode === DISPLAY_MODE_DEFAULT;
   },
   urn: (state, getters) => {
     const { urn } = state.route.query;

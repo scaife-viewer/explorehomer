@@ -28,6 +28,11 @@
   import Reader from './Reader.vue';
 
   export default {
+    readerConfig: {
+      label: 'Metrical Annotations',
+      layout: 'normal',
+      textWidth: 'wide',
+    },
     components: { Reader },
     props: {
       queryVariables: Object,

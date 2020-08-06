@@ -123,15 +123,6 @@
       queryVariables() {
         return { urn: this.urn === null ? '' : this.urn.absolute };
       },
-      displayMode() {
-        return this.$store.state.displayMode;
-      },
-      folioMode() {
-        return this.$store.getters.folioMode;
-      },
-      alignmentsMode() {
-        return this.$store.getters.alignmentsMode;
-      },
       namedEntitiesMode() {
         return this.$store.getters.namedEntitiesMode;
       },

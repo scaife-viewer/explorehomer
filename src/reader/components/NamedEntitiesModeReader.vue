@@ -44,6 +44,11 @@
   import { MAP_STATE_NONE } from '@/constants';
 
   export default {
+    readerConfig: {
+      label: 'Named Entities',
+      layout: 'normal',
+      textWidth: 'normal',
+    },
     props: {
       queryVariables: Object,
       textSize: String,
