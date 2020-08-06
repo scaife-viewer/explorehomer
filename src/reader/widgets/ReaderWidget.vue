@@ -102,7 +102,8 @@
     },
     computed: {
       readerComponent() {
-        return this.$store.getters.readerComponent;
+        const { displayMode } = this.$store.state;
+        return this.$scaife.config.readerComponents[displayMode];
       },
       query() {
         return gql`

@@ -23,7 +23,13 @@
     },
     computed: {
       displayModes() {
-        return this.$store.getters.displayModes;
+        const { readerComponents } = this.$scaife.config;
+        return Object.keys(readerComponents).map(key => ({
+          ...readerComponents[key].readerConfig,
+          component: readerComponents[key],
+          mode: key,
+          active: this.$store.state.displayMode === key,
+        }));
       },
     },
     methods: {
