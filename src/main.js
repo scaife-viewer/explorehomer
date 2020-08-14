@@ -19,15 +19,7 @@ import {
   faWindowMaximize,
 } from '@fortawesome/free-solid-svg-icons';
 
-
-import SkeletonPlugin from 'scaife-skeleton';
-import { EndpointsPlugin } from '@scaife-viewer/scaife-widgets';
-import client from '@/gql';
-
-import LoaderBall from '@/components/LoaderBall.vue';
-import EmptyMessage from '@/components/EmptyMessage.vue';
-import ErrorMessage from '@/components/ErrorMessage.vue';
-
+import { SkeletonPlugin } from '@scaife-viewer/skeleton';
 import {
   DISPLAY_MODE_SENTENCE_ALIGNMENTS,
   DISPLAY_MODE_FOLIO,
@@ -35,20 +27,18 @@ import {
   DISPLAY_MODE_METRICAL,
   DISPLAY_MODE_NAMED_ENTITIES,
   DISPLAY_MODE_DEFAULT,
-} from '@/constants';
+} from '@scaife-viewer/store';
+import AlignmentsModeReader from '@scaife-viewer/reader-alignments-mode';
+import ImageModeReader from '@scaife-viewer/reader-image-mode';
+import NamedEntitiesModeReader from '@scaife-viewer/reader-named-entities-mode';
+import MetricalModeReader from '@scaife-viewer/reader-metrical-mode';
+import InterlinearModeReader from '@scaife-viewer/reader-interlinear-mode';
+import { DefaultModeReader } from '@scaife-viewer/widget-reader';
 
-import AlignmentsModeReader from '@/reader/components/AlignmentsModeReader.vue';
-import ImageModeReader from '@/reader/components/ImageModeReader.vue';
-// eslint-disable-next-line max-len
-import NamedEntitiesModeReader from '@/reader/components/NamedEntitiesModeReader.vue';
-import MetricalModeReader from '@/reader/components/MetricalModeReader.vue';
-// eslint-disable-next-line max-len
-import InterlinearModeReader from '@/reader/components/InterlinearModeReader.vue';
-import DefaultModeReader from '@/reader/components/DefaultModeReader.vue';
-
+// import client from '@/gql';
 import App from '@/App.vue';
 import router from '@/router';
-import store from '@/store';
+import store, { apolloProvider } from '@/store';
 
 sync(store, router);
 
@@ -98,24 +88,16 @@ Vue.use(SkeletonPlugin, { iconMap, config });
 
 Vue.use(VueApollo);
 
-const apolloProvider = new VueApollo({
-  defaultClient: client,
-});
-
-const widgetEndpoints = {};
-if (process.env.VUE_APP_TOC_ENDPOINT) {
-  widgetEndpoints.tocEndpoint = process.env.VUE_APP_TOC_ENDPOINT;
-}
-Vue.use(EndpointsPlugin, widgetEndpoints);
+// const widgetEndpoints = {};
+// if (process.env.VUE_APP_TOC_ENDPOINT) {
+//   widgetEndpoints.tocEndpoint = process.env.VUE_APP_TOC_ENDPOINT;
+// }
+// Vue.use(EndpointsPlugin, widgetEndpoints);
 
 Vue.config.productionTip = false;
 
 Vue.prototype.$isEmpty = obj =>
   Object.keys(obj).length === 0 && obj.constructor === Object;
-
-Vue.component('LoaderBall', LoaderBall);
-Vue.component('EmptyMessage', EmptyMessage);
-Vue.component('ErrorMessage', ErrorMessage);
 
 new Vue({
   router,

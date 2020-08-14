@@ -1,5 +1,5 @@
-import ReaderView from '@/reader/components/ReaderView.vue';
-import TOCsView from '@/tocs/components/TOCsView.vue';
+import ReaderView from '@/views/ReaderView.vue';
+import TOCsView from '@/views/TOCsView.vue';
 
 export default [
   { path: '/', redirect: 'reader' },
