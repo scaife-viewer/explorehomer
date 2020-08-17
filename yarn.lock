@@ -1526,10 +1526,10 @@
     "@scaife-viewer/store" "^0.0.3"
     graphql-tag "^2.10.3"
 
-"@scaife-viewer/widget-passage-reference@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-passage-reference/-/widget-passage-reference-0.0.4.tgz#524306dcceee3d791ec2528863f3fd3e50c2a989"
-  integrity sha512-zLodxMNNPeOBUGekv/mHfNDBMVJVeVveBUOEVMPif3n4KAHJ44ddD3hzWnx12ZipghcsB+W6N76BeCnCorO3oQ==
+"@scaife-viewer/widget-passage-reference@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-passage-reference/-/widget-passage-reference-0.0.5.tgz#644e32984b82243f085cc9f501b9b95733ae13df"
+  integrity sha512-eJrHBZRyAeBdDduTHRpAw2x1aljALwuAMraGIzAbRK91B55tL8ygGBy47kSWMXSX9ezgD90qaa3+ocZ5zz814Q==
   dependencies:
     "@scaife-viewer/store" "^0.0.3"
     graphql-tag "^2.10.3"
@@ -10101,9 +10101,9 @@ querystring@0.2.0:
   integrity sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
 
 querystringify@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.1.1.tgz#60e5a5fd64a7f8bfa4d2ab2ed6fdf4c85bad154e"
-  integrity sha512-w7fLxIRCRT7U8Qu53jQnJyPkYZIaR4n5151KMfcJlO/A9397Wxb1amJvROTK6TOnp7PfoAmg/qXiNHI+08jRfA==
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.2.0.tgz#3345941b4153cb9d082d8eee4cda2016a9aef7f6"
+  integrity sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==
 
 quickselect@^2.0.0:
   version "2.0.0"

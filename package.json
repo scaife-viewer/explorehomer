@@ -28,7 +28,7 @@
     "@scaife-viewer/widget-new-alexandria": "^0.0.3",
     "@scaife-viewer/widget-passage-ancestors": "^0.0.3",
     "@scaife-viewer/widget-passage-children": "^0.0.3",
-    "@scaife-viewer/widget-passage-reference": "^0.0.4",
+    "@scaife-viewer/widget-passage-reference": "^0.0.5",
     "@scaife-viewer/widget-passage-siblings": "^0.0.3",
     "@scaife-viewer/widget-reader": "^0.0.3",
     "@scaife-viewer/widget-scholia": "^0.0.4",
