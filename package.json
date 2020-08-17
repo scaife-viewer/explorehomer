@@ -38,6 +38,7 @@
     "@scaife-viewer/widget-word-list": "^0.0.2",
     "apollo-boost": "^0.4.9",
     "core-js": "^3.6.5",
+    "graphql-tag": "^2.11.0",
     "node-sass": "^4.14.1",
     "path": "^0.12.7",
     "sass-loader": "^9.0.2",
