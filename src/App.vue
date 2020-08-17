@@ -55,4 +55,8 @@
       padding-right: 1rem;
     }
   }
+
+  .widget-sidebar .body > div.library-widget {
+    margin: 0 auto 0 2em;
+  }
 </style>
