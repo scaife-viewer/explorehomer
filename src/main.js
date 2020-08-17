@@ -75,12 +75,12 @@ const config = {
       'mapbox://styles/paltman/ckbi4thqt156y1ijz5wldui14',
   },
   readerComponents: {
-    [DISPLAY_MODE_SENTENCE_ALIGNMENTS]: AlignmentsModeReader,
-    [DISPLAY_MODE_FOLIO]: ImageModeReader,
-    [DISPLAY_MODE_NAMED_ENTITIES]: NamedEntitiesModeReader,
-    [DISPLAY_MODE_METRICAL]: MetricalModeReader,
-    [DISPLAY_MODE_INTERLINEAR]: InterlinearModeReader,
     [DISPLAY_MODE_DEFAULT]: DefaultModeReader,
+    [DISPLAY_MODE_INTERLINEAR]: InterlinearModeReader,
+    [DISPLAY_MODE_FOLIO]: ImageModeReader,
+    [DISPLAY_MODE_METRICAL]: MetricalModeReader,
+    [DISPLAY_MODE_NAMED_ENTITIES]: NamedEntitiesModeReader,
+    [DISPLAY_MODE_SENTENCE_ALIGNMENTS]: AlignmentsModeReader,
   },
 };
 
