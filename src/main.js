@@ -35,7 +35,6 @@ import MetricalModeReader from '@scaife-viewer/reader-metrical-mode';
 import InterlinearModeReader from '@scaife-viewer/reader-interlinear-mode';
 import { DefaultModeReader } from '@scaife-viewer/widget-reader';
 
-// import client from '@/gql';
 import App from '@/App.vue';
 import router from '@/router';
 import store, { apolloProvider } from '@/store';
@@ -87,12 +86,6 @@ const config = {
 Vue.use(SkeletonPlugin, { iconMap, config });
 
 Vue.use(VueApollo);
-
-// const widgetEndpoints = {};
-// if (process.env.VUE_APP_TOC_ENDPOINT) {
-//   widgetEndpoints.tocEndpoint = process.env.VUE_APP_TOC_ENDPOINT;
-// }
-// Vue.use(EndpointsPlugin, widgetEndpoints);
 
 Vue.config.productionTip = false;
 
