@@ -1372,226 +1372,226 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@scaife-viewer/common@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/common/-/common-0.0.1.tgz#fb69f7d829f0bce3246069f60e4263c545fbb188"
-  integrity sha512-LhN7kSpeF6HyKGNLw1+/9VYYWhc/12wz/VTlQ2p0R6NeTcIxH8EgIAmzXS6fFlWrEfpYQsU8PaAU881g9Evpcg==
+"@scaife-viewer/common@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/common/-/common-0.0.2.tgz#95e664502372f07e3e6a201fac4338087044cbae"
+  integrity sha512-jTlzMDl9RcuB3zV33HuMffl/9XsUYiRFwH0h9bLrupm2IMSZSDqF16nMIaN7dXnDhAbgqWYLXGIPA8bod7UODA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.28"
     "@fortawesome/vue-fontawesome" "^0.1.8"
     lodash.debounce "^4.0.8"
 
-"@scaife-viewer/entity-map@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/entity-map/-/entity-map-0.0.1.tgz#c98eccbd3c4eff4219a59f895b956fa0e8719149"
-  integrity sha512-e58bRBVccAgWkY5tMan/b7SL3K2t5EStaD5kKwcSAjSJ0Q+qbAm9HqFJMNSB89eavizu2HPNl+93YuXm17Dcyw==
+"@scaife-viewer/entity-map@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/entity-map/-/entity-map-0.0.2.tgz#371f89c9c116ecef825fe47e78021b89f0cdd9b1"
+  integrity sha512-YS5pBXL+/rPno6Ke87tPaIXyalhZr0tgpYHcvapwSLHlHKnDyJ92xN46YKndFwG+r3yY8vf8RMuDas8Ad5gvHA==
   dependencies:
     mapbox-gl "^1.11.0"
     vue-mapbox "^0.4.1"
 
-"@scaife-viewer/reader-alignments-mode@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/reader-alignments-mode/-/reader-alignments-mode-0.0.1.tgz#19a0ce85915d67a29513725d42089f93424045d4"
-  integrity sha512-TI0k3s5ZrS/DeF1H8QyfW4UCTVpwI8Q912fUwClCugSzxsKH/8mizGyMBhGicTtigwPihJwN3gG2ZiGP8m4SsQ==
+"@scaife-viewer/reader-alignments-mode@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/reader-alignments-mode/-/reader-alignments-mode-0.0.2.tgz#c8483faf87a89b8cc009a3a1cf89df21b3e75057"
+  integrity sha512-WOk5J6qVUNrU1CW2arILkaXu813/sHSirtABs94V5LqE6cPE55bmbM3TB7SieC3fe+TSjNv3mJvzIbjAOA6iUA==
   dependencies:
-    "@scaife-viewer/common" "^0.0.1"
-    "@scaife-viewer/store" "^0.0.1"
+    "@scaife-viewer/common" "^0.0.2"
+    "@scaife-viewer/store" "^0.0.2"
     graphql-tag "^2.10.3"
 
-"@scaife-viewer/reader-image-mode@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/reader-image-mode/-/reader-image-mode-0.0.1.tgz#63efd32372ec2771bc571e7191d920127357d556"
-  integrity sha512-uUMcFQZdrErv7s3pKUPCVF+0EEVXmrymwDIJI63X5NQkyXanv30ReLVH7kk6gp74Y0GyhCzoO+HABOdeMX+Quw==
+"@scaife-viewer/reader-image-mode@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/reader-image-mode/-/reader-image-mode-0.0.2.tgz#32974e07a8b8f953bfd624552970047383c1ab90"
+  integrity sha512-FPPXTkcsQMczl9gZGoNN+veYE9B/aOwU/lKY6zM24FKKec70gbf5fRyFIjlytMsXYnWdUHzivGy0AV9fCRVjpg==
   dependencies:
-    "@scaife-viewer/common" "^0.0.1"
-    "@scaife-viewer/widget-reader" "^0.0.1"
+    "@scaife-viewer/common" "^0.0.2"
+    "@scaife-viewer/widget-reader" "^0.0.2"
     graphql-tag "^2.10.3"
     openseadragon "^2.4.2"
     vue-apollo "^3.0.3"
 
-"@scaife-viewer/reader-interlinear-mode@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/reader-interlinear-mode/-/reader-interlinear-mode-0.0.1.tgz#960545d103726c70324f1c5a023f46ed27c978f4"
-  integrity sha512-wFK+iZpRaMckpVhhtHPBdOvJwlT0ZNJS4xMeFPDBSKv69sg9og3JL2fOZQnwCk1fr/24aXxxLMDislvjLWvwhg==
+"@scaife-viewer/reader-interlinear-mode@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/reader-interlinear-mode/-/reader-interlinear-mode-0.0.2.tgz#ce43be272017d9fca0a7421974fe671b3a1a60f1"
+  integrity sha512-rqUdRZUw0VM8iSInuzF8jPNGXfASH1X8VEPoThMfNFn1x0WIIOyWaWSq+vvhApd9pq1DXmk6oSF3FZ4ssqL5gg==
   dependencies:
-    "@scaife-viewer/common" "^0.0.1"
-    "@scaife-viewer/widget-reader" "^0.0.1"
+    "@scaife-viewer/common" "^0.0.2"
+    "@scaife-viewer/widget-reader" "^0.0.2"
     graphql-tag "^2.10.3"
     vue-apollo "^3.0.3"
 
-"@scaife-viewer/reader-metrical-mode@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/reader-metrical-mode/-/reader-metrical-mode-0.0.1.tgz#ca9aaef356c94e98c179436397363d301099df8a"
-  integrity sha512-Pz/bYrppLJGtLB4vT3L40QbXPHtZrfcEC6OKpYJ1264rU3YuLSwWUb/DV9AHLDO5ef46WQ95vh2pxiHYwbgRKg==
+"@scaife-viewer/reader-metrical-mode@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/reader-metrical-mode/-/reader-metrical-mode-0.0.2.tgz#2084edcdbb0e9e6ae10a8bdc961274ed400aba0c"
+  integrity sha512-EEvmrp5a4AT2ZshfZK8zxQ9BbBaQQYUxS6nja3C7sE/n4B938Dqv9QpOYrDolC0x8HYNyeg8aygn39iAb/nZ2g==
   dependencies:
-    "@scaife-viewer/common" "^0.0.1"
-    "@scaife-viewer/widget-reader" "^0.0.1"
+    "@scaife-viewer/common" "^0.0.2"
+    "@scaife-viewer/widget-reader" "^0.0.2"
     graphql-tag "^2.10.3"
     vue-apollo "^3.0.3"
 
-"@scaife-viewer/reader-named-entities-mode@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/reader-named-entities-mode/-/reader-named-entities-mode-0.0.1.tgz#c0a7dcd584e1a523ea994ff96f03f2b956995722"
-  integrity sha512-hm1PMd22QDzvYMOL8lpGRy5mABwAP63o6v0WluojOGr1+bW207Sh2sRbV/XzXB11EOjYLLJoCymJlBApOzOVzg==
+"@scaife-viewer/reader-named-entities-mode@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/reader-named-entities-mode/-/reader-named-entities-mode-0.0.2.tgz#ff85d3b10eeacf00ff7eff80b07ea374abc3f948"
+  integrity sha512-AC/x+iUk+UNR0YSbsOBEX80DaPTIjDgTOtKEVl12x9vPmZ5x157/xXEig3thl0deejr6OugHBw7qQk541aHdQw==
   dependencies:
-    "@scaife-viewer/common" "^0.0.1"
-    "@scaife-viewer/entity-map" "^0.0.1"
-    "@scaife-viewer/store" "^0.0.1"
-    "@scaife-viewer/widget-reader" "^0.0.1"
+    "@scaife-viewer/common" "^0.0.2"
+    "@scaife-viewer/entity-map" "^0.0.2"
+    "@scaife-viewer/store" "^0.0.2"
+    "@scaife-viewer/widget-reader" "^0.0.2"
     graphql-tag "^2.10.3"
     vue-apollo "^3.0.3"
 
-"@scaife-viewer/skeleton@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/skeleton/-/skeleton-0.0.1.tgz#099c4208e69c567314751b54e5d54584d60c0bd2"
-  integrity sha512-MiJeZdD5SMY5BkOJUB4fGBYT/Vncii/4KLHvEz3z4zSfZt15ve2Bfv1kxWVTY7ZTmkY935l8UXco0Pc/HwiRdQ==
+"@scaife-viewer/skeleton@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/skeleton/-/skeleton-0.0.3.tgz#fc6d813a1e8a45c34528352decc2cb0b2daf2d69"
+  integrity sha512-jIyQK+HrHBEwZlKRBK9pA9AbDdg4IePY5ahJEDhJXTMDETXfnm1qLK4E05C1c9Phlt5m2wjdwIQXANDnzFOrCQ==
   dependencies:
     "@fortawesome/free-solid-svg-icons" "^5.14.0"
-    "@scaife-viewer/common" "^0.0.1"
-    "@scaife-viewer/store" "^0.0.1"
+    "@scaife-viewer/common" "^0.0.2"
+    "@scaife-viewer/store" "^0.0.2"
     portal-vue "^2.1.7"
 
-"@scaife-viewer/store@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/store/-/store-0.0.1.tgz#3d04e11130f3314799ac22c9b757bda343396918"
-  integrity sha512-2YWQdXx0sn8vENRMn8ro3fpKF/Oe31EGpUN/OpZQamy9pIsZX9IpKAl7HZobfHE1APt0y8MR0tvAKqjm+ug0aA==
+"@scaife-viewer/store@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/store/-/store-0.0.2.tgz#a5713b60e45449ad13e4a8389b740eca82bf3b60"
+  integrity sha512-/zJXLnfNukYwWwm2PKRLyLsaqyMQOp2SACYlhXJC/XWWT5423ZBZc5xnLHaQMLA5D9K05Fb+mcxTD+PkPDYvlA==
   dependencies:
-    "@scaife-viewer/common" "^0.0.1"
+    "@scaife-viewer/common" "^0.0.2"
     graphql-tag "^2.10.3"
 
-"@scaife-viewer/widget-audio@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-audio/-/widget-audio-0.0.1.tgz#be5736c2ede0c19cfa1d543c61b0be1207dfa5d5"
-  integrity sha512-lDG2HTNi5bJ2KXC2jNK73eoXVGQVh7h7GuCNI/wTRWyAcQWMQBhfr6sawL/B5G3l4HvZhv+0uGjcdVDj6PWt1g==
+"@scaife-viewer/widget-audio@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-audio/-/widget-audio-0.0.2.tgz#3164b885eae41ab9cb20441d5dd2f8ac6beb16e5"
+  integrity sha512-5tivNzj3JwP3GNQJxvPCw0PRbWqvqKTFvyT4dGFJD66/tuwzEC6swLEpWS6qnKbO970FqxU7TwuhEtJ3xJlwgA==
   dependencies:
-    "@scaife-viewer/common" "^0.0.1"
-    "@scaife-viewer/store" "^0.0.1"
+    "@scaife-viewer/common" "^0.0.2"
+    "@scaife-viewer/store" "^0.0.2"
     graphql-tag "^2.10.3"
 
-"@scaife-viewer/widget-display-mode@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-display-mode/-/widget-display-mode-0.0.1.tgz#c4be906be864180cad155d09dc532067f7f3c3e5"
-  integrity sha512-5WOE1/IZb1EcDX2v6xNr5kZCpkFZ50iESufcj61y4W5EMeOColER4Md79E7L31QSEYyDsjRMa5FUcoRcUSvNNA==
+"@scaife-viewer/widget-display-mode@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-display-mode/-/widget-display-mode-0.0.3.tgz#a3cde3b2f1d5c3d75a93e48b43114026821ac4da"
+  integrity sha512-YNuJKwrDADcu3l76gDtZ0R2O0JWvGrR7ZK40u4Bq8o/DqbxZKMFxDdk4LZyPpq41As3ArHqCCZMSiUh84LT/LA==
   dependencies:
-    "@scaife-viewer/store" "^0.0.1"
+    "@scaife-viewer/store" "^0.0.2"
 
-"@scaife-viewer/widget-library@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-library/-/widget-library-0.0.1.tgz#2983725bddaac638ea803dff526fff2b292f52c5"
-  integrity sha512-ylb1xIzWShR47QTu9Pz64qy2ePi4gIXeYc2uPuyLShBk9r9P+fiPBVnDNaSfo+7VnC0fkMl54b3R8ALFtcjoxQ==
+"@scaife-viewer/widget-library@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-library/-/widget-library-0.0.2.tgz#7834afb2c3b78adf5e823dc5816d77b643690361"
+  integrity sha512-nKSHEnvGgMS19f/ttn72AzJUw5l0N3b69XPMFMJB/f9KSlJH+NmmutCJEpdCnp3ZJLvRuO1lpZxdVqQcDbMrvg==
   dependencies:
-    "@scaife-viewer/common" "^0.0.1"
-    "@scaife-viewer/store" "^0.0.1"
+    "@scaife-viewer/common" "^0.0.2"
+    "@scaife-viewer/store" "^0.0.2"
     graphql-tag "^2.10.3"
 
-"@scaife-viewer/widget-metadata@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-metadata/-/widget-metadata-0.0.1.tgz#3aa07b6b209e56ad9fc39702938166738bdac2d8"
-  integrity sha512-n2LFpgvzb8hd3bz120yrz0/Gc/F1FDGm6fSOP6fqGp85P0po9+MwnDeSGFr5YiHn0la07oiXcHH7dFE9vzaHQg==
+"@scaife-viewer/widget-metadata@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-metadata/-/widget-metadata-0.0.2.tgz#9da82f55b10d8508d001f6d29122d36b7906031d"
+  integrity sha512-xbVX3vFX69SCfwu8JknzxfN0msCCLKKwvqeKTbjVVTOOFfzQKPwr9v8VEpkkqEh0g4gxtiV/NGfHlLhhEe4iBw==
   dependencies:
-    "@scaife-viewer/store" "^0.0.1"
+    "@scaife-viewer/store" "^0.0.2"
 
-"@scaife-viewer/widget-named-entities@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-named-entities/-/widget-named-entities-0.0.1.tgz#57774133e6d8493ff4a6c3c677a947bf9ce0f598"
-  integrity sha512-15fLYnklmxc7cnlX0N+qXSswFeV9ps124tt6XyT9fxR2DcjUQprlkFcOs86i4NsGriUG7WBeevivcNiaZ2yidA==
+"@scaife-viewer/widget-named-entities@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-named-entities/-/widget-named-entities-0.0.2.tgz#cc64e4a1c48e60c9190703f0d06a56d628bc05cb"
+  integrity sha512-+e1kdZzqM3TyxST4P+s8FAY3X5AqHWfIPq7gACJ1gMrjIW8kp9p3+ZRb0TMmXOLjU/3kZGXBC/98usbUtZBlcA==
   dependencies:
-    "@scaife-viewer/common" "^0.0.1"
-    "@scaife-viewer/entity-map" "^0.0.1"
-    "@scaife-viewer/store" "^0.0.1"
+    "@scaife-viewer/common" "^0.0.2"
+    "@scaife-viewer/entity-map" "^0.0.2"
+    "@scaife-viewer/store" "^0.0.2"
     graphql-tag "^2.10.3"
 
-"@scaife-viewer/widget-new-alexandria@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-new-alexandria/-/widget-new-alexandria-0.0.1.tgz#3170ac05228ff453f760e2252400869aa1151b4f"
-  integrity sha512-CMwkNs62KV0ulkN7az/ANbAv+B4srmcV2NdVgmCzwtkWqu4LDihqzAFQWKNXoCPUV55rN/UqWdwY3Osx8QEuRQ==
+"@scaife-viewer/widget-new-alexandria@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-new-alexandria/-/widget-new-alexandria-0.0.2.tgz#55a160417116d0c058fa0a06bf4c94ec191baff6"
+  integrity sha512-CEwxpiONePIO8rDlkxMMfIbmVNOVP4dP2h1sHRlTvYIyKt8jnA0/8gLLO82FdQNUiCYcyHP/3XlVPVnfgDETnw==
   dependencies:
-    "@scaife-viewer/store" "^0.0.1"
+    "@scaife-viewer/store" "^0.0.2"
     graphql-tag "^2.10.3"
     query-string "^6.11.0"
 
-"@scaife-viewer/widget-passage-ancestors@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-passage-ancestors/-/widget-passage-ancestors-0.0.1.tgz#509ae7f5b14d74941496668dc83da4a7f2f59d0f"
-  integrity sha512-RSVxjLxaMqYhR10gGEgdeswAAmaWRpufSVLfHaRAlJTqU84sNgJ6pZOpZTf067yHl2KgmzmaBOiaj0IAaQhhxw==
+"@scaife-viewer/widget-passage-ancestors@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-passage-ancestors/-/widget-passage-ancestors-0.0.2.tgz#69e1eb0136c95b92960742ad7563a4e7ff09ba51"
+  integrity sha512-M9jsoKuABJhwQd5r5lJFEVcg6bE1H+npHoRzvazD1DbJlmRfVxn7pRK2W1svBcqF1zFW6WxhCBKqeT9VNs74zA==
   dependencies:
-    "@scaife-viewer/store" "^0.0.1"
+    "@scaife-viewer/store" "^0.0.2"
     graphql-tag "^2.10.3"
 
-"@scaife-viewer/widget-passage-children@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-passage-children/-/widget-passage-children-0.0.1.tgz#9d1507ae5b71d1a494fa3fe9bfd396ba861fa5fd"
-  integrity sha512-0Uz2hFcVt4gIIiAzHE5d86Nv/cKZJjWJVEbeRMa1Pi8+uZVUCvnJI2vYajCli2xRP8ieDsM1eS66k8Xfx/sgZA==
+"@scaife-viewer/widget-passage-children@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-passage-children/-/widget-passage-children-0.0.2.tgz#9acabcccc634ed9036ae75fc9eddef9fbc4ae0db"
+  integrity sha512-bztn2rsxaF6Jgx4pfIw7aWLg5UPSso33dGFkAxuGDaZyNWu8ryKcY2Bv5o4mqv/63Rf17wqVZP7RLyEKWpoKdQ==
   dependencies:
-    "@scaife-viewer/store" "^0.0.1"
+    "@scaife-viewer/store" "^0.0.2"
     graphql-tag "^2.10.3"
 
-"@scaife-viewer/widget-passage-reference@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-passage-reference/-/widget-passage-reference-0.0.1.tgz#3dae4902531ccc25e15b87b1d6d9872ef3ed3a60"
-  integrity sha512-uawqxwJYreosXWzU7DhIniFK0xH+KL9KS1U9uf7SYO2c3ZopHMzjAUMR4hTj5m440dsIei0jfwUDwlUODsVL2w==
+"@scaife-viewer/widget-passage-reference@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-passage-reference/-/widget-passage-reference-0.0.3.tgz#2713c9ed3bcf9d4a329b6a5d47a2aaca31b18562"
+  integrity sha512-LDKKo7LwsmCQzkq140g+pP52zKV6dNma4U0NUu2H/Qs9vs/DMj7Qk5aQjXXd9TbKyH7x4nAnD183J8vsJ9EMBg==
   dependencies:
-    "@scaife-viewer/store" "^0.0.1"
+    "@scaife-viewer/store" "^0.0.2"
     graphql-tag "^2.10.3"
 
-"@scaife-viewer/widget-passage-siblings@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-passage-siblings/-/widget-passage-siblings-0.0.1.tgz#eb7edecd87599b467f74264f678f42074513fc07"
-  integrity sha512-VkG7bvla2DBS5NiLl4s7oCzuaZ6/1hQF+NfWLLB67IVUl7zKkffJ9O79BYeB+29LE4gmOdX76i3YrZ3yNlU4aw==
+"@scaife-viewer/widget-passage-siblings@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-passage-siblings/-/widget-passage-siblings-0.0.2.tgz#0c0b20b5c6c6f4b97d497703dcaf510f3b541ffb"
+  integrity sha512-fmXb2zVmuGJRRNlsc/1KhNyf3NnxZ+fNMXaKpPI35e1Xp2QYRQOU0PkucDs8OW/bnqW5RyOAL3ZN5q0Iv8aW2g==
   dependencies:
-    "@scaife-viewer/store" "^0.0.1"
+    "@scaife-viewer/store" "^0.0.2"
     graphql-tag "^2.10.3"
 
-"@scaife-viewer/widget-reader@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-reader/-/widget-reader-0.0.1.tgz#28fd02ccfcba6b0bff295de2c12b4157df7ff74c"
-  integrity sha512-qP3yqPxeEj7AuyYdYMFxpnezJUlxZ9EPTmuMzn6aYkwQTgHWLUT3gQ0yqivO1kwn3KTiufBcAh1kvGwbUqVRgA==
+"@scaife-viewer/widget-reader@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-reader/-/widget-reader-0.0.2.tgz#e6ad42ee500f42cdc80c06896c0e24bc3ea02be8"
+  integrity sha512-TlOl88owxp5cgSGRxiO4437bUezjfpe06M8DzLg8yKgDt50NiDaFHLjYrfqRM9u+S3bPaqjtPdAc/ux6b6s0jg==
   dependencies:
-    "@scaife-viewer/common" "^0.0.1"
-    "@scaife-viewer/store" "^0.0.1"
+    "@scaife-viewer/common" "^0.0.2"
+    "@scaife-viewer/store" "^0.0.2"
     graphql "^15.0.0"
     graphql-tag "^2.10.3"
     vue-apollo "^3.0.3"
 
-"@scaife-viewer/widget-scholia@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-scholia/-/widget-scholia-0.0.1.tgz#3de4875adfc70044684820aef9c9eeb470fc01d4"
-  integrity sha512-q3id2Q88O1FPb9LFrWIFiJJMe+DjxggZpAREgy7tbqzcVPZJlpB33wx40Md+ZSqzkf7obu09LTUW1DYC4XOOSA==
+"@scaife-viewer/widget-scholia@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-scholia/-/widget-scholia-0.0.3.tgz#178b91a19c789a939ad8343ca33222ed1d00d4a4"
+  integrity sha512-wcKS7TB/RvehFDmvft8AJQNiRg59DzjaCoFyh3gQANsE5VvWy0MP3xOc58mJWCpY9FFctxNZV75HChBXYacbzw==
   dependencies:
-    "@scaife-viewer/common" "^0.0.1"
-    "@scaife-viewer/store" "^0.0.1"
+    "@scaife-viewer/common" "^0.0.2"
+    "@scaife-viewer/store" "^0.0.2"
     graphql-tag "^2.10.3"
 
-"@scaife-viewer/widget-text-size@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-text-size/-/widget-text-size-0.0.1.tgz#0d8e060ed4bb8e08e9058926ac0617e1a3ae0a4f"
-  integrity sha512-uZye608LkO8ws7WsGwh1Ur3LLrVks4Ksfq5ourMuxqe0MqZqf+Noh3eC+g+PeGzh/c7aO2XKwyiaKHpPFvDAuw==
+"@scaife-viewer/widget-text-size@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-text-size/-/widget-text-size-0.0.3.tgz#70b3348d8da6df24af05a891e7faf73e9124af04"
+  integrity sha512-a4PKOeHGlOKMsRY2IByl3E0nnmAuM8AoyQConmb6nQ4CxOWfHdE8hqCAdkDk4ICL0CjZY2pNo3hr4xYYJwNFrw==
   dependencies:
-    "@scaife-viewer/store" "^0.0.1"
+    "@scaife-viewer/store" "^0.0.2"
 
-"@scaife-viewer/widget-text-width@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-text-width/-/widget-text-width-0.0.1.tgz#5253b7074b19c4ec46672c89e3144029b40cdadb"
-  integrity sha512-41VYu5llfM3Ou9Y2jfjSyAzjrPiDsaaoHm1SbIUphcumtTfq9bYJSNRqXFmAM+vjimJu7x/bl6O/oxBeHgjWig==
+"@scaife-viewer/widget-text-width@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-text-width/-/widget-text-width-0.0.3.tgz#dc7ac77a2e5972ebc611a40faca9e4717e1b6e86"
+  integrity sha512-BoncB7J53quoHCCVXwjGuAldG+fmfAWi9VYXcvTKW5B8bive+XZ3a/H8T7oMfxss6G49eAC8yiZ16jbXyWkyYw==
   dependencies:
-    "@scaife-viewer/store" "^0.0.1"
+    "@scaife-viewer/store" "^0.0.2"
 
-"@scaife-viewer/widget-token-annotations@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-token-annotations/-/widget-token-annotations-0.0.1.tgz#839974f028d0d153a095a65d19357aa4c87e4b28"
-  integrity sha512-15sOZ3ZaiOTC5zNocR0gZuAUKPh6XtTRIIHGLuAg3yDA+inBGkn13Y/tfLmBAAZD+NOQ4HeY0n9j+k2TQg9BJw==
+"@scaife-viewer/widget-token-annotations@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-token-annotations/-/widget-token-annotations-0.0.3.tgz#0db6dcab636a979c8c1d9742e7b240c6425090d6"
+  integrity sha512-pwxc0bbFn0a3h3V97JYhmPQPUq+Pg1tLlsI1Sg0+kNmvIUbzn18oqfDWtbn5wHtYFn4Mv1ocweR1eKXudFNscQ==
   dependencies:
-    "@scaife-viewer/common" "^0.0.1"
-    "@scaife-viewer/store" "^0.0.1"
+    "@scaife-viewer/common" "^0.0.2"
+    "@scaife-viewer/store" "^0.0.2"
     graphql-tag "^2.10.3"
 
-"@scaife-viewer/widget-word-list@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-word-list/-/widget-word-list-0.0.1.tgz#59ade89ff756d332ba4dade3989c705d009a22a2"
-  integrity sha512-+k+fsCdlGtbYRnnQ+lP7Fbgyx5eiRvb2RQd7xZY/04tVxm7QmE3RlncTeHMfAE8SK6HwgdOdKNeRZKYSdd991g==
+"@scaife-viewer/widget-word-list@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@scaife-viewer/widget-word-list/-/widget-word-list-0.0.2.tgz#9d7137fb77431911bcf9d981ed3737e191f48322"
+  integrity sha512-LR5IJE1DPfETYOOy1lRXp8dexm0vejcdIAqbe5zC9NWXpVrUNiJX24Zz+xwvYlQf95Pc4i6EUW2iXGI3ecJCfg==
   dependencies:
-    "@scaife-viewer/common" "^0.0.1"
-    "@scaife-viewer/store" "^0.0.1"
+    "@scaife-viewer/common" "^0.0.2"
+    "@scaife-viewer/store" "^0.0.2"
     graphql-tag "^2.10.3"
 
 "@sinonjs/commons@^1.7.0":
