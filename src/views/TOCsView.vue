@@ -3,16 +3,17 @@
 </template>
 
 <script>
-  import { TOCWidget, HelloWorld } from '@scaife-viewer/scaife-widgets';
+  // import { TOCWidget, HelloWorld } from '@scaife-viewer/scaife-widgets';
 
   export default {
     name: 'TOCsView',
     computed: {
       mainWidget() {
-        return TOCWidget;
+        return null;
+        // return TOCWidget;
       },
       rightWidgets() {
-        return [HelloWorld];
+        return [];
       },
     },
   };

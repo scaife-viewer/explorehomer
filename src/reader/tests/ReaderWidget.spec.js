@@ -3,7 +3,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import SkeletonPlugin from 'scaife-skeleton';
-import { Paginator, URN } from '@scaife-viewer/scaife-widgets';
+import URN, { Paginator } from '@scaife-viewer/common';
 
 import createStore from '@/reader/config';
 import ReaderWidget from '@/reader/widgets/ReaderWidget.vue';

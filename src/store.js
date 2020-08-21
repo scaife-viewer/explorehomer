@@ -1,25 +1,26 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import VueApollo from 'vue-apollo';
+import ApolloClient from 'apollo-boost';
 
-import { createStore as createSkeletonStore } from 'scaife-skeleton';
-import { scaifeWidgets } from '@scaife-viewer/scaife-widgets';
-// eslint-disable-next-line import/no-named-default
-import { default as createReaderStore } from './reader/config';
-
-import createStore from './config';
+import createStore from '@scaife-viewer/store';
 
 Vue.use(Vuex);
 
-const readerStore = createReaderStore();
-const skeletonStore = createSkeletonStore();
-
-const store = new Vuex.Store({
-  modules: {
-    [readerStore.namespace]: readerStore.store,
-    [scaifeWidgets.namespace]: scaifeWidgets.store,
-    [skeletonStore.namespace]: skeletonStore.store,
-  },
-  ...createStore(),
+const client = new ApolloClient({
+  uri:
+    process.env.VUE_APP_ATLAS_GRAPHQL_ENDPOINT ||
+    'https://explorehomer-atlas-dev.scaife-viewer.org/graphql/',
+});
+const apolloProvider = new VueApollo({
+  defaultClient: client,
 });
 
-export default store;
+const scaifeStore = createStore(client);
+
+export default new Vuex.Store({
+  modules: {
+    [scaifeStore.namespace]: scaifeStore.store,
+  },
+});
+export { apolloProvider };
