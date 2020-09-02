@@ -15,7 +15,6 @@
   };
 </script>
 
-<style src="@scaife-viewer/scaife-widgets/dist/scaife-widgets.css"></style>
 <style lang="scss">
   @import './styles/variables';
 
@@ -55,5 +54,9 @@
     .new-alexandria-container {
       padding-right: 1rem;
     }
+  }
+
+  .widget-sidebar .body > div.library-widget {
+    margin: 0 auto 0 2em;
   }
 </style>
